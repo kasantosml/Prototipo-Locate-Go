@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <title>Dados do Empresário</title>
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #e5e5e5;
+        text-align: center;
+    }
+
+    header {
+        background: rgb(140, 10, 10);
+        color: white;
+        padding: 20px;
+        width: 100%;
+        justify-content: space-between;
+        display: flex;   
+        align-items: center; 
+        font-size: 25px;
+    }
+
+    header img {
+        width: 60px;
+        border-radius: 50px;
+    }
+
+    header i {
+        font-size: 25px;
+        cursor: pointer;
+        color: white;
+    }
+
+    .dados {
+        text-transform: uppercase;
+        margin-left: 10%;
+        width: 100%;
+        margin: 15% 5%;
+    }
+
+    .dados h3 {
+        margin-bottom: 10%;
+        font-size: 30px;
+    }
+
+    .questionario input {
+        display: block;
+        margin: 15px 40px;
+        width: 80%;
+        padding: 20px;
+        text-transform: uppercase;
+        border: none;
+        border-bottom: 1px solid black;
+        background: #e5e5e5;
+        outline: none;
+        flex-direction: column
+    }
+
+    #email::placeholder {
+        text-transform: uppercase;
+        color: gray;
+    }
+
+    #email {
+        text-transform: lowercase;
+    }
+
+    button {
+        width: 80%;
+        margin: 10%;
+        margin-left: 13%;
+        padding: 3%;
+        background: rgb(106, 7, 7);
+        border-radius: 50px;
+        color: white;
+        font-size: 20px;
+        border-bottom: 5px solid rgb(0, 0, 0);
+    }
+
+    button:active {
+        background: rgb(10, 131, 114);
+        transition: 0.3s;
+        color: rgb(0, 0, 0);
+    }
+
+    #eye, #eyeConfirma {
+    position: absolute;
+    right: 30px;   /* fixa no lado direito do input */
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: gray;
+}
+
+</style>
+<body>
+    <header>
+        <a href="inicial.prototipo.html"><i class="fa-solid fa-arrow-left"></i></a>
+        <img src="locate.png" alt="">
+    </header>
+    
+    <div class="dados">
+    <h3>dados do(a) Empresário(a):</h3>
+    </div>
+
+    <div class="questionario">
+        <input type="text" placeholder="nome completo" onkeydown="pularComEnter(event)">
+        <input type="number" placeholder="cpf" onkeydown="pularComEnter(event)">
+        <input type="text" placeholder="contato" onkeydown="pularComEnter(event)">
+        <input type="email" placeholder="e-mail" id="email" onkeydown="pularComEnter(event)">
+        <input type="text" placeholder="sua função na empresa" onkeydown="pularComEnter(event)">
+
+        <div class="senha" style="position: relative;">
+        <input type="password" placeholder="crie uma senha" onkeydown="pularComEnter(event)" id="password">
+        <i class="fa-solid fa-eye-slash" id="eye"></i>
+        </div>
+        <div class="confirmaSenha" style="position: relative;">
+        <input type="password" placeholder="confirme a senha" onkeydown="pularComEnter(event)" id="confirmaSenha">
+        <i class="fa-solid fa-eye-slash" id="eyeConfirma"></i>
+        </div>
+    </div>
+
+    <a href="dadosEmpresa.prototipo.html"><button>GO</button></a>
+
+
+
+
+
+
+<script>
+//pular com enter
+    function pularComEnter(event) {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      
+    const inputs = Array.from(document.querySelectorAll("input"))
+        .filter(input =>
+          input.type !== "submit" &&
+          input.type !== "button" &&
+          input.type !== "reset" &&
+          !input.disabled &&
+          input.offsetParent !== null 
+        
+        );
+
+      const index = inputs.indexOf(event.target);
+      if (index >= 0 && index < inputs.length - 1) {
+        inputs[index + 1].focus();
+      } else {
+        const botao = document.querySelector("button");
+if (botao) {
+  botao.focus();
+}
+      }
+    }
+  }
+
+
+
+//mostrar senha
+const togglePassword = document.querySelector("#eye");
+const password = document.querySelector("#password");
+
+togglePassword.addEventListener("click", function(){
+    const type = password.type === "password" ? "text" : "password";
+    password.type = type;
+
+    this.classList.toggle("fa-eye");
+    this.classList.toggle("fa-eye-slash");
+});
+
+
+const togglePassword2 = document.querySelector("#eyeConfirma");
+const confirmaSenha = document.querySelector("#confirmaSenha");
+
+togglePassword2.addEventListener("click", function(){
+    const type = confirmaSenha.type === "password" ? "text" : "password";
+    confirmaSenha.type = type;
+
+    this.classList.toggle("fa-eye");
+    this.classList.toggle("fa-eye-slash");
+});
+
+</script>
+</body>
+</html>

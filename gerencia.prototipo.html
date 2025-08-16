@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<title>Gerência de Filas</title>
+<style>
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background-color: #e5e5e5;
+        text-align: center;
+    }
+
+    header {
+        background-color: rgb(140, 10, 10);
+        color: white;
+        padding: 20px;
+        font-size: 25px;
+        font-weight: bold;
+        justify-content: space-between;
+        display: flex;   
+        align-items: center; 
+    }
+
+    #img {
+        width: 15%;
+        height: auto;
+        border-radius: 50px;
+    }
+
+    header i {
+        font-size: 25px;
+        cursor: pointer;
+    }
+
+    .filter-container {
+        position: relative;
+    }
+
+    .filter-menu {
+        display: none;
+        position: absolute;
+        top: 35px;
+        right: 0;
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 10px 8px rgba(0,0,0,0.15);
+        overflow: hidden;
+        z-index: 10;
+        min-width: 150px;
+    }
+
+    .filter-menu button {
+        background: none;
+        border: none;
+        width: 100%;
+        padding: 10px;
+        text-align: left;
+        font-size: 14px;
+        cursor: pointer;
+    }
+
+    .filter-menu button:hover {
+        background: #800f15;
+        color: white;
+    }
+
+    h2 {
+        font-size: 25px;
+        margin: 10%;
+        margin-top: 20%;
+    }
+
+    #number {
+        font-size: 20px;
+        margin-bottom: 20px;
+    }
+
+    #card-container {
+    padding-bottom: 150px; 
+    }
+
+    .card {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background-color: white;
+        border-radius: 17px;
+        padding: 25px;
+        margin: 10% auto;
+        width: 80%;
+        box-shadow: 20px 20px 15px rgba(0,0,0,0.1);
+        transition: background 0.2s, color 0.2s;
+        border: none;
+        
+    }
+
+    .card:active {
+        background-color: #8e1111;
+        color: white;
+        padding: 25px;
+        
+    }
+    
+    .card-text {
+        flex-grow: 1;
+        text-align: left;
+        font-size: 20px;        
+    }
+
+    .input {
+        border: none;
+        font-size: 20px;
+        font-weight: bold;
+        text-transform: uppercase;
+        width: 200px;
+        border-radius: 20px;
+        text-decoration: none;
+        outline: none;
+        transition: background 0.2s, color 0.2s;
+    }
+    
+
+    .input:hover {
+        padding: 4%;
+        max-width: 50%;
+        outline: none;
+        background-color: #8e1111;
+    }
+
+    .input:active {
+        background-color: #8e1111;
+    }
+
+    .numeracao {
+        font-size: 20px;
+        margin-right: 20%;
+    }
+
+    .dots {
+        text-decoration: none;
+        font-size: 25px;
+        color: inherit;        /* Usa a cor do texto/pai */
+        display: inline-flex;
+    }
+
+    #item1 {
+        font-size: 40px;
+    }
+
+    #item2 {
+        font-size: 40px;
+    }
+
+    #item3 {
+        font-size: 40px;
+    }
+
+    #a {
+      text-decoration: none;
+      color: black;
+    }
+
+    .adc {
+        background-color: black;
+        color: white;
+        border-radius: 50%;
+        padding: 15px;
+        font-size: 20px;
+        border: none;
+        position: fixed;
+        bottom: 100px;
+        left: 50%;
+        transform: translateX(-50%);
+        cursor: pointer;
+        width: 12%;
+    }
+
+    .adc:active {
+        background-color: rgb(106, 7, 7);
+    }
+
+    footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: rgb(177, 177, 177);
+    border-top: 3px solid #a7a7a7;
+    padding: 10px 0;
+    display: flex;
+    justify-content: center;
+    gap: 0;
+    align-items: center;
+    box-sizing: border-box;
+}
+
+
+footer button {
+    flex: 1; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: none;
+    border: none;
+    padding: 5px 90px;
+    font-size: 25px;
+    cursor: pointer;
+}
+
+footer button:active {
+    background-color: rgb(106, 7, 7);
+    border-radius: 20px;
+}
+
+#perfil {
+    color: black;
+}
+
+#home {
+    color: rgb(169, 2, 2);
+}
+
+</style>
+</head>
+<body>
+
+<header>
+  <img src="locate.png" alt="L & G" id="img">
+  <div class="filter-container">
+        <i id="filter-icon" class="fa-solid fa-bars"></i>
+        <div id="filter-menu" class="filter-menu">
+            <button id="ordem-alfabetica">Ordem Alfabética</button>
+            <button id="prioridade">Prioridades</button>
+            <button id="maior">Maior Fila</button>
+            <button id="menor">Menor Fila</button>
+            <button id="editar">Editar</button>
+            <button id="excluir">Excluir</button>
+        </div>
+  </div>
+</header>
+
+<h2>GERÊNCIA DE FILAS</h2>
+<div id="number">03 FILAS</div>
+
+<div id="card-container">
+
+<div class="card">
+    <div class="card-text"><b>ENTREGAS</b></div>
+    <div class="numeracao">11</div>
+    <div class="dots"><i class="fa-solid fa-ellipsis-vertical"></i></div>
+</div>
+
+<div class="card">
+    <div class="card-text"><b>RETIRADAS</b></div>
+    <div class="numeracao">2</div>
+    <div class="dots"><i class="fa-solid fa-ellipsis-vertical"></i></div>    
+</div>
+
+<a href="fila.prototipo.html" id="a">
+<div class="card" id="card">
+    <div class="card-text"><b>PRESENCIAIS</b></div>
+    <div class="numeracao">5</div>
+    <div class="dots"><i class="fa-solid fa-ellipsis-vertical"></i></div>
+</div>
+</a>
+</div>
+
+<button class="adc" id="adc">+</button>
+
+<footer id="footer">
+    <a href="perfilEmpresario.prototipo.html"><button id="perfil"><i id="perfil"><div class="fa-solid fa-user"></div></i></button></a>
+    <a href="gerencia.prototipo.html"><button><i id="home"><div class="fa-solid fa-house"></div></i></button></a>
+</footer>
+
+<script>
+  const lista = document.getElementById('card-container');
+  const ordemBtn = document.getElementById('ordem-alfabetica');
+
+function nomeDoItem(item) {
+  
+  const input = item.querySelector('.card-text input');
+  if (input) {
+    return (input.value || '').trim().toLowerCase();
+  }
+  return (item.querySelector('.card-text')?.textContent || '').trim().toLowerCase();
+}
+
+ordemBtn.addEventListener('click', () => {
+  const itens = Array.from(lista.children); 
+  itens.sort((a, b) => nomeDoItem(a).localeCompare(nomeDoItem(b), 'pt-BR', { sensitivity: 'base' }));
+  itens.forEach(it => lista.appendChild(it));
+});
+
+
+
+
+
+
+
+const maiorBtn = document.getElementById('maior');
+
+function valorDoCard(card) {
+  return parseInt(card.querySelector('.numeracao')?.textContent || 0, 10);
+}
+
+maiorBtn.addEventListener('click', () => {
+  const cards = Array.from(lista.children);
+  cards.sort((a, b) => valorDoCard(b) - valorDoCard(a)); 
+  cards.forEach(card => lista.appendChild(card));
+});
+
+
+
+
+const menorBtn = document.getElementById('menor');
+
+function valorDoCard(card) {
+  return parseInt(card.querySelector('.numeracao')?.textContent || 0, 10);
+}
+
+
+maiorBtn.addEventListener('click', () => {
+  const cards = Array.from(lista.children);
+  cards.sort((a, b) => valorDoCard(b) - valorDoCard(a));
+  cards.forEach(card => lista.appendChild(card));
+});
+
+
+menorBtn.addEventListener('click', () => {
+  const cards = Array.from(lista.children);
+  cards.sort((a, b) => valorDoCard(a) - valorDoCard(b));
+  cards.forEach(card => lista.appendChild(card));
+});
+
+
+
+
+
+  const numberDisplay = document.getElementById('number');
+  const container = document.getElementById('card-container');
+  const addBtn = document.getElementById('adc');
+  const body = document.body;
+
+  function atualizarNumero() {
+    const totalCards = container.querySelectorAll('.card').length;
+    numberDisplay.textContent = totalCards.toString().padStart(2,'0') + ' FILAS';
+}
+
+
+  addBtn.addEventListener('click', () => {
+
+    const newCard = document.createElement('div');
+    newCard.classList.add('card');
+
+
+    newCard.innerHTML = `
+      <div class="card-text">
+        <input type="text" placeholder="Fila" class="input">
+      </div>
+      <div class="numeracao">0</div>
+      <a href="catalogo.prototipo.html" class="dots">
+  <i class="fa-solid fa-ellipsis-vertical"></i>
+</a>
+
+
+    `;
+
+    container.appendChild(newCard); 
+    atualizarNumero();
+  });
+
+  atualizarNumero();
+
+
+
+
+
+
+let ultimoScroll = window.scrollY;
+const footer = document.getElementById('footer');
+
+window.addEventListener('scroll', () => {
+    const atualScroll = window.scrollY;
+
+    if (atualScroll > ultimoScroll) {
+
+        footer.style.transform = "translateY(100%)";
+    } else {
+
+        footer.style.transform = "translateY(0)";
+    }
+
+    ultimoScroll = atualScroll;
+});
+
+
+
+
+
+
+
+
+
+const filterIcon = document.getElementById('filter-icon');
+const filterMenu = document.getElementById('filter-menu');
+
+filterIcon.addEventListener('click', () => {
+    filterMenu.style.display = filterMenu.style.display === 'block' ? 'none' : 'block';
+});
+
+document.addEventListener('click', (e) => {
+    if (!filterIcon.contains(e.target) && !filterMenu.contains(e.target)) {
+        filterMenu.style.display = 'none';
+    }
+});
+
+
+
+
+
+
+document.getElementById('prioridade').addEventListener('click', () => {
+  alert('Função de PRIORIDADE em desenvolvimento!');
+});
+
+document.getElementById('editar').addEventListener('click', () => {
+  alert('Função de EDITAR em desenvolvimento!');
+});
+
+document.getElementById('excluir').addEventListener('click', () => {
+  alert('Função de EXCLUIR em desenvolvimento!');
+});
+
+
+</script>
+</body>
+</html>

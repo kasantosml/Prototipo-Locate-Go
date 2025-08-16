@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pedido Individual</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<style>
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: #e5e5e5;
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+    }
+
+    header {
+        background: #800f15;
+        color: white;
+        padding: 15px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    header img {
+        height: 60px;
+        border-radius: 50px;
+        transform: translateX(-13px);
+    }
+
+    header i {
+        font-size: 25px;
+        cursor: pointer;
+    }
+
+    main {
+        flex: 1;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        overflow-y: auto;
+    }
+
+    .pedido-info {
+        background: white;
+        border-radius: 10px;
+        padding: 20px;
+        text-align: center;
+        box-shadow: 0 5px 8px rgba(0,0,0,0.1);
+        text-transform: uppercase;
+    }
+
+    .pedido-info h2 {
+        margin: 0;
+        font-size: 25px;
+    }
+
+    .pedido-info p {
+        margin: 5px 0 0 0;
+        font-size: 18px;
+        color: #333;
+    }
+
+    .numero-pedido {
+        background: rgba(0, 0, 0, 0.108);
+        width: 80px;
+        height: 80px;
+        margin: 10px auto;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 36px;
+        font-weight: bold;
+    }
+
+    .pedido-detalhes {
+        background: white;
+        border-radius: 10px;
+        padding: 15px;
+        box-shadow: 0 5px 8px rgba(0,0,0,0.1);
+    }
+
+    .pedido-detalhes h3 {
+        margin-top: 0;
+        border-bottom: 1px solid #ccc;
+        padding-bottom: 5px;
+        font-size: 18px;
+        text-align: left;
+    }
+
+    .pedido-detalhes ul {
+        list-style: none;
+        padding-left: 0;
+        margin: 10px 0;
+        text-align: left;
+    }
+
+    .pedido-detalhes ul li {
+        padding: 5px 0;
+    }
+
+    .pedido-detalhes .sem-especificacao {
+        font-weight: bold;
+        text-align: center;
+        margin-top: 10px;
+    }
+
+    #botao {
+        width: 210px;
+        padding: 10px;
+        margin: 1%;
+        background-color: #800f15;
+        color: white;
+        border-radius: 50px;
+        border-bottom: 5px solid #000000;
+        font-size: 20px;
+        position: fixed;
+        bottom: 50px;
+        left: 50%;
+        transform: translateX(-50%);
+        box-shadow: 0 10px 2px rgba(0, 0, 0, 0.253);
+        cursor: pointer;
+    }
+
+    #botao:hover {
+        background: rgb(10, 131, 114);
+        transition: 0.3s;
+        color: rgb(0, 0, 0);
+    }
+
+</style>
+</head>
+<body>
+
+<header>
+    <a href="fila.prototipo.html"><i class="fa-solid fa-arrow-left" style="color:white; margin-right: 0;"></i></a>
+    <img src="locate.png" alt="Logo">
+
+</header>
+
+<main>
+    <div class="pedido-info">
+        <h2>Kawan Santos</h2>
+        <p>11:50AM</p>
+        <hr><br>
+        <div class="numero-pedido">1°</div>
+    </div>
+
+    <div class="pedido-detalhes">
+        <h3>PEDIDO:</h3>
+        <ul>
+            <li>1 MILKSHAKE DE MORANGO</li>
+            <li>1 MILKSHAKE DE CHOCOLATE</li>
+        </ul>
+        <div class="sem-especificacao">SEM ESPECIFICAÇÃO</div>
+    </div>
+
+    <a href="fila.prototipo.html"><button id="botao">FINALIZADO</button></a>
+</main> 
+
+</body>
+</html>

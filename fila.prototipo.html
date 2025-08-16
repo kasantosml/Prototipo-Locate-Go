@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fila Local</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    :root {
+        --cor-principal: #800f15;
+        --cor-fundo: #f9f9f9;
+        --cor-texto: #333;
+        --cor-botao: #000;
+    }
+
+    html, body {
+        height: 100%;
+        font-family: Arial, sans-serif;
+        background: var(--cor-fundo);
+        color: var(--cor-texto);
+        display: flex;
+        flex-direction: column;
+    }
+
+    header {
+        background: var(--cor-principal);
+        color: white;
+        padding: 15px 15px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    header img {
+        height: 60px;
+        border-radius: 50px;
+    }
+
+    #a {
+      text-decoration: none;
+      color: rgb(255, 255, 255);
+    }
+
+    header i {
+        font-size: 25px;
+        cursor: pointer;
+    }
+
+    .filter-container {
+        position: relative;
+    }
+
+    .filter-menu {
+        display: none;
+        position: absolute;
+        top: 35px;
+        right: 0;
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 10px 8px rgba(0,0,0,0.15);
+        overflow: hidden;
+        z-index: 10;
+        min-width: 150px;
+    }
+
+    .filter-menu button {
+        background: none;
+        border: none;
+        width: 100%;
+        padding: 10px;
+        text-align: left;
+        font-size: 14px;
+        cursor: pointer;
+    }
+
+    .filter-menu button:hover {
+        background: #800f15;
+        color: white;
+    }
+
+    main {
+        flex: 1;
+        padding: 20px;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        overflow-y: auto;
+        margin-bottom: 80px;
+        padding-bottom: 150px;
+    }
+
+    #titulo {
+        font-size: 25px;
+        margin: 25px 0;
+    }
+
+    #number {
+        font-size: 20px;
+        margin-bottom: 20px;
+    }
+
+    header a {
+      text-decoration: none;
+      color: rgb(255, 255, 255);
+    }
+
+    #pular {
+        text-decoration: none;
+        color: rgb(0, 0, 0);
+    }
+
+    #a:active {
+        text-decoration: none;
+    }
+
+    .lista {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        width: 100%;
+        max-width: 400px;
+    }
+
+    .card {
+        background: white;
+        padding: 20px 15px;
+        border-radius: 8px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-shadow: 0 8px 5px rgba(0,0,0,0.1);
+        font-size: 15px;
+        transition: background 0.2s, color 0.2s;
+        text-transform: uppercase;
+    }
+
+    .card:active {
+        background: #8e1111;
+        transition: 0.1s;
+        color: white;
+    }
+
+    .detalhes {
+        display: flex;
+        flex-direction: column;
+        text-align: left;
+        flex: 1;
+    }
+
+    .num {
+        font-weight: bold;
+        margin-right: 15px;
+    }
+
+    .info {
+        flex: 1;
+        text-align: left;
+        font-size: 15px;
+    }
+
+    .extra {
+        font-size: 15px;
+        color: #777;
+    }
+
+    footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: rgb(177, 177, 177);
+    border-top: 3px solid #a7a7a7;
+    padding: 10px 0;
+    display: flex;
+    justify-content: center;
+    gap: 0;
+    align-items: center;
+    box-sizing: border-box;
+}
+
+
+footer button {
+    flex: 1; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: none;
+    border: none;
+    padding: 5px 90px;
+    font-size: 25px;
+    cursor: pointer;
+}
+
+footer button:active {
+    background-color: rgb(106, 7, 7);
+    border-radius: 20px;
+}
+
+#perfil {
+    color: black;
+}
+    
+</style>
+</head>
+<body>
+
+<header>
+    <a href="gerencia.prototipo.html"><i class="fa-solid fa-arrow-left" style="color:white; margin-right: 0;"></i></a>
+    <img src="locate.png" alt="Logo">
+    <div class="filter-container">
+        <i id="filter-icon" class="fa-solid fa-bars"></i>
+        <div id="filter-menu" class="filter-menu">
+            <button id="ordem-alfabetica">Ordem Alfabética</button>
+            <button>Prioridades</button>
+            <button id="ordem-tempo">Temp. Chegada</button>
+            <button>Outros</button>
+        </div>
+    </div>
+</header>
+
+<main>
+    <h2 id="titulo">FILA: LOCAL</h2>
+    <div id="number">05 PESSOAS</div>
+
+    <div class="lista">
+
+        <a href="pedido.prototipo.html" id="pular">
+        <div class="card">
+            <div class="num">1°</div>
+
+            <div class="detalhes">
+            <div class="info">Kawan dos Santos</div>
+            <div class="extra">casquinha</div>
+            </div>
+            <div class="hora">11:50</div>
+        </div>
+        </a>
+
+
+        <div class="card">
+            <div class="num">2°</div>
+
+            <div class="detalhes">
+            <div class="info">Maria germina</div>
+            <div class="extra">cascão</div>
+            </div>
+            <div class="hora">11:56</div>
+        </div>
+
+        <div class="card">
+            <div class="num">3°</div>
+
+            <div class="detalhes">
+            <div class="info">Hellen cristina</div>
+            <div class="extra">picolé</div>
+            </div>
+            <div class="hora">12:04</div>
+        </div>
+
+        <div class="card">
+            <div class="num">4°</div>
+
+            <div class="detalhes">
+            <div class="info">Kaysla dos Santos</div>
+            <div class="extra">casquinha</div>
+            </div>
+            <div class="hora">12:05</div>
+        </div>
+
+        <div class="card">
+            <div class="num">5°</div>
+
+            <div class="detalhes">
+            <div class="info">jader abreu</div>
+            <div class="extra">casquinha</div>
+            </div>
+            <div class="hora">12:09</div>
+        </div>
+        
+</main>
+
+<footer id="footer">
+    <a href="perfilEmpresario.prototipo.html"><button id="perfil"><i id="perfil"><div class="fa-solid fa-user"></div></i></button></a>
+    <a href="gerencia.prototipo.html"><button><i id="home"><div class="fa-solid fa-house"></div></i></button></a>
+</footer>
+
+<script>
+const filterIcon = document.getElementById('filter-icon');
+const filterMenu = document.getElementById('filter-menu');
+
+filterIcon.addEventListener('click', () => {
+    filterMenu.style.display = filterMenu.style.display === 'block' ? 'none' : 'block';
+});
+
+document.addEventListener('click', (e) => {
+    if (!filterIcon.contains(e.target) && !filterMenu.contains(e.target)) {
+        filterMenu.style.display = 'none';
+    }
+});
+
+
+
+const lista = document.querySelector('.lista');
+const ordemBtn = document.getElementById('ordem-alfabetica');
+
+function getCardFromItem(item) {
+  return item.classList.contains('card') ? item : item.querySelector('.card');
+}
+
+function nomeDoItem(item) {
+  const card = getCardFromItem(item);
+  return (card?.querySelector('.info')?.textContent || '').trim().toLowerCase();
+}
+
+function renumerar() {
+  const nums = lista.querySelectorAll('.card .num');
+  nums.forEach((el, i) => (el.textContent = `${i + 1}°`));
+
+  const qtd = lista.querySelectorAll('.card').length;
+  const numberEl = document.getElementById('number');
+  if (numberEl) numberEl.textContent = String(qtd).padStart(2, '0') + ' PESSOAS';
+}
+
+ordemBtn.addEventListener('click', () => {
+  const itens = Array.from(lista.children);
+
+  itens.sort((a, b) =>
+    nomeDoItem(a).localeCompare(nomeDoItem(b), 'pt-BR', { sensitivity: 'base' })
+  );
+
+  itens.forEach(it => lista.appendChild(it));
+
+  renumerar();
+  const filterMenu = document.getElementById('filter-menu');
+  if (filterMenu) filterMenu.style.display = 'none';
+});
+
+
+
+
+
+
+const tempBtn = document.getElementById('ordem-tempo');
+
+function tempoDoItem(item) {
+  const card = getCardFromItem(item);
+  return (card?.querySelector('.hora')?.textContent || '').trim();
+}
+
+function parseHora(horaStr) {
+  const partes = horaStr.split(':');
+  if (partes.length === 2) {
+    const h = parseInt(partes[0], 10) || 0;
+    const m = parseInt(partes[1], 10) || 0;
+    return h * 60 + m; 
+  }
+  return 0;
+}
+
+tempBtn.addEventListener('click', () => {
+  const itens = Array.from(lista.children);
+
+  itens.sort((a, b) =>
+    parseHora(tempoDoItem(a)) - parseHora(tempoDoItem(b))
+  );
+
+  itens.forEach(it => lista.appendChild(it));
+
+  renumerar();
+  filterMenu.style.display = 'none';
+});
+
+
+
+
+
+
+let ultimoScroll = window.scrollY;
+const footer = document.getElementById('footer');
+
+window.addEventListener('scroll', () => {
+    const atualScroll = window.scrollY;
+
+    if (atualScroll > ultimoScroll) {
+
+        footer.style.transform = "translateY(100%)";
+    } else {
+
+        footer.style.transform = "translateY(0)";
+    }
+
+    ultimoScroll = atualScroll;
+});
+</script>
+
+</body>
+</html>
+
+
