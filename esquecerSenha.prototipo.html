@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Esqueci minha senha</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #e5e5e5;
+      color: #333;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      padding: 0;
+      margin: 0;
+    }
+
+    header {
+        background: rgb(140, 10, 10);
+        color: white;
+        padding: 20px;
+        width: 100%;
+        display: flex; 
+        align-items: center; 
+        font-size: 25px;
+        top: 0;
+        justify-content: center;  
+        align-items: center;
+    }
+
+    header img {
+        width: 60px;
+        border-radius: 50px;
+    }
+
+    .container {
+      background: white;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+      width: 90%;
+      max-width: 400px;
+      text-align: center;
+      margin: 150px auto 0 auto;
+    }
+
+    .container h2 {
+      margin-bottom: 10px;
+      color: rgb(106, 7, 7);
+    }
+
+    .container p {
+      font-size: 14px;
+      color: #555;
+      margin-bottom: 25px;
+    }
+
+    .input-group {
+      position: relative;
+      margin-bottom: 20px;
+    }
+
+    .input-group input {
+      width: 100%;
+      padding: 15px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      outline: none;
+      font-size: 14px;
+    }
+
+    .input-group input:focus {
+      border-color: rgb(106, 7, 7);
+      box-shadow: 0 0 5px rgba(106, 7, 7, 0.5);
+    }
+
+    button {
+      width: 100%;
+      padding: 15px;
+      background: rgb(106, 7, 7);
+      border: none;
+      border-radius: 8px;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    button:active {
+      background: rgb(205, 16, 16);
+    }
+
+    .voltar {
+      margin-top: 20px;
+      display: inline-block;
+      font-size: 14px;
+      color: rgb(106, 7, 7);
+      text-decoration: none;
+    }
+
+    .voltar i {
+      margin-right: 5px;
+    }
+
+    .voltar:active {
+        text-decoration: underline;
+        color: red;
+    }
+  </style>
+</head>
+<body>
+    <header>
+        <img src="locate.png" alt="">
+    </header>
+
+  <div class="container">
+    <h2>Esqueci minha senha</h2>
+    <p>Digite seu e-mail para receber um link de redefinição de senha.</p>
+
+    <form>
+      <div class="input-group">
+        <input type="email" placeholder="Digite seu e-mail" required>
+      </div>
+      <button type="submit" id="submit">Enviar código</button>
+    </form>
+
+    <a href="index.html" class="voltar">
+      <i class="fa-solid fa-arrow-left"></i> Voltar ao login
+    </a>
+  </div>
+
+  <script>
+//alerta
+document.getElementById('submit').addEventListener('click', () => {
+    event.preventDefault();
+alert('Botão de ENVIAR CÓDIGO ainda está em desenvolvimento!');
+});
+  </script>
+</body>
+</html>
