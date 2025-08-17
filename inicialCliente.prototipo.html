@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Busca com Lupa</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+  body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: #f0f0f0;
+    min-height: 100vh;
+  }
+
+  header {
+    background: rgb(140, 10, 10);
+    padding: 20px 15px;
+    width: 100%;
+    color: white;
+    justify-content: space-between;
+    display: flex;   
+    align-items: center; 
+    font-size: 25px;
+  }
+
+  header img {
+    width: 60px;
+    height: auto;
+    border-radius: 50px;
+    border: 2px solid rgba(0, 0, 0, 0.201);
+  }
+
+  .filter-container {
+        position: relative;
+    }
+
+    .filter-menu {
+        display: none;
+        position: absolute;
+        top: 35px;
+        right: 0;
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 10px 8px rgba(0,0,0,0.15);
+        overflow: hidden;
+        z-index: 10;
+        min-width: 150px;
+    }
+
+    .filter-menu button {
+        background: none;
+        border: none;
+        width: 100%;
+        padding: 10px;
+        text-align: left;
+        font-size: 14px;
+        cursor: pointer;
+    }
+
+    .filter-menu button:hover {
+        background: #800f15;
+        color: white;
+    }
+
+  .search-container {
+    display: flex;
+    border: 2px solid #ccc;
+    border-radius: 25px;
+    overflow: hidden;
+    background: #fff;
+    margin: 20px 0;
+    width: 90%;
+  }
+
+  .search-container input {
+    border: none;
+    padding: 10px 15px;
+    outline: none;
+    font-size: 16px;
+    width: 100%;
+  }
+
+  .search-container button {
+    background: rgb(140, 10, 10);
+    border: none;
+    color: white;
+    padding: 0 15px;
+    cursor: pointer;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .search-container button:active {
+    background: #019638;
+  }
+
+  .card-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+    max-width: 1200px;
+  }
+
+  .card {
+    margin: 10% 0;
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    width: 90%;
+    height: 260px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    border: 3px solid rgba(0, 0, 0, 0.159);
+    display: block;
+    text-decoration: none;
+  }
+
+  .card .visual {
+    text-align: center;
+  }
+
+  .card .visual img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 5px;
+    background: #ccc;
+    margin: 0;
+    display: block;
+  }
+
+  .card .visual b {
+    display: block;
+    margin-top: 5px;
+    text-transform: uppercase;
+    font-size: 20px;
+  }
+
+  .card .info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 10px;
+    font-size: 15px;
+    flex-wrap: wrap;
+  }
+
+  #star {
+    color: rgb(198, 172, 27);
+    font-size: 18px;
+  }
+
+  
+  #star, .pontuação {
+    display: inline-flex;
+    align-items: center;
+}
+
+.card .info {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 10px 15px;
+    font-size: 15px;
+    gap: 5px; 
+    z-index: 10;
+}
+
+.star-group {
+    display: flex;
+    align-items: center;
+    gap: 5px; 
+}
+
+
+.pontuação {
+    margin: 0;
+}
+
+.save-icon {
+    font-size: 20px;
+}
+
+a {
+    display: inline-block; 
+    text-decoration: none; 
+    padding: 0;
+}
+
+a.visual {
+    display: block;
+  width: 100%;
+  text-decoration: none;
+  color: inherit;
+}
+
+
+
+</style>
+</head>
+<body>
+
+<header>
+    <a href="#"><img src="locate.png" alt="L&G" id="img00"></a>
+    <div class="filter-container">
+        <i id="filter-icon" class="fa-solid fa-bars"></i>
+        <div id="filter-menu" class="filter-menu">
+            <button id="ordem-alfabetica">Ordem Alfabética</button>
+            <button id="distancia">Distância</button>
+            <button id="maior">Maior Fila</button>
+            <button id="menor">Menor Fila</button>
+            <button id="avaliações">Avaliações</button>
+            <button id="favorito">Favoritos</button>
+        </div>
+  </div>
+</header>
+
+<div class="search-container">
+  <input type="text" id="searchInput" placeholder="Localize e vá...">
+  <button id="searchBtn"><i class="fa-solid fa-magnifying-glass"></i></button>
+</div>
+
+<div class="card-container">
+    <div class="card">
+    <a href="perfilCliente.prototipo.html" class="visual">
+    <img src="galery.prototipo.jpeg" alt="" id="img1">
+    <b>sweet ice</b>
+    </a>
+
+    <div class="info">
+        <div class="star-group">
+            <i class="fa-solid fa-star" id="star"></i>
+            <div class="pontuação">4.2</div>
+        </div>
+        <div id="distancia">3km</div>
+        <div class="avaliacao">127 avaliações</div>
+        <i class="fa-regular fa-bookmark save-icon"></i>
+    </div>
+</div>
+
+<div class="card">
+    <div class="visual">
+        <img src="loja02.prototipo.jpeg" alt="">
+        <b>zara</b>
+    </div>
+    <div class="info">
+        <div class="star-group">
+            <i class="fa-solid fa-star" id="star"></i>
+            <div class="pontuação">4.7</div>
+        </div>
+        <div id="distancia">17.6km</div>
+        <div class="avaliacao">583 avaliações</div>
+        <i class="fa-regular fa-bookmark save-icon"></i>
+    </div>
+</div>
+
+<div class="card">
+    <div class="visual">
+        <img src="loja03.prototipo.jpeg" alt="">
+        <b>oboticário</b>
+    </div>
+    <div class="info">
+        <div class="star-group">
+            <i class="fa-solid fa-star" id="star"></i>
+            <div class="pontuação">3.8</div>
+        </div>
+        <div id="distancia">3.2km</div>
+        <div class="avaliacao">121 avaliações</div>
+        <i class="fa-regular fa-bookmark save-icon"></i>
+    </div>
+</div>
+
+<div class="card">
+    <div class="visual">
+        <img src="loja04.prototipo.jpeg" alt="">
+        <b>casa reserva</b>
+    </div>
+    <div class="info">
+        <div class="star-group">
+            <i class="fa-solid fa-star" id="star"></i>
+            <div class="pontuação">4.0</div>
+        </div>
+        <div id="distancia">53km</div>
+        <div class="avaliacao">862 avaliações</div>
+        <i class="fa-regular fa-bookmark save-icon"></i>
+    </div>
+</div>
+
+<div class="card">
+    <div class="visual">
+        <img src="loja05.prototipo.jpeg" alt="">
+        <b>lojas mel</b>
+    </div>
+    <div class="info">
+        <div class="star-group">
+            <i class="fa-solid fa-star" id="star"></i>
+            <div class="pontuação">2.7</div>
+        </div>
+        <div id="distancia">12km</div>
+        <div class="avaliacao">30 avaliações</div>
+        <i class="fa-regular fa-bookmark save-icon"></i>
+    </div>
+</div>
+
+<div class="card">
+    <div class="visual">
+        <img src="loja06.prototipo.jpeg" alt="">
+        <b>forever 21</b>
+    </div>
+    <div class="info">
+        <div class="star-group">
+            <i class="fa-solid fa-star" id="star"></i>
+            <div class="pontuação">4.9</div>
+        </div>
+        <div id="distancia">127km</div>
+        <div class="avaliacao">2711 avaliações</div>
+        <i class="fa-regular fa-bookmark save-icon"></i>
+    </div>
+</div>
+
+<div class="card">
+    <div class="visual">
+        <img src="loja07.prototipo.jpeg" alt="">
+        <b>divino fogão</b>
+    </div>
+    <div class="info">
+        <div class="star-group">
+            <i class="fa-solid fa-star" id="star"></i>
+            <div class="pontuação">4.0</div>
+        </div>
+        <div id="distancia">30.1km</div>
+        <div class="avaliacao">298 avaliações</div>
+        <i class="fa-regular fa-bookmark save-icon"></i>
+    </div>
+</div>
+
+<div class="card">
+    <div class="visual">
+        <img src="#" alt="">
+        <b>NOME DA EMPRESA</b>
+    </div>
+    <div class="info">
+        <div class="star-group">
+            <i class="fa-solid fa-star" id="star"></i>
+            <div class="pontuação">0.0</div>
+        </div>
+        <div id="distancia">0km</div>
+        <div class="avaliacao">0 avaliações</div>
+        <i class="fa-regular fa-bookmark save-icon"></i>
+    </div>
+</div>
+
+<div class="card">
+    <div class="visual">
+        <img src="#" alt="">
+        <b>NOME DA EMPRESA</b>
+    </div>
+    <div class="info">
+        <div class="star-group">
+            <i class="fa-solid fa-star" id="star"></i>
+            <div class="pontuação">0.0</div>
+        </div>
+        <div id="distancia">0km</div>
+        <div class="avaliacao">0 avaliações</div>
+        <i class="fa-regular fa-bookmark save-icon" ></i>
+    </div>
+</div>
+
+<div class="card">
+    <div class="visual">
+        <img src="#" alt="">
+        <b>NOME DA EMPRESA</b>
+    </div>
+    <div class="info">
+        <div class="star-group">
+            <i class="fa-solid fa-star" id="star"></i>
+            <div class="pontuação">0.0</div>
+        </div>
+        <div id="distancia">0km</div>
+        <div class="avaliacao">0 avaliações</div>
+        <i class="fa-regular fa-bookmark" id="salvar"></i>
+    </div>
+</div>
+
+</div>
+
+<script>
+
+//função de busca
+  const searchBtn = document.getElementById('searchBtn');
+  const searchInput = document.getElementById('searchInput');
+
+  searchBtn.addEventListener('click', () => {
+    const query = searchInput.value.trim();
+    if(query) {
+      alert('Você buscou por: ' + query);
+      
+    } else {
+      alert('Digite algo para buscar!');
+    }
+  });
+
+
+//salvar perfil da empresa
+const saveIcons = document.querySelectorAll('.save-icon');
+
+saveIcons.forEach(icon => {
+    icon.addEventListener('click', () => {
+        
+        icon.classList.toggle('fa-regular'); 
+        icon.classList.toggle('fa-solid');   
+    });
+});
+
+
+//menu sanduiche
+const filterIcon = document.getElementById('filter-icon');
+const filterMenu = document.getElementById('filter-menu');
+
+filterIcon.addEventListener('click', () => {
+    filterMenu.style.display = filterMenu.style.display === 'block' ? 'none' : 'block';
+});
+
+document.addEventListener('click', (e) => {
+    if (!filterIcon.contains(e.target) && !filterMenu.contains(e.target)) {
+        filterMenu.style.display = 'none';
+    }
+});
+
+
+
+//alertas
+document.getElementById('ordem-alfabetica').addEventListener('click', () => {
+  alert('Função de ORDEM ALFABÉTICA ainda está em desenvolvimento!');
+});
+
+document.getElementById('distancia').addEventListener('click', () => {
+  alert('Função de DISTÂNCIA ainda está em desenvolvimento!');
+});
+
+document.getElementById('maior').addEventListener('click', () => {
+  alert('Função de MAIOR FILA ainda está em desenvolvimento!');
+});
+
+document.getElementById('menor').addEventListener('click', () => {
+  alert('Função de MENOR FILA ainda está em desenvolvimento!');
+});
+
+document.getElementById('avaliações').addEventListener('click', () => {
+  alert('Função de AVALIAÇÕES ainda está em desenvolvimento!');
+});
+
+document.getElementById('favorito').addEventListener('click', () => {
+  alert('Função de FAVORITOS ainda está em desenvolvimento!');
+});
+
+document.getElementById('img00').addEventListener('click', () => {
+  alert('Função de entrar no perfil ainda está em desenvolvimento!');
+});
+</script>
+
+</body>
+</html>

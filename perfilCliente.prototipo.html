@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Perfil Sorveteria</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+    body {
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+        margin: 0;
+        background-color: #e5e5e5;
+    }
+
+    .cover {
+        width: 100%;
+        height: 200px;
+        position: relative;
+        border: 2px solid rgb(99, 99, 99);
+        background-color: white;
+    }
+
+    #profile-pic {
+        position: absolute;
+        bottom: -120px;
+        left: 15px;
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        border: 3px solid rgb(0, 0, 0);
+        background-color: rgb(255, 255, 255);
+        z-index: 11;
+    }
+
+    #galery {
+        height: 250px;
+        width: 100%;
+        border-bottom: 4px solid black;
+    }
+
+    #voltar {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        font-size: 45px;
+        color: rgb(255, 255, 255);
+        z-index: 10;
+    }
+
+    .profile-info {
+        padding: 50px 15px 10px;
+    }
+
+    #username {
+        display: block;
+        padding: 5px 10px;
+        width: 70%;
+        font-size: 25px;
+        font-weight: bold;
+        text-transform: uppercase;
+        margin-top: 10px;
+        text-align: right;
+        margin-left: auto;
+        margin-right: 0;
+    }
+
+    .star {
+        text-align: right;
+        margin-left: auto;
+        margin-right: 10px;
+        margin-top: 5px;
+        font-size: 30px;
+    }
+    .star i {
+        color: #c6d005;
+        font-size: 25px;
+    }
+
+    #avaliacao {
+        font-size: 25px;
+    }
+
+    .category {
+        margin-top: 20px;
+        display: flex;
+        gap: 10px;
+    }
+  
+    #categoria {
+        background-color: #e5e5e5;
+        color: gray;
+        width: 100px;
+        border: none; 
+        border-radius: 0;              
+        outline: none;
+        text-transform: uppercase;
+    }
+
+    .category i {
+        font-size: 20px;
+        color: #1a711e;
+        border-radius: 50%;
+        box-shadow: 0 0 15px 1px #2ec536;
+    }
+
+
+    textarea, input {
+        width: 100%;
+        padding: 6px;
+        margin-top: 5px;
+        font-size: 14px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+
+    .form {
+        padding: 10px 20px;
+        margin-bottom: 8%;
+    }
+
+    #descricao {
+        padding: 15px 15px;
+        transition: width 0.2s ease;
+        border-radius: 8px;
+        box-shadow: 0 5px 8px rgba(0,0,0,0.1);
+        color: rgb(0, 0, 0);
+        text-align: justify;
+        background: white;
+        margin-top: 20px;
+    }
+
+    #endereco {
+        padding: 15px 15px;
+        border-radius: 8px;
+        box-shadow: 0 5px 8px rgba(0,0,0,0.1);
+        color: rgb(0, 0, 0);
+        background: white;
+        margin-top: 20px;
+    }
+
+    .transportes {
+        display: flex;
+        width: 100%;
+        padding: 20px 5px;
+        gap: 30px;
+        
+    }
+
+    .transportes i {
+        display: flex;
+        text-align: center;
+        display: block;
+        font-size: 40px;
+        flex: 1;
+    }
+    
+    .transportes p {
+        font-size: 15px;
+    }
+
+    .servicos {
+        display: flex;
+    }
+
+    strong {
+        font-size: 25px;
+        margin: 8% 2%;
+        flex: 1;
+        text-transform: uppercase;
+    }
+
+    .servicos p {
+        flex: 1;
+        font-size: 25px;
+        margin: 8% 0;
+    }
+    
+    #card-container {
+    padding-bottom: 150px; 
+    }
+
+    .card {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background-color: white;
+        border-radius: 17px;
+        padding: 25px;
+        margin: 10% auto;
+        width: 80%;
+        box-shadow: 20px 20px 15px rgba(0,0,0,0.1);
+        transition: background 0.2s, color 0.2s;
+        border: none;
+        
+    }
+
+    .card:active {
+        background-color: #8e1111;
+        color: white;
+        padding: 25px;
+        
+    }
+    
+    .card-text {
+        flex-grow: 1;
+        text-align: left;
+        font-size: 20px;        
+    }
+
+    #item1 {
+        font-size: 40px;
+    }
+
+    #item2 {
+        font-size: 40px;
+    }
+
+    #item3 {
+        font-size: 40px;
+    }
+
+    #a {
+      text-decoration: none;
+      color: black;
+    }
+
+    .numeracao {
+        font-size: 20px;
+        margin-right: 10%;
+    }
+
+</style>
+</head>
+<body>
+
+    <a href="inicialCliente.prototipo.html"><i class="fa-solid fa-arrow-left" id="voltar"></i></a>
+
+<div class="cover">
+    <img src="galery.prototipo.jpeg" alt="" id="galery">
+    <img src="picture.prototipo.png" alt="" id="profile-pic">
+</div>
+
+<div class="profile-info">
+    <b id="username">@sweet_ice</b>
+
+    <div class="star">
+        <span style="margin-right: 8px; margin-left: 10px;" id="avaliacao">4.2</span>
+        <i class="fa-solid fa-star"></i>
+        <i class="fa-solid fa-star"></i>
+        <i class="fa-solid fa-star"></i>
+        <i class="fa-solid fa-star"></i>
+        <i class="fa-regular fa-star"></i>
+    </div>
+
+    <div class="category">
+        <i class="fa-solid fa-circle"></i><div id="categoria">soverteria</div>
+    </div>
+
+    <div class="form">
+      <div id="descricao">Delicie-se com os melhores sorvetes da cidade! Nossa sorveteria oferece uma grande variedade de sabores artesanais, feitos com ingredientes frescos e de alta qualidade. Desde os clássicos até criações exclusivas, temos opções para todos os gostos, incluindo sorvetes sem lactose e veganos. Venha se refrescar com a gente ou peça no conforto da sua casa!</div>
+      <div id="endereco">Rua Simplício Pereira,n° 126</div>
+    </div>
+
+    <hr>
+
+    <div class="transportes">
+        <div class="pedestre"><i class="fa-solid fa-person-walking"></i><p>40min</p></div>
+        <div class="bicicleta"><i class="fa-solid fa-bicycle"></i><p>10 min</p></div>
+        <div class="moto"><i class="fa-solid fa-motorcycle"></i><p>5 min</p></div>
+        <div class="carro"><i class="fa-solid fa-car"></i><p>10 min</p></div>
+        <div class="onibus"><i class="fa-solid fa-bus"></i><p>30 min</p></div>
+    </div>
+
+    <hr>
+
+    <div class="servicos"><strong>serviços:</strong><p>03</p></div>
+
+    <div class="card-container">
+        <div class="card">
+    <div class="card-text"><b>ENTREGAS</b></div>
+    <div class="numeracao">11</div>
+    </div>
+
+<div class="card">
+    <div class="card-text"><b>RETIRADAS</b></div>
+    <div class="numeracao">2</div>
+    </div>
+
+<a href="#" id="a">
+<div class="card" id="card">
+    <div class="card-text"><b>PRESENCIAIS</b></div>
+    <div class="numeracao">5</div>
+    </div>
+</a>
+</div>
+    </div>
+</body>
+</html>
+
