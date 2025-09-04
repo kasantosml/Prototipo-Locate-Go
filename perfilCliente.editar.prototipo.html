@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Perfil do Cliente</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Segoe UI", Tahoma, sans-serif;
+    }
+
+    body {
+      background: #f4f6f9;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    header {
+      background: linear-gradient(135deg, rgb(211, 14, 14), rgb(154, 5, 5));
+      color: white;
+      text-align: center;
+      padding: 1rem 0rem 2rem;
+      border-radius: 0 0 30px 30px;
+      position: relative;
+      margin: 0 20px;
+      width: 90%;
+    }
+
+    header .avatar {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      border: 4px solid white;
+      margin: 0 auto;
+      display: block;
+      object-fit: cover;
+    }
+
+    header h2 {
+      margin-top: 0.8rem;
+      font-size: 1.4rem;
+    }
+
+    main {
+      flex: 1;
+      padding: 1.5rem;
+    }
+
+    .card {
+      background: white;
+      padding: 1.2rem;
+      margin-bottom: 1rem;
+      border-radius: 16px;
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+    }
+
+    .card h3 {
+      font-size: 1rem;
+      margin-bottom: 0.8rem;
+      color: rgb(154, 5, 5);
+    }
+
+    .input-group {
+      margin-bottom: 1rem;
+    }
+
+    .input-group label {
+      display: block;
+      font-size: 0.9rem;
+      margin-bottom: 0.3rem;
+      color: #555;
+    }
+
+    .input-group input {
+      width: 100%;
+      padding: 0.9rem;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      font-size: 0.95rem;
+      outline: none;
+      transition: border 0.3s;
+    }
+
+    .input-group input:focus {
+      border-color: rgb(154, 5, 5);
+      box-shadow: 0 0 4px rgb(154, 5, 5);
+    }
+
+    .btn {
+      width: 100%;
+      padding: 0.9rem;
+      border: none;
+      border-radius: 12px;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 1rem;
+      transition: 0.3s;
+    }
+
+    #salvarBtn {
+      background: rgb(154, 5, 5);
+      color: white;
+    }
+
+    #salvarBtn:active {
+      background: rgb(10, 131, 114);
+    }
+
+    #limparBtn {
+      background: #e5e7eb;
+      color: #333;
+    }
+
+    #limparBtn:active {
+      background: #d1d5db;
+    }
+
+    .opcoes {
+      background: white;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      border-radius: 30px;
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+      width: 90%;
+      margin-left: 1rem;
+      padding: 0;
+    }
+
+    .btn02 {
+        display: flex;
+        border: none;
+        padding: 15px;
+        background: white;
+        width: 100%;
+        left: 0;
+        font-size: 15px;
+        transition: background 0.2s, color 0.2s;
+        margin: 0 0;
+    }
+
+    .btn02:active {
+        background: red;
+    }
+
+    #salvos {
+        border-radius: 16px 16px 0 0;
+    }
+
+    #senha {
+        border-radius: 0 0 16px 16px;
+    }
+
+    a {
+        text-decoration: none;
+    }
+
+    footer {
+      text-align: center;
+      padding: 1rem;
+      font-size: 0.8rem;
+      color: #888;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <img src="fotoPerfil.prototipo.jpeg" alt="Avatar do Cliente" class="avatar" id="avatar">
+    <h2 id="nomeExibicao">Kawan Santos</h2>
+  </header>
+
+  <main>
+    <div class="card">
+      <h3><i class="fa-solid fa-pen"></i> Alterar Dados</h3>
+
+      <div class="input-group">
+        <label for="nome">Nome</label>
+        <input type="text" id="nome" placeholder="Digite seu nome" onkeydown="pularComEnter(event)">
+      </div>
+
+      <div class="input-group">
+        <label for="cpf">CPF</label>
+        <input type="text" id="cpf" placeholder="Digite seu CPF" onkeydown="pularComEnter(event)">
+      </div>
+
+      <div class="input-group">
+        <label for="telefone">Telefone</label>
+        <input type="tel" id="telefone" placeholder="Digite seu telefone" onkeydown="pularComEnter(event)">
+      </div>
+
+      <div class="input-group">
+        <label for="email">E-mail</label>
+        <input type="email" id="email" placeholder="Digite seu e-mail" onkeydown="pularComEnter(event)">
+      </div>
+
+      <div class="input-group">
+        <label for="endereço">Endereço</label>
+        <input type="text" id="endereço" placeholder="Digite seu endereço" onkeydown="pularComEnter(event)">
+      </div>
+    
+      <button class="btn" id="salvarBtn">Salvar Alterações</button>
+      <button class="btn" id="limparBtn">Limpar Dados</button>
+    </div>
+  </main>
+
+    <div class="opcoes">
+        <button class="btn02" id="salvos">Empresas salvas</button>
+        <button class="btn02">Pedidos em andamento</button>
+        <button class="btn02">Agendamentos</button>
+        <a href="esquecerSenha.prototipo.html"><button class="btn02" id="senha">Alterar senha</button></a>
+    </div>
+
+  <footer>
+    © 2025 Locate & Go - Todos os direitos reservados
+  </footer>
+
+  <script>
+    // Carregar dados do localStorage ao abrir a página
+    window.onload = () => {
+      const nome = localStorage.getItem("clienteNome");
+      const CPF = localStorage.getItem("clienteCPF");
+      const email = localStorage.getItem("clienteEmail");
+      const telefone = localStorage.getItem("clienteTelefone");
+      const endereço = localStorage.getItem("clienteEndereço");
+
+      if (nome) {
+        document.getElementById("nome").value = nome;
+        document.getElementById("nomeExibicao").textContent = nome;
+      }
+      if (CPF) document.getElementById("cpf").value = CPF;
+      if (email) document.getElementById("email").value = email;
+      if (telefone) document.getElementById("telefone").value = telefone;
+      if (endereço) document.getElementById("endereço").value = endereço;
+    };
+
+    // Salvar dados no localStorage
+    document.getElementById("salvarBtn").addEventListener("click", () => {
+      const nome = document.getElementById("nome").value.trim();
+      const CPF = document.getElementById("cpf").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const telefone = document.getElementById("telefone").value.trim();
+      const endereço = document.getElementById("endereço").value.trim();
+
+      if (!nome || !CPF || !email || !telefone || !endereço) {
+        alert("Preencha todos os campos antes de salvar!");
+        return;
+      }
+
+      localStorage.setItem("clienteNome", nome);
+      localStorage.setItem("clienteCPF", CPF);
+      localStorage.setItem("clienteEmail", email);
+      localStorage.setItem("clienteTelefone", telefone);
+      localStorage.setItem("clienteEndereço", endereço);
+
+      document.getElementById("nomeExibicao").textContent = nome;
+      alert("Dados atualizados com sucesso!");
+    });
+
+    // Limpar dados do localStorage
+    document.getElementById("limparBtn").addEventListener("click", () => {
+      if (confirm("Tem certeza que deseja limpar os dados salvos?")) {
+        localStorage.removeItem("clienteNome");
+        localStorage.removeItem("clienteCPF");
+        localStorage.removeItem("clienteEmail");
+        localStorage.removeItem("clienteTelefone");
+        localStorage.removeItem("clienteEndereço");
+        document.getElementById("nome").value = "";
+        document.getElementById("cpf").value = "";
+        document.getElementById("email").value = "";
+        document.getElementById("telefone").value = "";
+        document.getElementById("endereço").value = "";
+        document.getElementById("nomeExibicao").textContent = "Usuário";
+      }
+    });
+
+//pular com enter
+    function pularComEnter(event) {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      
+    const inputs = Array.from(document.querySelectorAll("input"))
+        .filter(input =>
+          input.type !== "submit" &&
+          input.type !== "button" &&
+          input.type !== "reset" &&
+          !input.disabled &&
+          input.offsetParent !== null 
+        
+        );
+
+      const index = inputs.indexOf(event.target);
+      if (index >= 0 && index < inputs.length - 1) {
+        inputs[index + 1].focus();
+      } else {
+        const botao = document.querySelector("button");
+if (botao) {
+  botao.focus();
+}
+      }
+    }
+  }
+
+
+
+  //mascara de cpf
+const cpfInput = document.getElementById('cpf');
+
+cpfInput.addEventListener('input', function(e) {
+    let value = e.target.value;
+
+    value = value.replace(/\D/g, '');
+
+    value = value.slice(0, 11);
+
+    if (value.length > 3) value = value.replace(/^(\d{3})(\d)/, '$1.$2');
+    if (value.length > 6) value = value.replace(/^(\d{3})\.(\d{3})(\d)/, '$1.$2.$3');
+    if (value.length > 9) value = value.replace(/^(\d{3})\.(\d{3})\.(\d{3})(\d)/, '$1.$2.$3-$4');
+
+    e.target.value = value;
+});
+
+
+
+//mascara de telefone
+const telefoneInput = document.getElementById('telefone');
+
+telefoneInput.addEventListener('input', function(e) {
+    let value = e.target.value;
+
+    value = value.replace(/\D/g, '');
+
+    value = value.slice(0, 11);
+
+    if (value.length > 0) {
+        value = value.replace(/^(\d{0,2})/, '($1'); 
+        if (value.length >= 3) {
+            value = value.replace(/\((\d{2})(\d)/, '($1) $2'); 
+        }
+        if (value.length >= 8) {
+            value = value.replace(/(\d{5})(\d)/, '$1-$2'); 
+        }
+    }
+
+    e.target.value = value;
+});
+
+
+
+//mascara para email
+const emailInput = document.getElementById('email');
+
+emailInput.addEventListener('input', function(e) {
+    const value = e.target.value;
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; 
+    if(regex.test(value)) {
+        emailInput.style.borderColor = 'green'; 
+    } else {
+        emailInput.style.borderColor = 'red';
+    }
+});
+
+//alertas
+
+document.getElementById('avatar').addEventListener('click', () => {
+  alert('Função de ADICIONAR FOTO DE PERFIL ainda está em desenvolvimento!');
+});
+  </script>
+</body>
+</html>
