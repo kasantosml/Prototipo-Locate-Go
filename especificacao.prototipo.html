@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Especificações do Pedido — Locate & Go</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    :root {
+      --bg: #0d1117;
+      --card: #161b22;
+      --accent: #7c3aed;
+      --text: #e6eef6;
+      --muted: #9aa4b2;
+      --input-bg: #0b1220;
+      --radius: 12px;
+      font-family: "Inter", system-ui, sans-serif;
+    }
+
+    body {
+      margin: 0;
+      background-color: #e5e5e5;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    header {
+        background: linear-gradient(135deg, rgb(211, 14, 14), rgb(154, 5, 5));
+        color: white;
+        padding: 20px;
+        color: white;
+        padding: 20px;
+        width: 100%;
+        justify-content: space-between;
+        display: flex;   
+        align-items: center; 
+        font-size: 25px;
+    }
+
+    header img {
+        width: 60px;
+        border-radius: 50px;
+    }
+
+    header i {
+        font-size: 25px;
+        cursor: pointer;
+        color: white;
+    }
+
+    main {
+      flex: 1;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      max-width: 500px;
+      margin: 10% auto;
+    }
+
+    .card {
+      background: white;
+      border-radius: 15px;
+      padding: 25px;
+      max-width: 1000px;
+      width: 100%;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.4);
+    }
+
+    label {
+      display: block;
+      font-size: 1.5rem;
+      color: gray;
+      margin-bottom: 6px;
+    }
+
+    input, textarea, select {
+      width: 100%;
+      background: rgb(241, 241, 241);
+      color: gray;
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 10px;
+      padding: 10px;
+      font-size: 1rem;
+      outline: none;
+      max-width: 800px;
+      width: 95%;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    button {
+      width: 100%;
+      background: rgb(154, 5, 5);;
+      color: white;
+      border: none;
+      border-radius: var(--radius);
+      padding: 12px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s ease;
+      margin: 2% auto;
+    }
+
+    button:active {
+      background: rgb(255, 0, 0);
+    }
+
+    footer {
+      text-align: center;
+      padding: 10px;
+      color: var(--muted);
+      font-size: 0.8rem;
+    }
+
+    .success {
+      text-align: center;
+      background: rgba(16,185,129,0.1);
+      border: 1px solid #10b981;
+      border-radius: var(--radius);
+      color: #10b981;
+      padding: 10px;
+      margin-top: 10px;
+      display: none;
+    }
+
+    @media (max-width: 480px) {
+      h1 { font-size: 1.1rem; }
+      main { padding: 14px; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <a href="catalogoCliente.prototipo.html"><i class="fa-solid fa-arrow-left"></i></a>
+    <img src="locate.png" alt="logo" id="img">
+  </header>
+
+  <main>
+
+    <form id="formSugestao" class="card">
+      <div>
+        <label for="nome">Nome de quem vai receber:</label>
+        <input type="text" id="nome" placeholder="Ex: Maria Germina">
+      </div>
+
+      <div>
+        <label for="nome">Forma de Pagamento:</label>
+        <select id="pagamento">
+        <option value="din">Dinheiro</option>
+        <option value="pix">Pix</option>
+        <option value="car">Cartão</option>
+        </select>
+      </div>
+
+      <div>
+        <label for="adicionar">Adicionar ao pedido:</label>
+        <textarea id="adicionar" placeholder="Ex: adicionar queijo extra, molho à parte..."></textarea>
+      </div>
+
+      <div>
+        <label for="remover">Remover do pedido:</label>
+        <textarea id="remover" placeholder="Ex: tirar cebola, sem pimenta..."></textarea>
+      </div>
+
+      <div>
+        <label for="observacoes">Outras observações:</label>
+        <textarea id="observacoes" placeholder="Ex: entregar no portão, cliente idoso..."></textarea>
+      </div>
+
+      <button type="submit">Enviar especificações</button>
+      <div id="mensagem" class="success">✅ Especificações enviadas com sucesso!</div>
+    </form>
+  </main>
+
+  <footer>
+    Locate & Go • Página de Especificações do Cliente
+  </footer>
+
+  <script>
+    const form = document.getElementById('formSugestao');
+  const mensagem = document.getElementById('mensagem');
+
+  form.addEventListener('submit', function(e) {
+    e.preventDefault(); 
+  
+
+      // Captura os valores do formulário
+      const dados = {
+        nome: document.getElementById("nome").value.trim(),
+        adicionar: document.getElementById("adicionar").value.trim(),
+        remover: document.getElementById("remover").value.trim(),
+        observacoes: document.getElementById("observacoes").value.trim(),
+      };
+
+      // Exemplo de validação simples
+      if (!dados.nome) {
+        alert("Por favor, informe o nome do recebedor.");
+        return;
+      }
+
+      // Exibe mensagem de sucesso
+      mensagem.style.display = "block";
+
+      // Salva localmente (poderia ser enviado via API)
+      localStorage.setItem("especificacoes_cliente", JSON.stringify(dados));
+
+      // Limpa os campos
+      form.reset();
+
+      // Oculta mensagem após alguns segundos
+      setTimeout(() => {
+        mensagem.style.display = "none";
+      }, 3000);
+
+      setTimeout(() => {
+      window.location.href = 'posiçãoFila.prototipo.html';
+    }, 3000); 
+    });
+  </script>
+
+</body>
+</html>

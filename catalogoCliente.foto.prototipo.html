@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <title>Document</title>
+</head>
+<style>
+    /* Reset básico */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background: #e5e5e5;
+  color: #000000;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+    header {
+        background-color: rgb(140, 10, 10);
+        color: white;
+        padding: 20px;
+        font-size: 25px;
+        font-weight: bold;
+        justify-content: space-between;
+        display: flex;   
+        align-items: center; 
+        width: 100%;
+    }
+
+    #img {
+        width: 60px;
+        height: auto;
+        border-radius: 50px;
+    }
+
+    header i {
+        font-size: 25px;
+        cursor: pointer;
+        color: rgb(255, 255, 255);
+    }
+
+    .text {
+        display: flex;
+    }
+
+h1 {
+  margin-top: 30px;
+  font-size: 25px;
+  color: #444;
+  text-align: center;
+  flex: 1;
+  margin-top: 50px;
+}
+
+p {
+  text-align: center;
+  font-size: 25px;
+  color: #666;
+  margin-top: 50px;
+  margin-left: 5px;
+  text-transform: uppercase;
+  flex: 1;
+}
+
+body > img {
+  width: 80%;
+  max-width: 350px;
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  margin: 50px 0;
+  object-fit: cover;
+  background: #ddd;
+}
+
+#botão {
+        width: 80%;
+        margin: 10%;
+        margin-left: 13%;
+        padding: 3%;
+        background: rgb(106, 7, 7);
+        border-radius: 50px;
+        color: white;
+        font-size: 20px;
+        border-bottom: 5px solid rgb(0, 0, 0);
+        text-align: center;
+        text-decoration: none;
+    }
+
+#botão:active {
+        background: rgb(10, 131, 114);
+        transition: 0.3s;
+        color: rgb(0, 0, 0);
+    }
+
+</style>
+<body>
+    <header>
+        <a href="perfilCliente.prototipo.html"><i class="fa-solid fa-arrow-left"></i></a>
+        <img src="locate.png" alt="" id="img">
+    </header>
+
+    <div class="text"><h1>FILA:</h1><p>local</p></div>
+
+    <img src="catalogo.img.prototipo.jpg" alt="">
+
+    <a href="catalogoCliente.prototipo.html" id="botão">GO</a>
+
+</body>
+</html>
