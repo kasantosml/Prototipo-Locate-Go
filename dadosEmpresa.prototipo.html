@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Dados da Empresa</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #e5e5e5;
+      text-align: center;
+      padding-bottom: 40px;
+    }
+    header {
+      background: linear-gradient(135deg, rgb(211,14,14), rgb(154,5,5));
+      color: #fff;
+      padding: 18px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+    }
+    header img { width:56px; border-radius:50px; }
+    header a { color:#fff; text-decoration:none; font-size:20px; padding-left:10px; }
+    .wrap { max-width:760px; margin: 40px auto; width:90%; }
+    .title { text-transform:uppercase; margin:20px 0px 10px; font-size:46px; }
+    form.card {
+      background:#fff;
+      padding:22px;
+      border-radius:12px;
+      box-shadow:0 8px 18px rgba(0,0,0,0.12);
+    }
+    .field {
+      width:100%;
+      margin:12px 0;
+      position:relative;
+    }
+    input[type="text"], input[type="email"], input[type="password"] {
+      width:100%;
+      padding:16px;
+      border-radius:10px;
+      border:1px solid #ddd;
+      outline:none;
+      font-size:16px;
+    }
+    input:focus { box-shadow:0 0 6px rgba(154,5,5,0.15); border-color:rgb(154,5,5); }
+    .btn {
+      width:100%;
+      padding:14px;
+      border-radius:14px;
+      background:linear-gradient(135deg, rgb(211,14,14), rgb(154,5,5));
+      color:#fff;
+      font-size:18px;
+      border:none;
+      cursor:pointer;
+      margin-top:12px;
+    }
+    .btn:active { transform:scale(0.99); }
+    .error {
+      display:none;
+      color:#b00020;
+      margin-top:8px;
+      font-weight:600;
+    }
+    .helper { font-size:13px; color:#666; margin-top:6px; }
+    /* eye icons */
+    .eye {
+      position:absolute;
+      right:14px;
+      top:50%;
+      transform:translateY(-50%);
+      cursor:pointer;
+      color:gray;
+    }
+    @media (max-width:480px) {
+      .title { font-size:20px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <a href="dadosEmpresario.prototipo.html"><i class="fa-solid fa-arrow-left"></i></a>
+    <img src="locate.png" alt="logo">
+  </header>
+
+  <div class="wrap">
+    <div class="title">Dados da Empresa</div>
+
+    <!-- FORMULÁRIO PRINCIPAL -->
+    <form id="cadastroForm" class="card" autocomplete="off" novalidate>
+      <div class="field">
+        <input id="nome" type="text" placeholder="Nome da empresa" />
+      </div>
+
+      <div class="field">
+        <input id="cnpj" type="text" inputmode="numeric" placeholder="CNPJ" maxlength="18" />
+      </div>
+
+      <div class="field">
+        <input id="cep" type="text" inputmode="numeric" placeholder="CEP" maxlength="9" />
+      </div>
+
+      <div class="field">
+        <input id="email" type="email" placeholder="E-mail de contato" />
+      </div>
+
+      <div class="field">
+        <input id="nicho" type="text" placeholder="Tipo de empresa" />
+      </div>
+
+      <!-- opção: criar conta com senha (se quiser criar usuário Auth aqui) -->
+      <div class="field">
+        <input id="password" type="password" placeholder="Criar uma senha (mín. 6 caracteres)" minlength="6" />
+        <span class="eye" id="eye"><i class="fa-solid fa-eye-slash"></i></span>
+      </div>
+
+      <div class="field">
+        <input id="confirmaSenha" type="password" placeholder="Confirme a senha" minlength="6" />
+        <span class="eye" id="eyeConf"><i class="fa-solid fa-eye-slash"></i></span>
+      </div>
+
+      <div class="error" id="errorMessage">Preencha os campos corretamente.</div>
+
+      <div class="helper">Após cadastrar será criada uma conta (e-mail + senha) para administrar a empresa.</div>
+      <button class="btn" type="submit" id="goBtn">Cadastrar Empresa</button>
+    </form>
+  </div>
+
+  <!-- SCRIPTS -->
+  <script>
+    // Pular com Enter entre inputs
+    function pularComEnter(event) {
+      if (event.key === "Enter") {
+        event.preventDefault();
+        const inputs = Array.from(document.querySelectorAll("input")).filter(i => i.type !== "hidden" && !i.disabled && i.offsetParent !== null);
+        const index = inputs.indexOf(event.target);
+        if (index >= 0 && index < inputs.length - 1) inputs[index + 1].focus();
+        else document.getElementById('goBtn').focus();
+      }
+    }
+    document.querySelectorAll('input').forEach(i => i.addEventListener('keydown', pularComEnter));
+  </script>
+
+  <script>
+    // Máscara CNPJ, CEP e validação básica
+    //mascara de cnpj
+    const cnpjInput = document.getElementById('cnpj'); cnpjInput.addEventListener('input', function(e) { let value = e.target.value; value = value.replace(/\D/g, ''); value = value.slice(0, 14); if (value.length > 2) value = value.replace(/^(\d{2})(\d)/, '$1.$2'); if (value.length > 5) value = value.replace(/^(\d{2})\.(\d{3})(\d)/, '$1.$2.$3'); if (value.length > 8) value = value.replace(/^(\d{2})\.(\d{3})\.(\d{3})(\d)/, '$1.$2.$3/$4'); if (value.length > 12) value = value.replace(/^(\d{2})\.(\d{3})\.(\d{3})\/(\d{4})(\d)/, '$1.$2.$3/$4-$5'); e.target.value = value; });
+
+    const cepInput = document.getElementById('cep');
+    cepInput.addEventListener('input', function(e){
+      let v = e.target.value.replace(/\D/g,'').slice(0,8);
+      if (v.length > 5) v = v.replace(/^(\d{5})(\d{0,3}).*/, '$1-$2');
+      e.target.value = v;
+    });
+
+    // email visual
+    const emailInput = document.getElementById('email');
+    emailInput.addEventListener('input', function(e){
+      const val = e.target.value;
+      const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      e.target.style.borderColor = regex.test(val) ? 'green' : 'red';
+    });
+
+    // mostrar/ocultar senha
+    function toggleEye(buttonId, inputId) {
+      const btn = document.getElementById(buttonId);
+      const inp = document.getElementById(inputId);
+      btn.addEventListener('click', () => {
+        inp.type = inp.type === 'password' ? 'text' : 'password';
+        btn.querySelector('i').classList.toggle('fa-eye');
+        btn.querySelector('i').classList.toggle('fa-eye-slash');
+      });
+    }
+    toggleEye('eye','password');
+    toggleEye('eyeConf','confirmaSenha');
+  </script>
+
+  <script type="module">
+    // FIREBASE (config igual ao seu projeto)
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getFirestore, setDoc, doc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+    import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyAvXF36Fi9K25Ub1czRkZ_G9OQ_dwcm5rk",
+      authDomain: "locatego.firebaseapp.com",
+      projectId: "locatego",
+      storageBucket: "locatego.firebasestorage.app",
+      messagingSenderId: "904411855752",
+      appId: "1:904411855752:web:9e2ae088dca6b4bfd3d83d",
+      measurementId: "G-7K26FE6VD6"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    const auth = getAuth(app);
+
+    const form = document.getElementById('cadastroForm');
+    const errorMessage = document.getElementById('errorMessage');
+
+    form.addEventListener('submit', async (ev) => {
+      ev.preventDefault();
+      errorMessage.style.display = 'none';
+
+      const nome = document.getElementById('nome').value.trim();
+      const cnpjRaw = document.getElementById('cnpj').value.trim();
+      const cep = document.getElementById('cep').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const nicho = document.getElementById('nicho').value.trim();
+      const senha = document.getElementById('password').value;
+      const confirma = document.getElementById('confirmaSenha').value;
+
+      // Validações básicas
+      if (!nome || !cnpjRaw || !cep || !email || !nicho) {
+        errorMessage.textContent = 'Preencha todos os campos!';
+        errorMessage.style.display = 'block';
+        return;
+      }
+
+      // valida email simples
+      const emailMatch = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailMatch.test(email)) {
+        errorMessage.textContent = 'E-mail inválido!';
+        errorMessage.style.display = 'block';
+        return;
+      }
+
+      // cnpj só números
+      const cnpjDigits = cnpjRaw.replace(/\D/g,'');
+      if (cnpjDigits.length !== 14) {
+        errorMessage.textContent = 'CNPJ inválido (14 dígitos)!';
+        errorMessage.style.display = 'block';
+        return;
+      }
+
+      // cep 8 dígitos
+      const cepDigits = cep.replace(/\D/g,'');
+      if (cepDigits.length !== 8) {
+        errorMessage.textContent = 'CEP inválido (8 dígitos)!';
+        errorMessage.style.display = 'block';
+        return;
+      }
+
+      // senha obrigatória e verificação
+      if (!senha || senha.length < 6) {
+        errorMessage.textContent = 'Senha de no mínimo 6 caracteres!';
+        errorMessage.style.display = 'block';
+        return;
+      }
+      if (senha !== confirma) {
+        errorMessage.textContent = 'As senhas não coincidem!';
+        errorMessage.style.display = 'block';
+        return;
+      }
+
+      try {
+        // CRIA USUÁRIO NO AUTH (com email + senha)
+        const userCredential = await createUserWithEmailAndPassword(auth, email, senha);
+        const user = userCredential.user;
+
+        // SALVA DADOS DA EMPRESA (NÃO SALVA SENHA)
+        await setDoc(doc(db, 'empresas', user.uid), {
+          nome,
+          cnpj: cnpjRaw,
+          cep,
+          email,
+          nicho,
+          createdAt: new Date().toISOString()
+        });
+
+        alert('Empresa cadastrada com sucesso!');
+        // redireciona para a próxima página (ajuste se quiser outra)
+        window.location.href = 'registro.prototipo.html';
+      } catch (err) {
+        // mensagens do Firebase já explicam bastante, mas deixamos amigável
+        console.error(err);
+        errorMessage.textContent = err.message || 'Erro ao cadastrar';
+        errorMessage.style.display = 'block';
+      }
+    });
+  </script>
+</body>
+</html>

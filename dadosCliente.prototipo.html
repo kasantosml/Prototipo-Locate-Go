@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <title>Dados do Empresário</title>
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        font-family: Arial, sans-serif;
+        background-color: rgb(208, 208, 208);
+        text-align: center;
+    }
+
+    header {
+        background: linear-gradient(135deg, rgb(211, 14, 14), rgb(154, 5, 5));
+        color: white;
+        padding: 20px;
+        width: 100%;
+        justify-content: space-between;
+        display: flex;   
+        align-items: center; 
+        font-size: 25px;
+    }
+
+    header img {
+        width: 60px;
+        border-radius: 50px;
+    }
+
+    header i {
+        font-size: 25px;
+        cursor: pointer;
+        color: white;
+    }
+
+    .questionario {
+        margin-top: 20%;
+    }
+
+    .questionario input {
+        display: block;
+        margin: 45px 40px;
+        width: 80%;
+        padding: 20px;
+        background: #ffffff;
+        outline: none;
+        border: none;
+        border-radius: 12px;
+        flex-direction: column;
+        box-shadow: 0 10px 10px rgba(0, 0, 0, 0.300);
+    }
+
+    .questionario input:hover {
+        border-color: #2575fc;
+        box-shadow: 0 0 10px rgba(37, 117, 252, 0.4);
+    }
+
+    #email::placeholder, #password::placeholder, #confirmaSenha::placeholder, #telefone::placeholder, #cpf::placeholder, #nome::placeholder {
+        text-transform: uppercase;
+        color: gray;
+    }
+
+    #nome {
+        text-transform: uppercase;
+    }
+
+    button {
+        width: 90%;
+        margin-top: 10%;
+        margin-left: 10%;
+        padding: 4%;
+        border-radius: 20px;
+        color: white;
+        font-size: 20px;
+        cursor: pointer;
+        background: linear-gradient(135deg, rgb(211, 14, 14), rgb(154, 5, 5));
+    }
+
+    button:active {
+        background: rgb(10, 131, 114);
+        transition: 0.3s;
+        color: rgb(0, 0, 0);
+        transform: scale(1.09);
+    }
+
+    #eye, #eyeConfirma {
+    position: absolute;
+    right: 30px;  
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: gray;
+}
+
+    #errorMessage {
+        color: rgb(255, 0, 0);
+        font-size: 15px;
+        margin-left: 30px;
+        margin-top: 20px;
+        display: none;
+        width: 100%;
+        text-transform: uppercase;
+    }
+
+
+</style>
+<body>
+    <header>
+        <a href="inicial.prototipo.html"><i class="fa-solid fa-arrow-left"></i></a>
+        <img src="locate.png" alt="">
+    </header>
+    
+    <form id="cadastroForm">
+    <div class="questionario">
+        <input type="text" placeholder="nome completo:" onkeydown="pularComEnter(event)" id="nome">
+        <input type="text" placeholder="cpf:" onkeydown="pularComEnter(event)" id="cpf">
+        <input type="text" placeholder="telefone:" onkeydown="pularComEnter(event)" id="telefone">
+        <input type="email" placeholder="email:" id="email" onkeydown="pularComEnter(event)">
+
+        <div class="senha" style="position: relative;">
+        <input type="password" placeholder="crie uma senha" onkeydown="pularComEnter(event)" id="password" minlength="6">
+        <i class="fa-solid fa-eye-slash" id="eye"></i>
+        </div>
+        <div class="confirmaSenha" style="position: relative;">
+        <input type="password" placeholder="confirme a senha" onkeydown="pularComEnter(event)" id="confirmaSenha" minlength="6">
+        <i class="fa-solid fa-eye-slash" id="eyeConfirma"></i>
+        </div>
+    </div>
+
+    <button type="submit">GO</button>
+    <p class="error-message" id="errorMessage">Preencha seus dados corretamente!</p>
+
+    </form>
+
+
+
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getFirestore, setDoc, doc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyAvXF36Fi9K25Ub1czRkZ_G9OQ_dwcm5rk",
+    authDomain: "locatego.firebaseapp.com",
+    projectId: "locatego",
+    storageBucket: "locatego.firebasestorage.app",
+    messagingSenderId: "904411855752",
+    appId: "1:904411855752:web:9e2ae088dca6b4bfd3d83d",
+    measurementId: "G-7K26FE6VD6"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+  const auth = getAuth(app);
+
+  document.getElementById("cadastroForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const nome = document.getElementById("nome").value.trim();
+    const cpf = document.getElementById("cpf").value.trim();
+    const telefone = document.getElementById("telefone").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const senha = document.getElementById("password").value;
+    const confirma = document.getElementById("confirmaSenha").value;
+
+    if (!nome || !cpf || !telefone || !email || !senha || !confirma) {
+        alert("Preencha todos os campos!");
+        return;
+    }
+
+    if (senha.length < 6) {
+        alert("A senha deve ter pelo menos 6 caracteres!");
+        return;
+    }
+
+    if (senha !== confirma) {
+        alert("As senhas não coincidem!");
+        return;
+    }
+
+    try {
+      const userCredential = await createUserWithEmailAndPassword(auth, email, senha);
+      const user = userCredential.user;
+
+      await setDoc(doc(db, "clientes", user.uid), {
+        nome,
+        cpf,
+        telefone,
+        email
+      });
+
+      alert("Cadastro realizado com sucesso!");
+      window.location.href = "registroCliente.prototipo.html";
+
+    } catch (error) {
+      alert("Erro ao cadastrar: " + error.message);
+    }
+  });
+</script>
+<script>
+
+//pular com enter
+    function pularComEnter(event) {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      
+    const inputs = Array.from(document.querySelectorAll("input"))
+        .filter(input =>
+          input.type !== "submit" &&
+          input.type !== "button" &&
+          input.type !== "reset" &&
+          !input.disabled &&
+          input.offsetParent !== null 
+        
+        );
+
+      const index = inputs.indexOf(event.target);
+      if (index >= 0 && index < inputs.length - 1) {
+        inputs[index + 1].focus();
+      } else {
+        const botao = document.querySelector("button");
+if (botao) {
+  botao.focus();
+}
+      }
+    }
+  }
+
+
+//mascara de cpf
+const cpfInput = document.getElementById('cpf');
+
+cpfInput.addEventListener('input', function(e) {
+    let value = e.target.value;
+
+    value = value.replace(/\D/g, '');
+
+    value = value.slice(0, 11);
+
+    if (value.length > 3) value = value.replace(/^(\d{3})(\d)/, '$1.$2');
+    if (value.length > 6) value = value.replace(/^(\d{3})\.(\d{3})(\d)/, '$1.$2.$3');
+    if (value.length > 9) value = value.replace(/^(\d{3})\.(\d{3})\.(\d{3})(\d)/, '$1.$2.$3-$4');
+
+    e.target.value = value;
+});
+
+
+
+//mascara de telefone
+const telefoneInput = document.getElementById('telefone');
+
+telefoneInput.addEventListener('input', function(e) {
+    let value = e.target.value;
+
+    value = value.replace(/\D/g, '');
+
+    value = value.slice(0, 11);
+
+    if (value.length > 0) {
+        value = value.replace(/^(\d{0,2})/, '($1'); 
+        if (value.length >= 3) {
+            value = value.replace(/\((\d{2})(\d)/, '($1) $2'); 
+        }
+        if (value.length >= 8) {
+            value = value.replace(/(\d{5})(\d)/, '$1-$2'); 
+        }
+    }
+
+    e.target.value = value;
+});
+
+
+
+//mascara para email
+const emailInput = document.getElementById('email');
+
+emailInput.addEventListener('input', function(e) {
+    const value = e.target.value;
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; 
+    if(regex.test(value)) {
+        emailInput.style.borderColor = 'green'; 
+    } else {
+        emailInput.style.borderColor = 'red';
+    }
+});
+
+
+
+
+//mostrar senha
+const togglePassword = document.querySelector("#eye");
+const password = document.querySelector("#password");
+
+togglePassword.addEventListener("click", function(){
+    const type = password.type === "password" ? "text" : "password";
+    password.type = type;
+
+    this.classList.toggle("fa-eye");
+    this.classList.toggle("fa-eye-slash");
+});
+
+
+const togglePassword2 = document.querySelector("#eyeConfirma");
+const confirmaSenha = document.querySelector("#confirmaSenha");
+
+togglePassword2.addEventListener("click", function(){
+    const type = confirmaSenha.type === "password" ? "text" : "password";
+    confirmaSenha.type = type;
+
+    this.classList.toggle("fa-eye");
+    this.classList.toggle("fa-eye-slash");
+});
+
+</script>
+</body>
+</html>
