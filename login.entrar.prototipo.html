@@ -226,13 +226,13 @@ getRedirectResult(auth)
       if (methods.length === 0) {
         // Conta não existe ainda → crie no banco / pergunte tipo
         console.log("Conta Google nova! Redirecionando para cadastro de tipo...");
-        window.location.href = "escolherTipo.html";
+        window.location.href = "resgistro.prototipo.html.html";
         return;
       }
 
       // Conta já existe → redirecionar
       console.log("Conta já existente. Redirecionando...");
-      window.location.href = "painelCliente.html";
+      window.location.href = "resgistroCliente.prototipo.html.html";
     }
   })
   .catch((error) => {
@@ -281,10 +281,10 @@ document.getElementById("submit").addEventListener("click", async (e) => {
         await signInWithEmailAndPassword(auth, email, senha);
 
         if (tipo === "empresario") {
-            window.location.href = "painelEmpresario.html";
+            window.location.href = "resgistro.prototipo.html.html";
         } 
         else if (tipo === "cliente") {
-            window.location.href = "painelCliente.html";
+            window.location.href = "resgistroCliente.prototipo.html.html";
         } 
         else {
             alert("Digite 'Cliente' ou 'Empresário'.");
@@ -319,4 +319,5 @@ document.getElementById("googleLogin").addEventListener("click", async () => {
 
 </body>
 </html>
+
 
