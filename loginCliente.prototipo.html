@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Esqueci minha senha</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #e5e5e5;
+      color: #333;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      padding: 0;
+      margin: 0;
+    }
+
+    header {
+        background: rgb(140, 10, 10);
+        color: white;
+        padding: 20px;
+        width: 100%;
+        display: flex; 
+        align-items: center; 
+        font-size: 25px;
+        top: 0;
+        justify-content: center;  
+        align-items: center;
+    }
+
+    header img {
+        width: 60px;
+        border-radius: 50px;
+    }
+
+    .container {
+      background: white;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+      width: 90%;
+      max-width: 400px;
+      text-align: center;
+      margin: 150px auto 0 auto;
+    }
+
+    .container h2 {
+      margin-bottom: 10px;
+      color: rgb(106, 7, 7);
+    }
+
+    .container p {
+      font-size: 14px;
+      color: #555;
+      margin-bottom: 25px;
+    }
+
+    .input-group {
+      position: relative;
+      margin-bottom: 20px;
+    }
+
+    .input-group input {
+      width: 100%;
+      padding: 15px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      outline: none;
+      font-size: 14px;
+    }
+
+    .input-group input:focus {
+      border-color: rgb(106, 7, 7);
+      box-shadow: 0 0 5px rgba(106, 7, 7, 0.5);
+    }
+
+    button {
+      width: 100%;
+      padding: 15px;
+      background: rgb(106, 7, 7);
+      border: none;
+      border-radius: 8px;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    button:active {
+      background: rgb(205, 16, 16);
+    }
+
+    .voltar {
+      margin-top: 20px;
+      display: inline-block;
+      font-size: 14px;
+      color: rgb(106, 7, 7);
+      text-decoration: none;
+    }
+
+    .voltar i {
+      margin-right: 5px;
+    }
+
+    .voltar:active {
+        text-decoration: underline;
+        color: red;
+    }
+
+    .google-btn {
+    width: 100%;
+    padding: 15px;
+    margin: 20px auto;
+    background: white;
+    border: 1px solid #d3d3d3;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    font-size: 18px;
+    cursor: pointer;
+    box-shadow: 0 3px 5px rgba(0,0,0,0.15);
+    color: black;
+}
+
+.google-btn img {
+    width: 28px;
+    height: 28px;
+}
+
+.google-btn:active {
+    transform: scale(0.97);
+}
+
+.esquecer-senha {
+    color: red;
+    text-decoration: none;
+
+}
+
+.esquecer-senha:active, .esquecer-senha:hover{
+    text-decoration: underline;
+}
+
+  </style>
+</head>
+<body>
+    <header>
+        <img src="locate.png" alt="">
+    </header>
+
+  <div class="container">
+    <h2>LOGIN</h2>
+
+    <form>
+      <div class="input-group">
+        <input type="email" placeholder="Digite seu e-mail:" required>
+      </div>
+      <div class="input-group">
+        <input type="password" placeholder="Digite sua senha:" required>
+      </div>
+      <div class="input-group">
+        <input type="text" placeholder="Cliente ou Empresário" required>
+      </div>
+      <button type="submit" id="submit">Entrar</button>
+    </form>
+
+    <button id="googleLogin" class="google-btn">
+    <img src="https://img.icons8.com/color/48/google-logo.png" alt="Google">
+    Continuar com Google
+    </button>
+    <a href="esquecerSenha.prototipo.html" class="esquecer-senha">Esqueci minha senha</a><br>
+    <a href="index.html" class="voltar">
+      <i class="fa-solid fa-arrow-left"></i> Voltar ao login
+    </a>
+  </div>
+
+
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { 
+    getAuth,
+    signInWithEmailAndPassword,
+    GoogleAuthProvider,
+    signInWithRedirect,
+    getRedirectResult
+} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+
+import { 
+    getFirestore,
+    collection,
+    query,
+    where,
+    getDocs
+} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+// Config Firebase
+const firebaseConfig = {
+    apiKey: "AIzaSyAvXF36Fi9K25Ub1czRkZ_G9OQ_dwcm5rk",
+    authDomain: "locatego.firebaseapp.com",
+    projectId: "locatego",
+    storageBucket: "locatego.firebasestorage.app",
+    messagingSenderId: "904411855752",
+    appId: "1:904411855752:web:9e2ae088dca6b4bfd3d83d",
+    measurementId: "G-7K26FE6VD6"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+// Login com Email e Senha
+document.getElementById("submit").addEventListener("click", async (e) => {
+    e.preventDefault();
+
+    const email = document.querySelector('input[type="email"]').value;
+    const senha = document.querySelector('input[type="password"]').value;
+    const tipo = document.querySelector('input[type="text"]').value.trim().toLowerCase();
+
+    if (!email || !senha || !tipo) {
+        alert("Preencha todos os campos.");
+        return;
+    }
+
+    try {
+        // Autenticação com Firebase Auth
+        const userCredential = await signInWithEmailAndPassword(auth, email, senha);
+        const user = userCredential.user;
+
+        // Busca informações adicionais no Firestore (por exemplo, tipo de usuário)
+        const ref = collection(db, "clientes");
+        const q = query(ref, where("uid", "==", user.uid));
+        const result = await getDocs(q);
+
+        if (!result.empty) {
+            const userData = result.docs[0].data();
+            if (userData.tipo && userData.tipo.toLowerCase() === "empresario") {
+                window.location.href = "registro.prototipo.html";
+            } else {
+                window.location.href = "registroCliente.prototipo.html";
+            }
+        } else {
+            // Caso não tenha tipo definido, usa o input digitado
+            if (tipo === "empresario") {
+                window.location.href = "registro.prototipo.html";
+            } else {
+                window.location.href = "registroCliente.prototipo.html";
+            }
+        }
+
+    } catch (error) {
+        alert("Erro: " + error.message);
+    }
+});
+
+// Login com Google
+document.getElementById("googleLogin").addEventListener("click", () => {
+    const provider = new GoogleAuthProvider();
+    signInWithRedirect(auth, provider);
+});
+
+// Retorno do Google após login
+getRedirectResult(auth)
+  .then((result) => {
+      if (!result) return;
+      const user = result.user;
+      console.log("Usuário Google:", user);
+
+      // Aqui você pode salvar o usuário no Firestore se quiser
+      window.location.href = "registroCliente.prototipo.html";
+  })
+  .catch((error) => {
+      console.error("Erro Google:", error);
+  });
+
+  // Retorno do Google após login
+getRedirectResult(auth)
+  .then((result) => {
+      if (!result) return;
+      const user = result.user;
+      console.log("Usuário Google:", user);
+
+      // Aqui você pode salvar o usuário no Firestore se quiser
+      window.location.href = "registroCliente.prototipo.html";
+  })
+  .catch((error) => {
+      console.error("Erro Google:", error);
+
+      // Mostrar alerta amigável ao usuário
+      alert("Falha no login com Google: " + error.message);
+  });
+
+</script>
+
+
+</body>
+</html>
