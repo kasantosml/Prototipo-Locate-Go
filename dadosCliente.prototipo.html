@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Dados do CLIENTE</title>
+
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    *{margin:0; padding:0; box-sizing:border-box;}
+
+    body{
+      font-family:Arial, sans-serif;
+      background:#e5e5e5;
+      text-align:center;
+      padding-bottom:40px;
+    }
+
+    header{
+      background:linear-gradient(135deg, rgb(211,14,14), rgb(154,5,5));
+      padding:18px;
+      color:#fff;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+    }
+
+    header img{
+      width:56px;
+      border-radius:50%;
+    }
+
+    header a{
+      color:#fff;
+      font-size:22px;
+      padding-left:10px;
+      text-decoration:none;
+    }
+
+    .wrap{
+      max-width:760px;
+      margin:40px auto;
+      width:90%;
+    }
+
+    .title{
+      font-size:30px;
+      text-transform:uppercase;
+      margin:40px 0 40px;
+    }
+
+    .card{
+      background:#fff;
+      padding:22px;
+      border-radius:12px;
+      box-shadow:0 8px 18px rgba(0,0,0,0.12);
+      width:100%;
+    }
+
+    .field{
+      position:relative;
+      margin:14px 0;
+    }
+
+    input{
+      width:100%;
+      padding:16px;
+      border-radius:10px;
+      border:1px solid #ddd;
+      outline:none;
+      font-size:16px;
+      background:#fff;
+    }
+
+    input:focus{
+      border-color:rgb(154,5,5);
+      box-shadow:0 0 6px rgba(154,5,5,0.18);
+    }
+
+    .btn{
+      width:100%;
+      margin-top:14px;
+      padding:15px;
+      font-size:18px;
+      background:linear-gradient(135deg, rgb(211,14,14), rgb(154,5,5));
+      color:#fff;
+      border:none;
+      border-radius:14px;
+      cursor:pointer;
+    }
+
+    .btn:active{
+      transform:scale(0.98);
+    }
+
+    .error{
+      color:#b00020;
+      font-weight:bold;
+      margin-top:8px;
+      display:none;
+    }
+
+    .helper { 
+      font-size:13px; color:#666; 
+      margin-top:6px; 
+    }
+
+    .eye{
+      position:absolute;
+      right:14px;
+      top:50%;
+      transform:translateY(-50%);
+      cursor:pointer;
+      color:gray;
+      font-size:18px;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <a href="index.html">
+    <i class="fa-solid fa-arrow-left"></i>
+  </a>
+  <img src="locate.png" alt="">
+</header>
+
+<div class="wrap">
+
+  <div class="title">Dados do Cliente</div>
+
+  <form id="cadastroForm" class="card">
+
+    <div class="field">
+      <input type="text" id="nome" placeholder="Nome completo:">
+    </div>
+
+    <div class="field">
+      <input type="text" id="cpf" placeholder="CPF:">
+    </div>
+
+    <div class="field">
+      <input type="text" id="telefone" placeholder="Telefone:">
+    </div>
+
+    <div class="field">
+      <input type="email" id="email" placeholder="E-mail:">
+    </div>
+
+    <div class="field">
+      <input type="text" id="endereco" placeholder="Endereço:">
+    </div>
+
+    <div class="field">
+      <input type="password" id="password" placeholder="Criar senha (mín. 6 caracteres)">
+      <span class="eye" id="eye"><i class="fa-solid fa-eye-slash"></i></span>
+    </div>
+
+    <div class="field">
+      <input type="password" id="confirmaSenha" placeholder="Confirmar senha">
+      <span class="eye" id="eyeConfirma"><i class="fa-solid fa-eye-slash"></i></span>
+    </div>
+
+    <p class="error" id="errorMessage">Preencha seus dados corretamente!</p>
+
+    <div class="helper">Após cadastrar será criada uma conta do tipo CLIENTE para administrar e realizar seus pedidos.</div>
+    <button type="submit" class="btn">Cadastrar Cliente</button>
+  </form>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getFirestore, setDoc, doc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAvXF36Fi9K25Ub1czRkZ_G9OQ_dwcm5rk",
+  authDomain: "locatego.firebaseapp.com",
+  projectId: "locatego",
+  storageBucket: "locatego.appspot.com",
+  messagingSenderId: "904411855752",
+  appId: "1:904411855752:web:9e2ae088dca6b4bfd3d83d",
+  measurementId: "G-7K26FE6VD6"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+const auth = getAuth(app);
+
+document.getElementById("cadastroForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  const nome = document.getElementById("nome").value.trim();
+  const cpf = document.getElementById("cpf").value.trim();
+  const telefone = document.getElementById("telefone").value.trim();
+  const email = document.getElementById("email").value.trim();
+  const endereco = document.getElementById("endereco").value.trim();
+  const senha = document.getElementById("password").value;
+  const confirma = document.getElementById("confirmaSenha").value;
+
+  if (!nome || !cpf || !telefone || !email || !endereco || !senha || !confirma) {
+    alert("Preencha todos os campos!");
+    return;
+  }
+  if (senha.length < 6) {
+    alert("A senha deve ter pelo menos 6 caracteres!");
+    return;
+  }
+  if (senha !== confirma) {
+    alert("As senhas não coincidem!");
+    return;
+  }
+
+  try {
+    // Cadastra no Firebase Authentication
+    const userCredential = await createUserWithEmailAndPassword(auth, email, senha);
+    const user = userCredential.user;
+
+    // Salva os dados no Firestore
+    await setDoc(doc(db, "clientes", user.uid), {
+      nome,
+      cpf,
+      telefone,
+      email,
+      endereco,
+      senha
+    });
+
+    // Envia também para o servidor Node
+    await fetch("http://127.0.0.1:3000/cadastroCliente", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        nome,
+        cpf,
+        telefone,
+        email,
+        endereco,
+        senha
+      })
+    });
+
+    alert("Cadastro realizado com sucesso!");
+    window.location.href = "registroCliente.prototipo.html";
+
+  } catch (error) {
+    alert("Erro ao cadastrar: " + error.message);
+  }
+});
+</script>
+<script>
+// pular com Enter
+document.querySelectorAll("input").forEach(inp => {
+  inp.addEventListener("keydown", pularComEnter);
+});
+
+function pularComEnter(event) {
+  if (event.key === "Enter") {
+    event.preventDefault();
+    const inputs = [...document.querySelectorAll("input")].filter(i => i.type !== "button");
+    const index = inputs.indexOf(event.target);
+    if (index < inputs.length - 1) inputs[index + 1].focus();
+  }
+}
+
+// máscara CPF
+const cpfInput = document.getElementById("cpf");
+cpfInput.addEventListener("input", e => {
+  let v = e.target.value.replace(/\D/g, "").slice(0, 11);
+  if (v.length > 3) v = v.replace(/^(\d{3})(\d)/, "$1.$2");
+  if (v.length > 7) v = v.replace(/^(\d{3})\.(\d{3})(\d)/, "$1.$2.$3");
+  if (v.length > 9) v = v.replace(/^(\d{3})\.(\d{3})\.(\d{3})(\d)/, "$1.$2.$3-$4");
+  e.target.value = v;
+});
+
+// máscara telefone
+const telefoneInput = document.getElementById("telefone");
+telefoneInput.addEventListener("input", e => {
+  let v = e.target.value.replace(/\D/g, "").slice(0, 11);
+  if (v.length >= 1) v = v.replace(/^(\d{0,2})/, "($1");
+  if (v.length >= 3) v = v.replace(/\((\d{2})(\d)/, "($1) $2");
+  if (v.length >= 8) v = v.replace(/(\d{5})(\d)/, "$1-$2");
+  e.target.value = v;
+});
+
+// email border
+const emailInput = document.getElementById("email");
+emailInput.addEventListener("input", e => {
+  const ok = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e.target.value);
+  emailInput.style.borderColor = ok ? "green" : "red";
+});
+
+// mostrar senha
+function toggleEye(btnId, inputId) {
+  const btn = document.getElementById(btnId);
+  const input = document.getElementById(inputId);
+  btn.addEventListener("click", () => {
+    input.type = input.type === "password" ? "text" : "password";
+    btn.querySelector("i").classList.toggle("fa-eye");
+    btn.querySelector("i").classList.toggle("fa-eye-slash");
+  });
+}
+
+toggleEye("eye", "password");
+toggleEye("eyeConfirma", "confirmaSenha");
+</script>
+
+
+</body>
+</html>
