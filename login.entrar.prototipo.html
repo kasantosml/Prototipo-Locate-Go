@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #e5e5e5;
+      color: #333;
+      height: 100vh;
+    }
+
+    header {
+      background: rgb(140, 10, 10);
+      color: white;
+      padding: 20px;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+    }
+
+    header img {
+      width: 60px;
+      border-radius: 50px;
+    }
+
+    .container {
+      background: white;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+      width: 90%;
+      max-width: 400px;
+      text-align: center;
+      margin: 150px auto 0 auto;
+    }
+
+    .container h2 {
+      margin-bottom: 10px;
+      color: rgb(106, 7, 7);
+    }
+
+    .input-group {
+      position: relative;
+      margin-bottom: 20px;
+    }
+
+    .input-group input,
+    .input-group select {
+      width: 100%;
+      padding: 15px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      outline: none;
+      font-size: 14px;
+      background: white;
+    }
+
+    .input-group input:focus,
+    .input-group select:focus {
+      border-color: rgb(106, 7, 7);
+      box-shadow: 0 0 5px rgba(106, 7, 7, 0.5);
+    }
+
+    /* seta do select */
+    .input-group::after {
+      position: absolute;
+      right: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 12px;
+      color: #777;
+      pointer-events: none;
+    }
+
+    button {
+      width: 100%;
+      padding: 15px;
+      background: rgb(106, 7, 7);
+      border: none;
+      border-radius: 8px;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:active {
+      background: rgb(205, 16, 16);
+    }
+
+    .google-btn {
+      background: white;
+      border: 1px solid #d3d3d3;
+      margin: 20px auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      font-size: 16px;
+      color: black;
+      box-shadow: 0 3px 5px rgba(0,0,0,0.15);
+    }
+
+    .google-btn img {
+      width: 26px;
+    }
+
+    .esquecer-senha {
+      color: red;
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    .esquecer-senha:hover {
+      text-decoration: underline;
+    }
+
+    .voltar {
+      margin-top: 20px;
+      display: inline-block;
+      font-size: 14px;
+      color: rgb(106, 7, 7);
+      text-decoration: none;
+    }
+
+    .voltar i {
+      margin-right: 5px;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <img src="locate.png" alt="Logo">
+</header>
+
+<div class="container">
+  <h2>LOGIN</h2>
+
+  <form>
+    <div class="input-group">
+      <input type="email" id="email" placeholder="Digite seu e-mail" required>
+    </div>
+
+    <div class="input-group">
+      <input type="password" id="senha" placeholder="Digite sua senha" required>
+    </div>
+
+    <div class="input-group">
+      <select id="tipo" required>
+        <option value="" disabled selected>EMPRESÁRIO OU CLIENTE</option>
+        <option value="empresario">EMPRESÁRIO</option>
+        <option value="cliente">CLIENTE</option>
+      </select>
+    </div>
+
+    <button id="submit">Entrar</button>
+  </form>
+
+  <button id="googleLogin" class="google-btn">
+    <img src="https://img.icons8.com/color/48/google-logo.png">
+    Continuar com Google
+  </button>
+
+  <a href="esquecerSenha.prototipo.html" class="esquecer-senha">Esqueci minha senha</a><br>
+
+  <a href="index.html" class="voltar">
+    <i class="fa-solid fa-arrow-left"></i> Voltar
+  </a>
+</div>
+
+<!-- ======================= FIREBASE ======================= -->
+<script type="module">
+import {
+  getAuth,
+  signInWithEmailAndPassword,
+  GoogleAuthProvider,
+  signInWithRedirect,
+  getRedirectResult
+} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+
+import {
+  getFirestore,
+  doc,
+  getDoc
+} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAvXF36Fi9K25Ub1czRkZ_G9OQ_dwcm5rk",
+  authDomain: "locatego.firebaseapp.com",
+  projectId: "locatego",
+  storageBucket: "locatego.firebasestorage.app",
+  messagingSenderId: "904411855752",
+  appId: "1:904411855752:web:9e2ae088dca6b4bfd3d83d"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+
+// ===== RETORNO GOOGLE =====
+getRedirectResult(auth).then(async (result) => {
+  if (!result?.user) return;
+
+  const uid = result.user.uid;
+
+  const userRef = doc(db, "users", uid);
+  const userSnap = await getDoc(userRef);
+
+  if (!userSnap.exists()) {
+    window.location.href = "escolherTipo.prototipo.html";
+    return;
+  }
+
+  const { tipo } = userSnap.data();
+
+  if (tipo === "empresario") {
+    window.location.href = "registro.prototipo.html";
+  } else {
+    window.location.href = "registroCliente.prototipo.html";
+  }
+});
+
+// ===== LOGIN EMAIL =====
+document.getElementById("submit").addEventListener("click", async (e) => {
+  e.preventDefault();
+
+  const email = document.getElementById("email").value;
+  const senha = document.getElementById("senha").value;
+  const tipo = document.getElementById("tipo").value;
+
+  if (!email || !senha || !tipo) {
+    alert("Preencha todos os campos.");
+    return;
+  }
+
+  try {
+    await signInWithEmailAndPassword(auth, email, senha);
+
+    if (tipo === "empresario") {
+      window.location.href = "registro.prototipo.html";
+    } else {
+      window.location.href = "registroCliente.prototipo.html";
+    }
+
+  } catch (error) {
+    alert("Erro ao fazer login: " + error.message);
+  }
+});
+
+// ===== LOGIN GOOGLE =====
+const provider = new GoogleAuthProvider();
+document.getElementById("googleLogin").addEventListener("click", () => {
+  signInWithRedirect(auth, provider);
+});
+</script>
+
+</body>
+</html>
+
+
