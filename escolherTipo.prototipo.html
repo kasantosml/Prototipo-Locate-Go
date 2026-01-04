@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<body>
+  <h2>Você é:</h2>
+  <button id="cliente">Cliente</button>
+  <button id="empresario">Empresário</button>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getAuth } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+    import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+    const firebaseConfig = { /* MESMA CONFIG */ };
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    const user = auth.currentUser;
+
+    document.getElementById("cliente").onclick = async () => {
+      await setDoc(doc(db, "users", user.uid), {
+        email: user.email,
+        tipo: "cliente"
+      });
+      window.location.href = "registroCliente.prototipo.html";
+    };
+
+    document.getElementById("empresario").onclick = async () => {
+      await setDoc(doc(db, "users", user.uid), {
+        email: user.email,
+        tipo: "empresario"
+      });
+      window.location.href = "registro.prototipo.html";
+    };
+  </script>
+</body>
+</html>
