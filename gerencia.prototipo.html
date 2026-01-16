@@ -3,441 +3,395 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
 <title>Gerência de Filas</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
 <style>
-    body {
-        margin: 0;
-        font-family: Arial, sans-serif;
-        background-color: #e5e5e5;
-        text-align: center;
-    }
+:root{
+  --principal:#8c0a0a;
+  --bg:#e5e5e5;
+  --card:#fff;
+}
 
-    header {
-        background-color: rgb(140, 10, 10);
-        color: white;
-        padding: 20px;
-        font-size: 25px;
-        font-weight: bold;
-        justify-content: space-between;
-        display: flex;   
-        align-items: center; 
-    }
+/* RESET */
+*{
+  box-sizing:border-box;
+  font-family:Arial,sans-serif;
+}
 
-    #img {
-        width: 15%;
-        height: auto;
-        border-radius: 50px;
-    }
+body{
+  margin:0;
+  background:var(--bg);
+  text-align:center;
+}
 
-    header i {
-        font-size: 25px;
-        cursor: pointer;
-    }
+/* HEADER */
+header{
+  background:linear-gradient(135deg,rgb(211,14,14),rgb(154,5,5));
+  padding:18px 22px;
+  display:flex;
+  align-items:center;
+  color:#fff;
+}
 
-    .filter-container {
-        position: relative;
-    }
+header img{
+  margin-left: 5px;
+  width:60px;
+  border-radius:50px;
+}
 
-    .filter-menu {
-        display: none;
-        position: absolute;
-        top: 35px;
-        right: 0;
-        background: white;
-        border-radius: 10px;
-        box-shadow: 0 10px 8px rgba(0,0,0,0.15);
-        overflow: hidden;
-        z-index: 10;
-        min-width: 150px;
-    }
+/* empurra o menu para o EXTREMO direito */
+.header-spacer{
+  flex:1;
+}
 
-    .filter-menu button {
-        background: none;
-        border: none;
-        width: 100%;
-        padding: 10px;
-        text-align: left;
-        font-size: 14px;
-        cursor: pointer;
-    }
+header i{
+  font-size:26px;
+  cursor:pointer;
+}
 
-    .filter-menu button:hover {
-        background: white;
-        color: white;
-    }
+/* MENU FILTRO (NÃO ALTERADO) */
+.filter-container{
+  position:relative;
+  width:20px;
+}
 
-    h2 {
-        font-size: 25px;
-        margin: 10%;
-        margin-top: 20%;
-    }
+.filter-menu{
+  position:absolute;
+  right:0;
+  top:40px;
+  background:#fff;
+  border-radius:14px;
+  box-shadow:0 10px 25px rgba(0,0,0,.15);
+  overflow:hidden;
+  transform:scale(0);
+  transform-origin:top right;
+  transition:.25s;
+  z-index:10;
+}
 
-    #number {
-        font-size: 20px;
-        margin-bottom: 20px;
-    }
+.filter-menu.active{
+  transform:scale(1);
+}
 
-    #card-container {
-    padding-bottom: 150px; 
-    }
+.filter-menu button{
+  width:100%;
+  border:none;
+  background:none;
+  padding:15px 40px;
+  text-align:left;
+  cursor:pointer;
+}
 
-    .card {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        background-color: white;
-        border-radius: 17px;
-        padding: 25px;
-        margin: 10% auto;
-        width: 80%;
-        box-shadow: 20px 20px 15px rgba(0,0,0,0.1);
-        transition: background 0.2s, color 0.2s;
-        border: none;
-        
-    }
-
-    .card:active {
-        background-color: #8e1111;
-        color: white;
-        padding: 25px;
-        
-    }
-    
-    .card-text {
-        flex-grow: 1;
-        text-align: left;
-        font-size: 20px;        
-    }
-
-    .input {
-        border: none;
-        font-size: 20px;
-        font-weight: bold;
-        text-transform: uppercase;
-        width: 200px;
-        border-radius: 20px;
-        text-decoration: none;
-        outline: none;
-        transition: background 0.2s, color 0.2s;
-    }
-    
-
-    .input:hover {
-        padding: 4%;
-        max-width: 50%;
-        outline: none;
-        background-color: white;
-    }
-
-    .input:active {
-        background-color: #8e1111;
-    }
-
-    .numeracao {
-        font-size: 20px;
-        margin-right: 20%;
-    }
-
-    .dots {
-        text-decoration: none;
-        font-size: 25px;
-        color: inherit;        /* Usa a cor do texto/pai */
-        display: inline-flex;
-    }
-
-    #item1 {
-        font-size: 40px;
-    }
-
-    #item2 {
-        font-size: 40px;
-    }
-
-    #item3 {
-        font-size: 40px;
-    }
-
-    #a {
-      text-decoration: none;
-      color: black;
-    }
-
-    .adc {
-        background-color: black;
-        color: white;
-        border-radius: 50%;
-        padding: 15px;
-        font-size: 20px;
-        border: none;
-        position: fixed;
-        bottom: 100px;
-        left: 50%;
-        transform: translateX(-50%);
-        cursor: pointer;
-        width: 12%;
-    }
-
-    .adc:active {
-        background-color: rgb(106, 7, 7);
-    }
-
-    footer {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    background: rgb(177, 177, 177);
-    border-top: 3px solid #a7a7a7;
-    padding: 10px 0;
-    display: flex;
-    justify-content: center;
-    gap: 0;
-    align-items: center;
-    box-sizing: border-box;
+.filter-menu button:hover{
+  background:var(--principal);
+  color:#fff;
 }
 
 
-footer button {
-    flex: 1; 
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: none;
-    border: none;
-    padding: 5px 90px;
-    font-size: 25px;
-    cursor: pointer;
+/* TÍTULO */
+h2{
+  margin:50px 0 10px;
 }
 
-footer button:active {
-    background-color: rgb(106, 7, 7);
-    border-radius: 20px;
+#number{
+  font-weight:bold;
+  margin-bottom:65px;
 }
 
-#perfil {
-    color: black;
+/* CARDS */
+#card-container{
+  padding-bottom:160px;
 }
 
-#home {
-    color: rgb(169, 2, 2);
+.card{
+  background:var(--card);
+  width:90%;
+  margin:15px auto;
+  padding:18px;
+  border-radius:18px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  box-shadow:0 8px 18px rgba(0,0,0,.1);
+  transition:.25s;
+}
+
+.card:hover{
+  transform:translateY(-4px);
+}
+
+.card:active{
+  background:var(--principal);
+  color:#fff;
+}
+
+.card-text{
+  flex:1;
+  text-align:left;
+  font-size:20px;
+  font-weight:bold;
+}
+
+.card-text input{
+  border:none;
+  outline:none;
+  font-size:20px;
+  font-weight:bold;
+  width:100%;
+  background:transparent;
+  text-transform:uppercase;
+}
+
+.numeracao{
+  font-size:25px;
+  margin-right:15px;
+}
+
+.dots{
+  font-size:25px;
+}
+
+/* BOTÃO ADD */
+.adc{
+  position:fixed;
+  bottom:100px;
+  left:50%;
+  transform:translateX(-50%);
+  width:60px;
+  height:60px;
+  border-radius:50%;
+  background:#000;
+  color:#fff;
+  border:none;
+  font-size:26px;
+  cursor:pointer;
+}
+
+.adc:active{
+  background:var(--principal);
+}
+
+/* FOOTER */
+footer{
+  position:fixed;
+  bottom:0;
+  width:100%;
+  background:#b1b1b1;
+  display:flex;
+  justify-content:space-between;
+  transition:.3s;
+}
+
+footer button{
+  background:none;
+  border:none;
+  padding:15px 25px;
+  font-size:25px;
+  cursor:pointer;
+}
+
+#home{
+  color:var(--principal);
+}
+
+.dots{ font-size:25px; color:inherit; text-decoration:none; }
+
+.dots{
+  position:relative;
+}
+
+.card-menu{
+  top:28px;
+  right:0;
+  transform:scale(0);
+}
+
+.card-menu.active{
+  transform:scale(1);
 }
 
 </style>
 </head>
+
 <body>
 
 <header>
-  <img src="locate.png" alt="L & G" id="img">
+  <img src="locate.png">
+
+  <div class="header-spacer"></div>
+
   <div class="filter-container">
-        <i id="filter-icon" class="fa-solid fa-bars"></i>
-        <div id="filter-menu" class="filter-menu">
-            <button id="ordem-alfabetica">Ordem Alfabética</button>
-            <button id="prioridade">Prioridades</button>
-            <button id="maior">Maior Fila</button>
-            <button id="menor">Menor Fila</button>
-            <button id="editar">Editar</button>
-            <button id="excluir">Excluir</button>
-        </div>
+    <i class="fa-solid fa-bars" id="filter-icon"></i>
+    <div class="filter-menu" id="filter-menu">
+      <button data-action="alfabetica">Ordem Alfabética</button>
+      <button data-action="maior">Maior Fila</button>
+      <button data-action="menor">Menor Fila</button>
+    </div>
   </div>
 </header>
 
 <h2>GERÊNCIA DE FILAS</h2>
-<div id="number">03 FILAS</div>
+<div id="number">00 FILAS</div>
 
-<div id="card-container">
-
-<div class="card">
-    <div class="card-text"><b>ENTREGAS</b></div>
-    <div class="numeracao">11</div>
-    <div class="dots"><i class="fa-solid fa-ellipsis-vertical"></i></div>
-</div>
-
-<div class="card">
-    <div class="card-text"><b>RETIRADAS</b></div>
-    <div class="numeracao">2</div>
-    <div class="dots"><i class="fa-solid fa-ellipsis-vertical"></i></div>    
-</div>
-
-<a href="fila.prototipo.html" id="a">
-<div class="card" id="card">
-    <div class="card-text"><b>PRESENCIAIS</b></div>
-    <div class="numeracao">5</div>
-    <div class="dots"><i class="fa-solid fa-ellipsis-vertical"></i></div>
-</div>
-</a>
-</div>
+<div id="card-container"></div>
 
 <button class="adc" id="adc">+</button>
 
 <footer id="footer">
-    <a href="perfilEmpresario.prototipo.html"><button id="perfil"><i id="perfil"><div class="fa-solid fa-user"></div></i></button></a>
-    <a href="gerencia.prototipo.html"><button><i id="home"><div class="fa-solid fa-house"></div></i></button></a>
+  <a href="perfilEmpresario.montado.prototipo.html">
+    <button><i class="fa-solid fa-user"></i></button>
+  </a>
+
+  <a href="gerencia.prototipo.html">
+    <button><i class="fa-solid fa-house" id="home"></i></button>
+  </a>
 </footer>
 
 <script>
-  const lista = document.getElementById('card-container');
-  const ordemBtn = document.getElementById('ordem-alfabetica');
+/* MENU PRINCIPAL */
+const menu = document.getElementById('filter-menu');
+document.getElementById('filter-icon').onclick = () =>
+  menu.classList.toggle('active');
 
-function nomeDoItem(item) {
-  
-  const input = item.querySelector('.card-text input');
-  if (input) {
-    return (input.value || '').trim().toLowerCase();
-  }
-  return (item.querySelector('.card-text')?.textContent || '').trim().toLowerCase();
+/* ELEMENTOS */
+const container = document.getElementById('card-container');
+const number = document.getElementById('number');
+const btnAdd = document.getElementById('adc');
+
+/* FILAS */
+let filas = JSON.parse(localStorage.getItem('filas')) || [
+  { id: Date.now()+1, nome:'FILA01', numero:0 },
+  { id: Date.now()+2, nome:'FILA02', numero:0 },
+  { id: Date.now()+3, nome:'FILA03', numero:0 }
+];
+
+function salvar(){
+  localStorage.setItem('filas', JSON.stringify(filas));
+  atualizarNumero();
 }
 
-ordemBtn.addEventListener('click', () => {
-  const itens = Array.from(lista.children); 
-  itens.sort((a, b) => nomeDoItem(a).localeCompare(nomeDoItem(b), 'pt-BR', { sensitivity: 'base' }));
-  itens.forEach(it => lista.appendChild(it));
-});
-
-
-
-
-
-
-
-const maiorBtn = document.getElementById('maior');
-
-function valorDoCard(card) {
-  return parseInt(card.querySelector('.numeracao')?.textContent || 0, 10);
+function atualizarNumero(){
+  number.textContent = `${String(filas.length).padStart(2,'0')} FILAS`;
 }
 
-maiorBtn.addEventListener('click', () => {
-  const cards = Array.from(lista.children);
-  cards.sort((a, b) => valorDoCard(b) - valorDoCard(a)); 
-  cards.forEach(card => lista.appendChild(card));
-});
+/* RENDER */
+function render(){
+  container.innerHTML = '';
 
+  filas.forEach((fila) => {
+    const card = document.createElement('div');
+    card.className = 'card';
 
-
-
-const menorBtn = document.getElementById('menor');
-
-function valorDoCard(card) {
-  return parseInt(card.querySelector('.numeracao')?.textContent || 0, 10);
-}
-
-
-maiorBtn.addEventListener('click', () => {
-  const cards = Array.from(lista.children);
-  cards.sort((a, b) => valorDoCard(b) - valorDoCard(a));
-  cards.forEach(card => lista.appendChild(card));
-});
-
-
-menorBtn.addEventListener('click', () => {
-  const cards = Array.from(lista.children);
-  cards.sort((a, b) => valorDoCard(a) - valorDoCard(b));
-  cards.forEach(card => lista.appendChild(card));
-});
-
-
-
-
-
-  const numberDisplay = document.getElementById('number');
-  const container = document.getElementById('card-container');
-  const addBtn = document.getElementById('adc');
-  const body = document.body;
-
-  function atualizarNumero() {
-    const totalCards = container.querySelectorAll('.card').length;
-    numberDisplay.textContent = totalCards.toString().padStart(2,'0') + ' FILAS';
-}
-
-
-  addBtn.addEventListener('click', () => {
-
-    const newCard = document.createElement('div');
-    newCard.classList.add('card');
-
-
-    newCard.innerHTML = `
+    card.innerHTML = `
       <div class="card-text">
-        <input type="text" placeholder="Fila" class="input">
+        <input value="${fila.nome}">
       </div>
-      <div class="numeracao">0</div>
-      <a href="catalogo.prototipo.html" class="dots">
-  <i class="fa-solid fa-ellipsis-vertical"></i>
-</a>
 
+      <div class="numeracao">${fila.numero}</div>
 
+      <div class="dots">
+        <i class="fa-solid fa-ellipsis-vertical"></i>
+
+        <div class="filter-menu card-menu">
+          <button data-action="editar">EDITAR</button>
+          <button data-action="excluir">EXCLUIR</button>
+        </div>
+      </div>
     `;
 
-    container.appendChild(newCard); 
-    atualizarNumero();
+    /* 👉 CLICAR NO CARD (VISUALIZAR) */
+    card.onclick = () => {
+      window.location.href =
+        `fila.prototipo.html?id=${fila.id}&modo=visualizar`;
+    };
+
+    /* EVITA PROPAGAÇÃO */
+    card.querySelector('input').onclick = e => e.stopPropagation();
+    card.querySelector('.dots').onclick = e => e.stopPropagation();
+
+    /* EDITAR NOME */
+    card.querySelector('input').oninput = e => {
+      fila.nome = e.target.value.toUpperCase();
+      salvar();
+    };
+
+    /* DOTS */
+    const dotsIcon = card.querySelector('.dots i');
+    const cardMenu = card.querySelector('.card-menu');
+
+    dotsIcon.onclick = e => {
+      e.stopPropagation();
+      document.querySelectorAll('.card-menu')
+        .forEach(m => m.classList.remove('active'));
+      cardMenu.classList.toggle('active');
+    };
+
+    cardMenu.onclick = e => {
+      const action = e.target.dataset.action;
+
+      if(action === 'excluir'){
+        filas = filas.filter(f => f.id !== fila.id);
+        salvar();
+        render();
+      }
+
+      if(action === 'editar'){
+        window.location.href =
+          `catalogoEmpresario.prototipo.html?id=${fila.id}&modo=editar`;
+      }
+    };
+
+    container.appendChild(card);
   });
 
   atualizarNumero();
+}
 
+render();
 
+/* ADD FILA */
+btnAdd.onclick = () => {
+  filas.push({
+    id: Date.now(),
+    nome:`FILA${String(filas.length + 1).padStart(2,'0')}`,
+    numero:0
+  });
+  salvar();
+  render();
+};
 
+/* FILTROS SUPERIORES */
+menu.onclick = e => {
+  if(!e.target.dataset.action) return;
 
+  if(e.target.dataset.action === 'alfabetica')
+    filas.sort((a,b)=>a.nome.localeCompare(b.nome,'pt-BR'));
 
+  if(e.target.dataset.action === 'maior')
+    filas.sort((a,b)=>b.numero - a.numero);
 
-let ultimoScroll = window.scrollY;
-const footer = document.getElementById('footer');
+  if(e.target.dataset.action === 'menor')
+    filas.sort((a,b)=>a.numero - b.numero);
 
-window.addEventListener('scroll', () => {
-    const atualScroll = window.scrollY;
+  salvar();
+  render();
+  menu.classList.remove('active');
+};
 
-    if (atualScroll > ultimoScroll) {
-
-        footer.style.transform = "translateY(100%)";
-    } else {
-
-        footer.style.transform = "translateY(0)";
-    }
-
-    ultimoScroll = atualScroll;
+/* FECHAR MENUS */
+document.addEventListener('click', () => {
+  document.querySelectorAll('.card-menu')
+    .forEach(m => m.classList.remove('active'));
 });
-
-
-
-
-
-
-
-
-
-const filterIcon = document.getElementById('filter-icon');
-const filterMenu = document.getElementById('filter-menu');
-
-filterIcon.addEventListener('click', () => {
-    filterMenu.style.display = filterMenu.style.display === 'block' ? 'none' : 'block';
-});
-
-document.addEventListener('click', (e) => {
-    if (!filterIcon.contains(e.target) && !filterMenu.contains(e.target)) {
-        filterMenu.style.display = 'none';
-    }
-});
-
-
-
-
-
-
-document.getElementById('prioridade').addEventListener('click', () => {
-  alert('Função de PRIORIDADE em desenvolvimento!');
-});
-
-document.getElementById('editar').addEventListener('click', () => {
-  alert('Função de EDITAR em desenvolvimento!');
-});
-
-document.getElementById('excluir').addEventListener('click', () => {
-  alert('Função de EXCLUIR em desenvolvimento!');
-});
-
-
 </script>
+
+
+
+
 </body>
 </html>
+
 
 

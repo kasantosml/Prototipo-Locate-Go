@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EDITAR PERFIL - EMPRESÁRIO</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<style>
+:root {
+  --principal: #8c0a0a;
+  --cinza: #f2f2f2;
+}
+
+* {
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  margin: 0;
+  background: var(--cinza);
+}
+
+/* HEADER */
+header {
+  background: linear-gradient(135deg, rgb(211,14,14), rgb(154,5,5));
+  padding: 18px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+header img {
+  width: 56px;
+  border-radius: 50px;
+}
+
+/* ALERTA */
+.alerta {
+  position: fixed;
+  top: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--principal);
+  color: white;
+  padding: 12px 18px;
+  border-radius: 12px;
+  font-size: 14px;
+  z-index: 999;
+  animation: sumir 4s forwards;
+}
+
+@keyframes sumir {
+  0% { opacity: 1; }
+  80% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+/* CONTAINER */
+.container {
+  max-width: 650px;
+  margin: auto;
+  padding: 40px 16px 120px;
+}
+
+.container2 {
+  margin: 10px;
+}
+
+/* CARD */
+.card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 22px;
+  box-shadow: 0 6px 14px rgba(0,0,0,.1);
+}
+
+/* FOTO PERFIL */
+.profile-card {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.profile-card div {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  border: 3px dashed var(--principal);
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.profile-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.profile-card i {
+  font-size: 32px;
+  color: var(--principal);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+/* LABELS */
+label {
+  display: block;
+  margin-top: 14px;
+  font-size: 13px;
+  font-weight: bold;
+  color: var(--principal);
+  text-transform: uppercase;
+}
+
+/* INPUTS */
+input, textarea {
+  width: 100%;
+  margin-top: 6px;
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}
+
+textarea {
+  resize: none;
+}
+
+/* BOTÕES */
+button {
+  width: 100%;
+  margin-top: 18px;
+  padding: 14px;
+  border-radius: 12px;
+  border: none;
+  background: var(--principal);
+  color: white;
+  font-size: 14px;
+  cursor: pointer;
+  text-transform: uppercase;
+}
+
+.btn-gerencia {
+  background: #444;
+}
+
+.contato {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.contato-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.contato-item i {
+  font-size: 18px;
+}
+
+/* ===========================
+   🆕 FUNCIONÁRIOS
+=========================== */
+.funcionarios {
+  margin-top: 25px;
+  padding-top: 15px;
+  border-top: 1px dashed #ccc;
+}
+
+.funcionarios h3 {
+  color: var(--principal);
+  margin-bottom: 10px;
+}
+
+.funcionario-item {
+  background: #f7f7f7;
+  padding: 15px;
+  border-radius: 10px;
+  margin: 20px 0px;
+  font-size: 20px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <img src="locate.png" alt="LOGO">
+</header>
+
+<div class="alerta">✏️ EDITE SEU PERFIL</div>
+
+<div class="container">
+  <div class="card">
+
+    <div class="profile-card">
+      <div id="fotoCard">
+        <i class="fa-solid fa-camera"></i>
+      </div>
+    </div>
+
+    <label>NOME DO NEGÓCIO</label>
+    <input id="nome" placeholder="NOME DA EMPRESA">
+
+    <label>CATEGORIA</label>
+    <input id="categoria" placeholder="Exemplo: Sorveteria, Mercado, Banco, Perfumaria">
+
+    <label>DESCRIÇÃO</label>
+    <textarea id="descricao" rows="6" placeholder="Adicione uma descrição criativa e intuitiva que chame a atenção dos seus clientes garantindo sucesso para sua empresa."></textarea>
+
+    <label>ENDEREÇO</label>
+    <input id="endereco" placeholder="Exemplo: Rua, Bairro, Pontos de referência">
+
+    <!-- CONTATO -->
+    <div class="contato">
+      <div class="contato-item">
+        <i class="fa-solid fa-phone"></i>
+        <input id="telefone" placeholder="Telefone">
+      </div>
+
+      <div class="contato-item">
+        <i class="fa-brands fa-instagram"></i>
+        <input id="instagram" placeholder="@instagram">
+      </div>
+
+      <div class="contato-item">
+        <i class="fa-brands fa-whatsapp"></i>
+        <input id="whatsapp" placeholder="WhatsApp">
+      </div>
+    </div>
+
+    <!-- 🆕 CADASTRO DE FUNCIONÁRIOS -->
+    <div class="funcionarios">
+      <h3>FUNCIONÁRIOS</h3>
+
+      <input id="funcNome" placeholder="Nome do funcionário">
+      <input id="funcEmail" placeholder="Email de acesso">
+      <input id="funcSenha" placeholder="Senha de acesso">
+      <input id="funcCargo" placeholder="Cargo / Função">
+
+      <div id="listaFuncionarios"></div>
+      <button type="button" onclick="adicionarFuncionario()">Adicionar Funcionário</button>
+    </div>
+
+
+
+    <!-- BOTÕES -->
+    <button id="salvar">SALVAR PERFIL</button>
+
+    <button class="btn-gerencia" onclick="window.location.href='gerencia.prototipo.html'">
+      IR PARA GERENCIAMENTO
+    </button>
+
+    <button class="btn-gerencia" onclick="window.location.href='perfilEmpresario.montado.prototipo.html'">
+      VOLTAR
+    </button>
+
+  </div>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import { getFirestore, doc, getDoc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-storage.js";
+
+/* 🔥 CONFIG FIREBASE */
+const firebaseConfig = {
+  apiKey: "AIzaSyAvXF36Fi9K25Ub1czRkZ_G9OQ_dwcm5rk",
+  authDomain: "locatego.firebaseapp.com",
+  projectId: "locatego",
+  storageBucket: "locatego.appspot.com",
+  messagingSenderId: "904411855752",
+  appId: "1:904411855752:web:9e2ae088dca6b4bfd3d83d"
+};
+
+/* 🔥 INIT */
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+const storage = getStorage(app);
+
+/* =========================
+   VARIÁVEIS
+========================= */
+let uid = null;
+let fotoAtual = "";
+let uploadTask = null;
+
+const fotoCard = document.getElementById("fotoCard");
+const inputFoto = document.getElementById("inputFoto");
+const salvar = document.getElementById("salvar");
+
+const nome = document.getElementById("nome");
+const categoria = document.getElementById("categoria");
+const descricao = document.getElementById("descricao");
+const endereco = document.getElementById("endereco");
+
+/* 📸 Clique na foto */
+fotoCard.addEventListener("click", () => inputFoto.click());
+
+/* 🔐 Auth */
+onAuthStateChanged(auth, async (user) => {
+  if (!user) return;
+
+  uid = user.uid;
+
+  const snap = await getDoc(doc(db, "perfilEmpresa", uid));
+  if (snap.exists()) {
+    const d = snap.data();
+    nome.value = d.nome || "";
+    categoria.value = d.categoria || "";
+    descricao.value = d.descricao || "";
+    endereco.value = d.endereco || "";
+
+    if (d.foto) {
+      fotoCard.innerHTML = `<img src="${d.foto}">`;
+      fotoAtual = d.foto;
+    }
+  }
+});
+
+/* 🖼️ Upload da foto (em segundo plano) */
+inputFoto.addEventListener("change", (e) => {
+  const file = e.target.files[0];
+  if (!file || !uid) return;
+
+  // Preview imediato
+  fotoCard.innerHTML = `<img src="${URL.createObjectURL(file)}">`;
+
+  const fotoRef = ref(storage, `perfilEmpresa/${uid}.jpg`);
+  uploadTask = uploadBytesResumable(fotoRef, file);
+
+  uploadTask.on(
+    "state_changed",
+    null, // não precisamos do progresso
+    (error) => {
+      console.error("Erro no upload da foto:", error);
+      alert("❌ Erro ao enviar a foto");
+    },
+    async () => {
+      fotoAtual = await getDownloadURL(uploadTask.snapshot.ref);
+
+      // Atualiza a foto no Firestore assim que termina
+      if (uid) {
+        const perfilRef = doc(db, "perfilEmpresa", uid);
+        await setDoc(perfilRef, { foto: fotoAtual }, { merge: true });
+        console.log("✅ Foto atualizada no Firestore");
+      }
+    }
+  );
+});
+
+/* 💾 SALVAR PERFIL SEM ESPERAR FOTO */
+salvar.addEventListener("click", async () => {
+  if (!uid) return alert("Erro de autenticação");
+
+  try {
+    const perfilRef = doc(db, "perfilEmpresa", uid);
+    await setDoc(perfilRef, {
+      nome: nome.value.trim(),
+      categoria: categoria.value.trim(),
+      descricao: descricao.value.trim(),
+      endereco: endereco.value.trim(),
+      tipo: "empresario",
+      atualizadoEm: serverTimestamp(),
+      foto: fotoAtual || "" // salva a URL atual ou vazio se ainda não subiu
+    }, { merge: true });
+
+    alert("✅ Perfil salvo!");
+  } catch (erro) {
+    console.error("Erro ao salvar perfil:", erro);
+    alert("❌ Erro ao salvar perfil");
+  }
+});
+
+
+//contatos
+document.querySelectorAll('.contato-item input').forEach(input => {
+  input.addEventListener('focus', () => {
+    input.style.pointerEvents = 'auto';
+  });
+});
+
+//funcionarios
+
+const listaFuncionarios = document.getElementById("listaFuncionarios");
+
+function adicionarFuncionario(){
+  const nome = document.getElementById("funcNome").value;
+  const email = document.getElementById("funcEmail").value;
+  const senha = document.getElementById("funcSenha").value;
+  const cargo = document.getElementById("funcCargo").value;
+
+  if(!nome || !email) return alert("Preencha nome e email");
+
+  const div = document.createElement("div");
+  div.className = "funcionario-item";
+  div.innerHTML = `USUÁRIO: <strong>${nome}</strong><br>Email: ${email}<br> Senha:${senha}<br> Cargo: ${cargo}`;
+
+  listaFuncionarios.appendChild(div);
+
+  document.getElementById("funcNome").value = "";
+  document.getElementById("funcEmail").value = "";
+  document.getElementById("funcSenha").value = "";
+  document.getElementById("funcCargo").value = "";
+}
+</script>
+
+
+
+
+
+
+</body>
+</html>
+
+
+

@@ -109,28 +109,24 @@
         margin-top: 10px;
     }
 
-    #botao {
-        width: 210px;
-        padding: 10px;
-        margin: 1%;
-        background-color: #800f15;
-        color: white;
-        border-radius: 50px;
-        border-bottom: 5px solid #000000;
-        font-size: 20px;
-        position: fixed;
-        bottom: 50px;
-        left: 50%;
-        transform: translateX(-50%);
-        box-shadow: 0 10px 2px rgba(0, 0, 0, 0.253);
-        cursor: pointer;
-    }
+    
 
-    #botao:hover {
-        background: rgb(10, 131, 114);
-        transition: 0.3s;
-        color: rgb(0, 0, 0);
-    }
+    button {
+  width: 100%;
+  margin-top: 15px;
+  padding: 14px;
+  border-radius: 12px;
+  border: none;
+  background: var(--principal);
+  color: white;
+  font-size: 14px;
+  cursor: pointer;
+  text-transform: uppercase;
+}
+
+.btn-gerencia {
+  background: #b51c1c;
+}
 
 </style>
 </head>
@@ -144,8 +140,8 @@
 
 <main>
     <div class="pedido-info">
-        <h2>Kawan Santos</h2>
-        <p>11:50AM</p>
+        <h2>CLIENTE 00</h2>
+        <p>HORÁRIO</p>
         <hr><br>
         <div class="numero-pedido">1°</div>
     </div>
@@ -153,13 +149,15 @@
     <div class="pedido-detalhes">
         <h3>PEDIDO:</h3>
         <ul>
-            <li>1 MILKSHAKE DE MORANGO</li>
-            <li>1 MILKSHAKE DE CHOCOLATE</li>
+            <li>ITEM 1: DETALHADAMENTO</li>
+            <li>ITEM 2: DETALHADAMENTO</li>
         </ul>
         <div class="sem-especificacao">SEM ESPECIFICAÇÃO</div>
     </div>
 
-    <a href="fila.prototipo.html"><button id="botao">FINALIZADO</button></a>
+    <button class="btn-gerencia" onclick="window.location.href='fila.prototipo.html'">
+      FINALIZAR
+    </button>
 </main> 
 
 </body>

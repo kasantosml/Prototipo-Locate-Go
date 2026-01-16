@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Perfil do Empresário</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<style>
+:root {
+  --principal: #8c0a0a;
+  --cinza: #f2f2f2;
+  --branco: #fff;
+  --preto: #000;
+}
+
+* { box-sizing: border-box; font-family: Arial, sans-serif; margin:0; padding:0; }
+body { background: var(--cinza); color: #333; position: relative; }
+
+/* HEADER */
+header {
+  background: linear-gradient(135deg, rgb(211,14,14), rgb(154,5,5));
+  padding: 19px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+header img { width: 56px; border-radius: 50px; }
+
+.tudo { background-color: white; position: relative; }
+
+/* GALERIA */
+.cover {
+  width: 100%;
+  height: 250px;
+  position: relative;
+  overflow: hidden;
+  background-color: #ddd;
+}
+.cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-bottom: 2px solid var(--principal);
+}
+
+/* Ícone de galeria */
+.cover label {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgba(0,0,0,0.5);
+  color: #fff;
+  font-size: 24px;
+  padding: 10px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: 0.2s;
+}
+.cover label:hover { background: rgba(0,0,0,0.7); }
+.cover input { display: none; }
+
+/* FOTO DE PERFIL */
+#profile-pic {
+  position: absolute;
+  width: 160px;
+  height: 160px;
+  top: 180px;
+  left: 20px;
+  border-radius: 50%;
+  border: 4px solid var(--principal);
+  background: rgb(188, 188, 188);
+  overflow: hidden;
+  z-index: 10;
+}
+
+/* Ícone de câmera */
+#profile-pic label {
+  position: absolute;
+  bottom: 40px;
+  right: 40px;
+  background: rgb(188, 188, 188);
+  color: #ffffff;
+  font-size: 50px;
+  padding: 8px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: 0.2s;
+}
+#profile-pic label:hover { background: rgb(188, 188, 188); }
+#profile-pic input { display: none; }
+
+#profile-pic img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* CONTAINER */
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 100px 16px 50px;
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+/* PERFIL */
+.profile-info { flex: 1; min-width: 250px; }
+#username { font-size: 28px; font-weight: bold; text-transform: uppercase; margin-bottom: 5px; }
+#categoria { font-size: 16px; color: gray; margin-bottom: 15px; text-transform: uppercase; }
+
+/* AVALIAÇÃO */
+.star { display: flex; align-items: center; gap: 5px; margin-bottom: 15px; }
+.star i { color: gold; font-size: 25px; }
+#avaliacao { font-weight: bold; font-size: 20px; }
+
+/* DESCRIÇÃO E ENDEREÇO */
+#descricao, #endereco {
+  background: white;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 5px 8px rgba(0,0,0,0.1);
+  margin-bottom: 15px;
+}
+
+/* TRANSPORTES */
+.transportes {
+  display: flex;
+  justify-content: space-around;
+  background: white;
+  padding: 15px;
+  border-radius: 12px;
+  box-shadow: 0 5px 8px rgba(0,0,0,0.1);
+  margin-bottom: 20px;
+}
+.transportes div { text-align: center; }
+.transportes i { font-size: 30px; color: var(--preto); }
+.transportes p { margin-top: 5px; font-size: 14px; }
+
+/* SERVIÇOS */
+.servicos { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+.servicos strong { text-transform: uppercase; font-size: 20px; }
+.servicos p { font-size: 20px; }
+
+/* CARDS */
+.card-container { display: flex; flex-wrap: wrap; gap: 15px; margin-bottom: 20px; }
+.card {
+  flex: 1 1 30%;
+  background: white;
+  border-radius: 15px;
+  padding: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+  transition: 0.2s;
+}
+.card:active { transform: scale(0.97); background: var(--principal); color: #fff; }
+
+/* CONTATO */
+.contato {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+.contato a {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: white;
+  padding: 10px;
+  border-radius: 12px;
+  box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+  color: var(--principal);
+  text-decoration: none;
+  transition: 0.2s;
+}
+.contato a:hover { background: var(--principal); color: #fff; }
+
+/* BOTÃO EDITAR PERFIL */
+button.editar {
+  display: block;
+  width: 150px;
+  padding: 12px;
+  background: var(--principal);
+  color: var(--branco);
+  border-radius: 8px;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+  margin: 20px auto;
+  text-transform: uppercase;
+  transition: 0.3s;
+}
+button.editar:active { background: rgb(205,16,16); }
+
+/* RODAPÉ */
+footer{
+  position:fixed;
+  bottom:0;
+  width:100%;
+  background:#b1b1b1;
+  display:flex;
+  justify-content:space-between;
+  transition:.3s;
+}
+
+footer button{
+  background:none;
+  border:none;
+  padding:15px 25px;
+  font-size:25px;
+  cursor:pointer;
+}
+
+#home{
+  color:var(--principal);
+}
+/* RESPONSIVO */
+@media(max-width:700px){
+  .container{ flex-direction: column; }
+  #profile-pic { left: 50%; transform: translateX(-50%); top: 180px; }
+  button.editar { width: 80%; margin: 20px auto; }
+  .card { flex: 1 1 100%; }
+  .contato { flex-direction: row; justify-content: space-around; margin-bottom: 20px; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <img src="locate.png" alt="LOGO">
+</header>
+
+<div class="tudo">
+  <div class="cover">
+    <label for="inputGaleria"><i class="fa-solid fa-image"></i></label>
+    <input type="file" id="inputGaleria" accept="image/*">
+  </div>
+
+  <div id="profile-pic">
+    <label for="inputFoto"><i class="fa-solid fa-camera"></i></label>
+    <input type="file" id="inputFoto" accept="image/*">
+  </div>
+
+
+  <div class="container">
+    <div class="profile-info">
+      <div id="username">Carregando...</div>
+      <div id="categoria"></div>
+
+      <div class="star">
+        <span id="avaliacao">0</span>
+        <i class="fa-regular fa-star"></i>
+        <i class="fa-regular fa-star"></i>
+        <i class="fa-regular fa-star"></i>
+        <i class="fa-regular fa-star"></i>
+        <i class="fa-regular fa-star"></i>
+      </div>
+
+      <div id="descricao">Carregando descrição...</div>
+      <div id="endereco">Carregando endereço...</div>
+
+      <div class="transportes">
+        <div class="pedestre"><i class="fa-solid fa-person-walking"></i><p>-- min</p></div>
+        <div class="bicicleta"><i class="fa-solid fa-bicycle"></i><p>-- min</p></div>
+        <div class="moto"><i class="fa-solid fa-motorcycle"></i><p>-- min</p></div>
+        <div class="carro"><i class="fa-solid fa-car"></i><p>-- min</p></div>
+        <div class="onibus"><i class="fa-solid fa-bus"></i><p>-- min</p></div>
+      </div>
+
+      <div class="servicos"><strong>Serviços:</strong><p id="totalServicos">0</p></div>
+
+      <div class="card-container">
+        <div class="card"><div class="card-text">FILA 1</div><div class="numeracao" id="entregas">0</div></div>
+        <div class="card"><div class="card-text">FILA 2</div><div class="numeracao" id="retiradas">0</div></div>
+        <div class="card"><div class="card-text">FILA 3</div><div class="numeracao" id="presenciais">0</div></div>
+      </div>
+    </div>
+
+    <div class="contato">
+      <a href="#" id="telefone"><i class="fa-solid fa-phone"></i><span>--</span></a>
+      <a href="#" id="instagram"><i class="fa-brands fa-instagram"></i><span>--</span></a>
+      <a href="#" id="whatsapp"><i class="fa-brands fa-whatsapp"></i><span>--</span></a>
+    </div>
+
+    <button class="editar" onclick="window.location.href='perfilEmpresario.prototipo.html'">Editar Perfil</button>
+  </div>
+</div>
+
+<footer id="footer">
+  <a href="perfilEmpresario.montado.prototipo.html"><button><i class="fa-solid fa-user" style="color:red;"></i></button></a>
+  <a href="gerencia.prototipo.html"><button><i class="fa-solid fa-house"></i></button></a>
+</footer>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAvXF36Fi9K25Ub1czRkZ_G9OQ_dwcm5rk",
+  authDomain: "locatego.firebaseapp.com",
+  projectId: "locatego",
+  storageBucket: "locatego.appspot.com",
+  messagingSenderId: "904411855752",
+  appId: "1:904411855752:web:9e2ae088dca6b4bfd3d83d"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+const uidEmpresario = "UID_DO_EMPRESARIO_AQUI";
+
+async function carregarPerfil() {
+  const snap = await getDoc(doc(db, "perfilEmpresa", uidEmpresario));
+  if(snap.exists()){
+    const d = snap.data();
+    document.getElementById("username").innerText = d.nome || "Sem nome";
+    document.getElementById("categoria").innerText = d.categoria || "";
+    document.getElementById("descricao").innerText = d.descricao || "";
+    document.getElementById("endereco").innerText = d.endereco || "";
+    document.getElementById("avaliacao").innerText = d.nota || "0";
+    document.getElementById("entregas").innerText = d.entregas || "0";
+    document.getElementById("retiradas").innerText = d.retiradas || "0";
+    document.getElementById("presenciais").innerText = d.presenciais || "0";
+    document.getElementById("totalServicos").innerText = (d.entregas||0)+(d.retiradas||0)+(d.presenciais||0);
+
+    if(d.foto) document.querySelector("#profile-pic img").src = d.foto;
+    if(d.galeria) document.getElementById("galery").src = d.galeria;
+
+    if(d.telefone) document.getElementById("telefone").querySelector("span").innerText = d.telefone;
+    if(d.instagram) document.getElementById("instagram").querySelector("span").innerText = d.instagram;
+    if(d.whatsapp) document.getElementById("whatsapp").querySelector("span").innerText = d.whatsapp;
+  }
+}
+carregarPerfil();
+
+// Rodapé esconde/mostra ao scroll
+let ultimoScroll = window.scrollY;
+const footer = document.getElementById('footer');
+window.addEventListener('scroll', () => {
+  const atualScroll = window.scrollY;
+  footer.style.transform = atualScroll > ultimoScroll ? "translateY(100%)" : "translateY(0)";
+  ultimoScroll = atualScroll;
+});
+
+//foto de perfil 
+
+document.getElementById("inputFoto").addEventListener("change", function(e){
+  const file = e.target.files[0];
+  if(file){
+    document.getElementById("fotoPerfil").src = URL.createObjectURL(file);
+  }
+});
+
+// Atualizar preview da cover/galeria
+document.getElementById("inputGaleria").addEventListener("change", function(e){
+  const file = e.target.files[0];
+  if(file){
+    document.getElementById("galery").src = URL.createObjectURL(file);
+  }
+});
+
+document.getElementById("inputFoto").addEventListener("change", function(e){
+  const file = e.target.files[0];
+  if(file){
+    document.getElementById("fotoPerfil").src = URL.createObjectURL(file);
+  }
+});
+
+// Atualizar cover/galeria
+document.getElementById("inputGaleria").addEventListener("change", function(e){
+  const file = e.target.files[0];
+  if(file){
+    document.getElementById("galery").src = URL.createObjectURL(file);
+  }
+});
+
+let uid = null;
+let fotoAtual = "";
+let uploadTask = null;
+
+const fotoCard = document.getElementById("fotoCard");
+const inputFoto = document.getElementById("inputFoto");
+const salvar = document.getElementById("salvar");
+
+const nome = document.getElementById("nome");
+const categoria = document.getElementById("categoria");
+const descricao = document.getElementById("descricao");
+const endereco = document.getElementById("endereco");
+
+/* 📸 Clique na foto */
+fotoCard.addEventListener("click", () => inputFoto.click());
+
+/* 🔐 Auth */
+onAuthStateChanged(auth, async (user) => {
+  if (!user) return;
+
+  uid = user.uid;
+
+  const snap = await getDoc(doc(db, "perfilEmpresa", uid));
+  if (snap.exists()) {
+    const d = snap.data();
+    nome.value = d.nome || "";
+    categoria.value = d.categoria || "";
+    descricao.value = d.descricao || "";
+    endereco.value = d.endereco || "";
+
+    if (d.foto) {
+      fotoCard.innerHTML = `<img src="${d.foto}">`;
+      fotoAtual = d.foto;
+    }
+  }
+});
+
+/* 🖼️ Upload da foto (em segundo plano) */
+inputFoto.addEventListener("change", (e) => {
+  const file = e.target.files[0];
+  if (!file || !uid) return;
+
+  // Preview imediato
+  fotoCard.innerHTML = `<img src="${URL.createObjectURL(file)}">`;
+
+  const fotoRef = ref(storage, `perfilEmpresa/${uid}.jpg`);
+  uploadTask = uploadBytesResumable(fotoRef, file);
+
+  uploadTask.on(
+    "state_changed",
+    null, // não precisamos do progresso
+    (error) => {
+      console.error("Erro no upload da foto:", error);
+      alert("❌ Erro ao enviar a foto");
+    },
+    async () => {
+      fotoAtual = await getDownloadURL(uploadTask.snapshot.ref);
+
+      // Atualiza a foto no Firestore assim que termina
+      if (uid) {
+        const perfilRef = doc(db, "perfilEmpresa", uid);
+        await setDoc(perfilRef, { foto: fotoAtual }, { merge: true });
+        console.log("✅ Foto atualizada no Firestore");
+      }
+    }
+  );
+});
+
+</script>
+
+</body>
+</html>
