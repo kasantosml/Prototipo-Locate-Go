@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Configurações</title>
+
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- ========================
+       WRAPPER DO APP MOBILE
+  ======================== -->
+  <div class="app-frame">
+
+    <!-- HEADER FIXO -->
+    <header class="app-header">
+      <button class="btn-icon" id="btn-back" aria-label="Voltar">
+        <i class="bi bi-arrow-left"></i>
+      </button>
+      <h1 class="header-title">Configurações</h1>
+      <button class="btn-icon" id="btn-save-all" aria-label="Salvar tudo">
+        <i class="bi bi-check2"></i>
+      </button>
+    </header>
+
+    <!-- CONTEÚDO COM SCROLL -->
+    <main class="app-content" id="app-content">
+
+      <!-- ── 1. PERFIL DO USUÁRIO ── -->
+      <section class="settings-section" id="section-profile">
+        <div class="profile-card">
+          <div class="profile-avatar-wrap">
+            <img
+              src="https://api.dicebear.com/7.x/adventurer/svg?seed=Abner&backgroundColor=b6e3f4"
+              alt="Avatar do usuário"
+              class="profile-avatar"
+              id="profile-avatar"
+            />
+            <button class="avatar-edit-btn" id="btn-edit-avatar" aria-label="Editar foto">
+              <i class="bi bi-camera-fill"></i>
+            </button>
+          </div>
+          <div class="profile-info">
+            <p class="profile-name" id="profile-name">Abner Souza</p>
+            <p class="profile-email" id="profile-email">abner@exemplo.com</p>
+            <span class="profile-badge">
+              <i class="bi bi-patch-check-fill"></i> Conta verificada
+            </span>
+          </div>
+        </div>
+
+        <div class="action-row">
+          <button class="btn-action btn-edit" id="btn-edit-profile">
+            <i class="bi bi-pencil-square"></i> Editar Perfil
+          </button>
+          <button class="btn-action btn-logout" id="btn-logout">
+            <i class="bi bi-box-arrow-right"></i> Sair
+          </button>
+        </div>
+      </section>
+
+      <!-- ── 2. RAIO DE DISTÂNCIA ── -->
+      <section class="settings-section">
+        <h2 class="section-title">
+          <i class="bi bi-geo"></i> Raio de Busca
+        </h2>
+
+        <div class="setting-item setting-item--stack">
+          <div class="slider-header">
+            <span class="setting-label">Distância máxima</span>
+            <span class="slider-value-badge" id="distance-badge">10 km</span>
+          </div>
+          <div class="slider-track-wrap">
+            <span class="slider-min">1 km</span>
+            <input
+              type="range"
+              id="distance-slider"
+              class="custom-slider"
+              min="1"
+              max="50"
+              value="10"
+              step="1"
+              aria-label="Raio de distância"
+            />
+            <span class="slider-max">50 km</span>
+          </div>
+          <div class="slider-ticks">
+            <span>1</span><span>10</span><span>20</span><span>30</span><span>40</span><span>50</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── 3. LOCALIZAÇÃO ── -->
+      <section class="settings-section">
+        <h2 class="section-title">
+          <i class="bi bi-pin-map"></i> Localização
+        </h2>
+
+        <div class="setting-item">
+          <div class="setting-info">
+            <i class="setting-icon bi bi-crosshair2"></i>
+            <div>
+              <p class="setting-label">Usar localização atual</p>
+              <p class="setting-desc" id="location-status-text">Localização desativada</p>
+            </div>
+          </div>
+          <button class="location-btn" id="btn-location" data-active="false" aria-pressed="false">
+            <i class="bi bi-geo-alt-fill"></i>
+            <span>Ativar</span>
+          </button>
+        </div>
+
+        <div class="location-indicator" id="location-indicator">
+          <span class="pulse-dot"></span>
+          <span>Aguardando sinal GPS…</span>
+        </div>
+      </section>
+
+      <!-- ── 4. PREFERÊNCIAS DE CATEGORIA ── -->
+      <section class="settings-section">
+        <h2 class="section-title">
+          <i class="bi bi-grid-3x3-gap"></i> Categorias de Interesse
+        </h2>
+        <p class="section-subtitle">Selecione o que deseja ver no feed</p>
+
+        <div class="category-grid" id="category-grid">
+          <!-- Categorias renderizadas via JS -->
+        </div>
+      </section>
+
+      <!-- ── 5. NOTIFICAÇÕES ── -->
+      <section class="settings-section">
+        <h2 class="section-title">
+          <i class="bi bi-bell"></i> Notificações
+        </h2>
+
+        <div class="setting-item">
+          <div class="setting-info">
+            <i class="setting-icon bi bi-bell-fill"></i>
+            <div>
+              <p class="setting-label">Notificações push</p>
+              <p class="setting-desc">Alertas de novidades próximas a você</p>
+            </div>
+          </div>
+          <label class="toggle" aria-label="Ativar notificações">
+            <input type="checkbox" id="toggle-notifications" />
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+
+        <div class="setting-item">
+          <div class="setting-info">
+            <i class="setting-icon bi bi-envelope-fill"></i>
+            <div>
+              <p class="setting-label">E-mails semanais</p>
+              <p class="setting-desc">Resumo de destaques da semana</p>
+            </div>
+          </div>
+          <label class="toggle" aria-label="E-mails semanais">
+            <input type="checkbox" id="toggle-emails" />
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+
+        <div class="setting-item">
+          <div class="setting-info">
+            <i class="setting-icon bi bi-megaphone-fill"></i>
+            <div>
+              <p class="setting-label">Promoções e ofertas</p>
+              <p class="setting-desc">Receba cupons e descontos exclusivos</p>
+            </div>
+          </div>
+          <label class="toggle" aria-label="Promoções">
+            <input type="checkbox" id="toggle-promos" />
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+      </section>
+
+      <!-- ── 6. PRIVACIDADE ── -->
+      <section class="settings-section">
+        <h2 class="section-title">
+          <i class="bi bi-shield-lock"></i> Privacidade
+        </h2>
+
+        <div class="setting-item">
+          <div class="setting-info">
+            <i class="setting-icon bi bi-eye-slash-fill"></i>
+            <div>
+              <p class="setting-label">Ocultar localização</p>
+              <p class="setting-desc">Outros usuários não verão onde você está</p>
+            </div>
+          </div>
+          <label class="toggle" aria-label="Ocultar localização">
+            <input type="checkbox" id="toggle-hide-location" />
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+
+        <div class="setting-item">
+          <div class="setting-info">
+            <i class="setting-icon bi bi-lock-fill"></i>
+            <div>
+              <p class="setting-label">Conta privada</p>
+              <p class="setting-desc">Somente seguidores verão seu perfil</p>
+            </div>
+          </div>
+          <label class="toggle" aria-label="Conta privada">
+            <input type="checkbox" id="toggle-private-account" />
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+      </section>
+
+      <!-- ── 7. APARÊNCIA ── -->
+      <section class="settings-section">
+        <h2 class="section-title">
+          <i class="bi bi-palette"></i> Aparência
+        </h2>
+
+        <div class="theme-picker" id="theme-picker">
+          <button class="theme-option active" data-theme="light" aria-pressed="true">
+            <div class="theme-preview theme-preview--light">
+              <div></div><div></div>
+            </div>
+            <span>Claro</span>
+          </button>
+          <button class="theme-option" data-theme="dark" aria-pressed="false">
+            <div class="theme-preview theme-preview--dark">
+              <div></div><div></div>
+            </div>
+            <span>Escuro</span>
+          </button>
+          <button class="theme-option" data-theme="auto" aria-pressed="false">
+            <div class="theme-preview theme-preview--auto">
+              <div></div><div></div>
+            </div>
+            <span>Automático</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- ── 8. IDIOMA ── -->
+      <section class="settings-section">
+        <h2 class="section-title">
+          <i class="bi bi-translate"></i> Idioma
+        </h2>
+
+        <div class="setting-item">
+          <div class="setting-info">
+            <i class="setting-icon bi bi-globe2"></i>
+            <div>
+              <p class="setting-label">Idioma do aplicativo</p>
+              <p class="setting-desc" id="lang-desc">Português (Brasil)</p>
+            </div>
+          </div>
+          <select class="custom-select" id="lang-select" aria-label="Selecionar idioma">
+            <option value="pt-BR">🇧🇷 Português</option>
+            <option value="en-US">🇺🇸 English</option>
+            <option value="es-ES">🇪🇸 Español</option>
+            <option value="fr-FR">🇫🇷 Français</option>
+            <option value="de-DE">🇩🇪 Deutsch</option>
+          </select>
+        </div>
+      </section>
+
+      <!-- ── 9. SOBRE ── -->
+      <section class="settings-section">
+        <h2 class="section-title">
+          <i class="bi bi-info-circle"></i> Sobre
+        </h2>
+
+        <div class="setting-item setting-item--link">
+          <div class="setting-info">
+            <i class="setting-icon bi bi-file-text-fill"></i>
+            <p class="setting-label">Termos de Uso</p>
+          </div>
+          <i class="bi bi-chevron-right chevron"></i>
+        </div>
+
+        <div class="setting-item setting-item--link">
+          <div class="setting-info">
+            <i class="setting-icon bi bi-shield-check-fill"></i>
+            <p class="setting-label">Política de Privacidade</p>
+          </div>
+          <i class="bi bi-chevron-right chevron"></i>
+        </div>
+
+        <div class="setting-item setting-item--link">
+          <div class="setting-info">
+            <i class="setting-icon bi bi-star-fill"></i>
+            <p class="setting-label">Avaliar o App</p>
+          </div>
+          <i class="bi bi-chevron-right chevron"></i>
+        </div>
+
+        <p class="app-version">Versão 2.4.1 · Build 241</p>
+      </section>
+
+      <!-- ESPAÇO EXTRA PARA O FAB -->
+      <div style="height: 80px;"></div>
+    </main>
+
+    <!-- TOAST DE FEEDBACK -->
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <!-- MODAL DE EDITAR PERFIL -->
+    <div class="modal-overlay" id="modal-edit-profile" aria-modal="true" role="dialog">
+      <div class="modal-card">
+        <div class="modal-header">
+          <h3>Editar Perfil</h3>
+          <button class="btn-icon" id="btn-close-modal" aria-label="Fechar">
+            <i class="bi bi-x-lg"></i>
+          </button>
+        </div>
+        <div class="modal-body">
+          <label class="field-label" for="input-name">Nome</label>
+          <input type="text" id="input-name" class="field-input" placeholder="Seu nome completo" />
+
+          <label class="field-label" for="input-email">E-mail</label>
+          <input type="email" id="input-email" class="field-input" placeholder="seu@email.com" />
+        </div>
+        <div class="modal-footer">
+          <button class="btn-modal btn-cancel" id="btn-modal-cancel">Cancelar</button>
+          <button class="btn-modal btn-confirm" id="btn-modal-save">Salvar</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODAL DE LOGOUT -->
+    <div class="modal-overlay" id="modal-logout" aria-modal="true" role="dialog">
+      <div class="modal-card modal-card--sm">
+        <div class="modal-header">
+          <h3>Sair da conta?</h3>
+        </div>
+        <div class="modal-body">
+          <p class="modal-text">Tem certeza que deseja encerrar a sessão atual?</p>
+        </div>
+        <div class="modal-footer">
+          <button class="btn-modal btn-cancel" id="btn-logout-cancel">Cancelar</button>
+          <button class="btn-modal btn-danger" id="btn-logout-confirm">Sair</button>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /app-frame -->
+
+  <script src="app.js"></script>
+</body>
+</html>
