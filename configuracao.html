@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR" data-theme="light">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -13,8 +14,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="configuracao.css" />
 </head>
+
 <body>
 
   <!-- ========================
@@ -24,7 +26,7 @@
 
     <!-- HEADER FIXO -->
     <header class="app-header">
-      <button class="btn-icon" id="btn-back" aria-label="Voltar">
+      <button onclick="window.location.href='fila.online.html'" class="btn-icon" id="btn-back" aria-label="Voltar">
         <i class="bi bi-arrow-left"></i>
       </button>
       <h1 class="header-title">Configurações</h1>
@@ -40,12 +42,8 @@
       <section class="settings-section" id="section-profile">
         <div class="profile-card">
           <div class="profile-avatar-wrap">
-            <img
-              src="https://api.dicebear.com/7.x/adventurer/svg?seed=Abner&backgroundColor=b6e3f4"
-              alt="Avatar do usuário"
-              class="profile-avatar"
-              id="profile-avatar"
-            />
+            <img src="https://api.dicebear.com/7.x/adventurer/svg?seed=Abner&backgroundColor=b6e3f4"
+              alt="Avatar do usuário" class="profile-avatar" id="profile-avatar" />
             <button class="avatar-edit-btn" id="btn-edit-avatar" aria-label="Editar foto">
               <i class="bi bi-camera-fill"></i>
             </button>
@@ -82,16 +80,8 @@
           </div>
           <div class="slider-track-wrap">
             <span class="slider-min">1 km</span>
-            <input
-              type="range"
-              id="distance-slider"
-              class="custom-slider"
-              min="1"
-              max="50"
-              value="10"
-              step="1"
-              aria-label="Raio de distância"
-            />
+            <input type="range" id="distance-slider" class="custom-slider" min="1" max="50" value="10" step="1"
+              aria-label="Raio de distância" />
             <span class="slider-max">50 km</span>
           </div>
           <div class="slider-ticks">
@@ -231,19 +221,22 @@
         <div class="theme-picker" id="theme-picker">
           <button class="theme-option active" data-theme="light" aria-pressed="true">
             <div class="theme-preview theme-preview--light">
-              <div></div><div></div>
+              <div></div>
+              <div></div>
             </div>
             <span>Claro</span>
           </button>
           <button class="theme-option" data-theme="dark" aria-pressed="false">
             <div class="theme-preview theme-preview--dark">
-              <div></div><div></div>
+              <div></div>
+              <div></div>
             </div>
             <span>Escuro</span>
           </button>
           <button class="theme-option" data-theme="auto" aria-pressed="false">
             <div class="theme-preview theme-preview--auto">
-              <div></div><div></div>
+              <div></div>
+              <div></div>
             </div>
             <span>Automático</span>
           </button>
@@ -357,4 +350,5 @@
 
   <script src="app.js"></script>
 </body>
+
 </html>
