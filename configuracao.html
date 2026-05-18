@@ -84,12 +84,12 @@
               aria-label="Raio de distância" />
             <span class="slider-max">50 km</span>
           </div>
+          <span>1</span><span>10</span><span>20</span><span>30</span><span>40</span><span>50</span>
           <div class="slider-ticks">
-            <span>1</span><span>10</span><span>20</span><span>30</span><span>40</span><span>50</span>
           </div>
         </div>
-      </section>
 
+      </section>
       <!-- ── 3. LOCALIZAÇÃO ── -->
       <section class="settings-section">
         <h2 class="section-title">
@@ -99,11 +99,16 @@
         <div class="setting-item">
           <div class="setting-info">
             <i class="setting-icon bi bi-crosshair2"></i>
+
             <div>
               <p class="setting-label">Usar localização atual</p>
-              <p class="setting-desc" id="location-status-text">Localização desativada</p>
+
+              <p class="setting-desc" id="location-status-text">
+                Localização desativada
+              </p>
             </div>
           </div>
+
           <button class="location-btn" id="btn-location" data-active="false" aria-pressed="false">
             <i class="bi bi-geo-alt-fill"></i>
             <span>Ativar</span>
@@ -112,8 +117,28 @@
 
         <div class="location-indicator" id="location-indicator">
           <span class="pulse-dot"></span>
-          <span>Aguardando sinal GPS…</span>
+
+          <span id="gps-text">
+            Aguardando sinal GPS…
+          </span>
         </div>
+      </section>
+
+      <section class="settings-section nearby-section">
+
+        <h2 class="section-title">
+          <i class="bi bi-shop"></i>
+          Locais próximos
+        </h2>
+
+        <div class="places-container" id="places-container">
+
+          <div class="empty-places">
+            Ative sua localização para buscar lugares próximos
+          </div>
+
+        </div>
+
       </section>
 
       <!-- ── 4. PREFERÊNCIAS DE CATEGORIA ── -->
