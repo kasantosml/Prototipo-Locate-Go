@@ -314,12 +314,16 @@
         alert('Empresa cadastrada com sucesso!');
         // redireciona para a próxima página (ajuste se quiser outra)
         window.location.href = 'registro.prototipo.html';
-      } catch (err) {
-        // mensagens do Firebase já explicam bastante, mas deixamos amigável
-        console.error(err);
-        errorMessage.textContent = err.message || 'Erro ao cadastrar';
-        errorMessage.style.display = 'block';
       }
+        catch (err) {
+  console.error("Código:", err.code);
+  console.error("Mensagem:", err.message);
+
+  alert("Erro: " + err.code);
+
+  errorMessage.textContent = err.message;
+  errorMessage.style.display = 'block';
+}
     });
   </script>
 </body>
