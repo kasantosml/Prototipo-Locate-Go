@@ -1,0 +1,1603 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Fila Especifica</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="stylesheet" href="tema.css">
+
+<style>
+
+    :root{
+  --primary:#d30e0e;
+
+  /* CLARO */
+  --bg:#f4f6f9;
+  --header1:#d30e0e;
+  --header2:#6d0909;
+
+  --card:#ffffff;
+  --card-hover:#fafafa;
+
+  --text:#222222;
+  --text-secondary:#555555;
+
+  --title:#8c0a0a;
+
+  --footer:#ffffff;
+
+  --border:#ececec;
+
+  --shadow:
+  0 6px 20px rgba(0,0,0,.08);
+
+  --shadow-hover:
+  0 10px 25px rgba(0,0,0,.12);
+}
+
+/* =========================
+   TEMA ESCURO
+========================= */
+
+[data-theme="dark"]{
+  --bg:#0c0e14;
+
+  --header1:#a50c0c;
+  --header2:#4b0707;
+
+  --card:#161923;
+  --card-hover:#1f2431;
+
+  --text:#ffffff;
+  --text-secondary:#c8c8c8;
+
+  --title:#ffffff;
+
+  --footer:#161923;
+
+  --border:rgba(255,255,255,.08);
+
+  --shadow:
+  0 6px 20px rgba(0,0,0,.35);
+
+  --shadow-hover:
+  0 10px 25px rgba(0,0,0,.45);
+}
+
+/* RESET */
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Segoe UI',Arial,sans-serif;
+}
+
+body{
+  background:var(--bg);
+  color:var(--text);
+  padding-bottom:90px;
+  transition:.3s;
+}
+
+/* HEADER */
+
+.header {
+  background:linear-gradient(
+    135deg,
+    var(--header1),
+    var(--header2)
+  );
+  color:#fff;
+  padding:20px;
+  text-align:center;
+  font-size:22px;
+  font-weight:700;
+  letter-spacing:1px;
+  box-shadow:0 4px 12px rgba(0,0,0,.15);
+
+
+  position:relative;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-weight:bold;
+}
+
+#filaTitulo{
+    font-size:22px;
+}
+
+
+/* CARDS */
+
+.cards {
+  display:flex;
+  gap:10px;
+  padding:15px;
+}
+
+.card {
+  flex:1;
+  background:var(--card);
+  color:var(--text);
+  padding:15px;
+  border-radius:12px;
+  box-shadow:var(--shadow);
+  text-align:center;
+  border:1px solid var(--border);
+}
+
+.card span {
+  font-size:35px;
+  font-weight:bold;
+  display:block;
+  margin-top:5px;
+}
+
+.filas{
+  text-align: center;
+    display:flex;
+    flex-wrap:wrap;
+margin: 5px;
+    display: flex;
+  
+}
+
+.div{
+    width:calc(50% - 20px);
+    background:#ffffff;
+    padding: 20px;
+    box-sizing:border-box;
+    box-shadow:0 4px 12px rgba(0,0,0,.15);
+    border-radius: 12px;
+    border:1px solid var(--border);
+    margin: 10px;
+}
+
+.filas h6 {
+  font-size: 15px;
+}
+
+#totalFila{
+  font-size:70px;
+  margin-top:10px;
+}
+
+/* HORA */
+
+#hora{
+  margin-top:0;
+  padding:10px;
+  border-radius:8px;
+  border:1px solid var(--border);
+  background:var(--input);
+  color:var(--text);
+  font-size:16px;
+  text-align:center;
+}
+
+/* CONTAINER */
+
+.lista, .listas{
+  max-width:900px;
+  margin:20px auto;
+  padding:20px;
+  
+}
+
+.lista h3, .listas {
+  color:var(--title);
+  font-size:22px;
+  font-weight:700;
+  margin-bottom:15px;
+}
+
+hr{
+  border:none;
+  border-top:1px solid var(--border);
+}
+
+/* FILA */
+
+ul{
+  list-style:none;
+  display:flex;
+  flex-direction:column;
+  gap:18px;
+}
+
+/* CARD */
+
+li{
+  background:var(--card);
+  border-radius:18px;
+  padding:10px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  box-shadow:var(--shadow);
+  transition:.25s;
+  border-left:5px solid var(--primary);
+  position:relative;
+    z-index:1;
+}
+
+li:hover, li:active{
+  background:linear-gradient(
+    135deg,
+    var(--header1),
+    var(--header2)
+  );
+  transform:translateY(-2px);
+  box-shadow:var(--shadow-hover);
+}
+
+li.menu-aberto{
+    z-index:9999;
+}
+
+/* INFO */
+
+.info{
+  display:flex;
+  align-items:center;
+  gap:15px;
+  width:100%;
+  cursor:pointer;
+}
+
+.posicao{
+    width:42px;
+    height:42px;
+    border-radius:50%;
+    background:var(--cor-posicao,#8e0404);
+    box-shadow: 5px solid black;
+    color:#fff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:bold;
+    font-size:16px;
+    flex-shrink:0;
+}
+
+.nome{
+  font-size:20px !important;
+  font-weight:700;
+  color:var(--text);
+  text-transform:capitalize;
+}
+
+/* DETALHES */
+
+.oculto{
+  display:none;
+  margin-top:10px;
+  background:var(--card-hover);
+  border-radius:12px;
+  padding:14px;
+  border:1px solid var(--border);
+}
+
+.oculto strong{
+  color:var(--title);
+  font-size:15px;
+}
+
+.detalhes{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+  margin-top:10px;
+}
+
+.detalhes small{
+  font-size:14px;
+  color:var(--text-secondary);
+}
+
+/* BOTÕES */
+
+.alterar{
+    display:flex;
+    gap:10px;
+    margin-left:15px;
+    position:relative;
+}
+
+.menu{
+
+    display:none;
+
+    position:absolute;
+
+    top:35px;
+
+    right:0;
+
+    background:var(--card);
+
+    border-radius:10px;
+
+    border:1px solid var(--border);
+
+    box-shadow:0 5px 15px rgba(0,0,0,.2);
+
+    overflow:hidden;
+
+    z-index: 10000;
+
+}
+
+.menu.active{
+    display:block;
+}
+
+.menu button{
+
+    width:170px;
+
+    border:none;
+
+    background:none;
+
+    text-align:left;
+
+    cursor:pointer;
+
+    color:var(--text);
+
+    z-index: 11;
+
+    display:flex;
+
+align-items:center;
+
+gap:12px;
+
+padding:14px 18px;
+
+font-size:15px;
+
+}
+
+.menu button:hover{
+
+    background:var(--card-hover);
+
+}
+
+.menu-cores{
+
+    display:none;
+
+    margin-top:8px;
+
+    border-top:1px solid var(--border);
+
+     z-index: 5000;
+
+}
+
+.menu-cores.active{
+z-index: 22222;
+    display:block;
+
+}
+
+.btn-menu {
+  border: none;
+  background: none;
+  font-size: 20px;
+  cursor: pointer;
+  z-index: 1;
+}
+
+#check, .remover, .marcar{
+  border:none;
+  color:#000000;
+  width:130px;
+  height:42px;
+  font-size:16px;
+  cursor:pointer;
+  transition:.2s;
+  z-index: 12000;
+}
+
+#check:hover, .remover:hover, .marcarr:hover{
+  transform:scale(1.05);
+}
+
+
+/*=========================
+FOOTER
+=========================*/
+
+footer{
+
+    position:fixed;
+
+    bottom:0;
+
+    left:0;
+
+    width:100%;
+
+    height:70px;
+
+    display:flex;
+
+    justify-content:space-around;
+
+    align-items:center;
+
+    background:var(--footer);
+
+    border-top:1px solid var(--border);
+
+    box-shadow:0 -3px 12px rgba(0,0,0,.08);
+
+    z-index:99;
+
+}
+
+footer button{
+
+    width:55px;
+
+    height:55px;
+
+    border:none;
+
+    background:none;
+
+    border-radius:50%;
+
+    color:var(--muted);
+
+    font-size:22px;
+
+    cursor:pointer;
+
+    transition:.25s;
+
+}
+
+footer button:hover{
+
+    color:var(--primary);
+
+    background:rgba(129,10,10,.08);
+
+}
+
+footer button.active{
+
+    color:var(--primary);
+
+    background:rgba(129,10,10,.12);
+
+}
+
+[data-theme="dark"] footer button.active{
+    color:#fff;
+    background:rgba(208, 10, 10, 0.234);
+}
+
+
+.verde{
+    border-left:8px solid #18b418;
+    --cor-posicao:#18b418;
+}
+
+.amarelo{
+    border-left:8px solid gold;
+    --cor-posicao:gold;
+}
+
+.azul{
+    border-left:8px solid #2196f3;
+    --cor-posicao:#2196f3;
+}
+
+.vermelho{
+    border-left:8px solid #d32f2f;  
+    --cor-posicao:#d32f2f;
+}
+
+.menuFila{
+
+position:absolute;
+
+top:8px;
+
+right:8px;
+
+}
+
+.btnFilaMenu{
+
+background:none;
+
+border:none;
+
+font-size:18px;
+
+cursor:pointer;
+
+color:var(--text);
+
+padding:6px;
+
+}
+
+.opcoesFila{
+
+display:none;
+
+position:absolute;
+
+top:28px;
+
+right:0;
+
+background:var(--card);
+
+border:1px solid var(--border);
+
+border-radius:10px;
+
+box-shadow:0 4px 15px rgba(0,0,0,.2);
+
+overflow:hidden;
+
+z-index:9999;
+
+}
+
+.opcoesFila button{
+
+width:150px;
+
+padding:12px;
+
+background:none;
+
+border:none;
+
+cursor:pointer;
+
+text-align:left;
+
+color:#c62828;
+    font-weight:600;
+
+}
+
+.opcoesFila button:hover{
+
+background:var(--card-hover);
+
+}
+
+.opcoesFila.active{
+
+display:block;
+
+}
+
+.filaExtra{
+    position:relative;
+    overflow:visible;
+}
+
+.filas{
+    overflow:visible;
+}
+
+
+.modal{
+
+    display:none;
+
+    position:fixed;
+
+    left:0;
+    top:0;
+
+    width:100%;
+    height:100%;
+
+    background:rgba(0,0,0,.55);
+
+    z-index:99999;
+
+    justify-content:center;
+    align-items:center;
+    font-size: 20px;
+    
+
+}
+
+.modal.active{
+
+    display:flex;
+
+}
+
+.modal-content{
+
+    position:relative;
+
+    width:92%;
+    max-width:600px;
+
+    margin:15px;
+
+    max-height:85vh;
+
+    overflow:auto;
+
+    background:var(--card);
+
+    color:var(--text);
+
+    border-radius:18px;
+
+    padding:25px;
+
+}
+
+.modal-content h2{
+
+    margin-bottom:25px;
+
+    padding-right:45px;
+
+}
+
+.fecharModal{
+
+    position:absolute;
+
+    top:18px;
+
+    right:18px;
+
+    width:60px;
+height:60px;
+
+display:flex;
+align-items:center;
+justify-content:center;
+
+border-radius:50%;
+
+transition:.2s;
+
+    cursor:pointer;
+
+    color:var(--text);
+
+    line-height:1;
+
+    font-size: 34px;
+
+}
+
+.fecharModal:hover{
+
+    background:rgba(0,0,0,.08);
+
+}
+
+.cardFila{
+
+background:var(--card);
+
+border-radius:18px;
+
+padding:18px;
+
+display:flex;
+
+align-items:center;
+
+box-shadow:var(--shadow);
+
+transition:.25s;
+
+position:relative;
+
+}
+
+.conteudo{
+
+display:flex;
+
+flex-direction:column;
+
+gap:8px;
+
+margin-left:15px;
+
+flex:1;
+
+}
+
+.entrada{
+
+font-size:14px;
+
+opacity:.8;
+
+display:flex;
+
+align-items:center;
+
+gap:6px;
+
+}
+
+.tempo{
+
+display:flex;
+
+align-items:center;
+
+gap:10px;
+
+margin-top:5px;
+
+}
+
+.status{
+
+padding:3px 8px;
+
+border-radius:30px;
+
+color:white;
+
+font-size:14px;
+
+font-weight:bold;
+
+}
+
+.status.verde{
+
+background:#18b418;
+
+}
+
+.status.amarelo{
+
+background:#f4b400;
+
+}
+
+.status.vermelho{
+
+background:#d32f2f; 
+
+}
+
+.tempoEspera{
+
+font-weight:bold;
+
+font-size:15px;
+
+}
+
+/*=========================
+PESQUISA
+=========================*/
+
+.pesquisa{
+    display:flex;
+    align-items:center;
+    gap:10px;
+
+    margin:0px 0;
+
+    padding:12px 15px;
+
+    background:var(--card);
+
+    border:1px solid var(--border);
+
+    border-radius:14px;
+
+    box-shadow:var(--shadow);
+}
+
+.pesquisa i{
+    color:var(--text-secondary);
+    font-size:18px;
+}
+
+.pesquisa input{
+
+    flex:1;
+
+    border:none;
+
+    outline:none;
+
+    background:transparent;
+
+    color:var(--text);
+
+    font-size:16px;
+
+}
+
+.pesquisa input::placeholder{
+
+    color:var(--text-secondary);
+
+}
+
+#voltar{
+    position:absolute;
+    left:20px;
+    display:inline-flex;
+    font-size: 25px;
+    cursor: pointer;
+}
+
+.fila-vazia{
+
+    margin:50px auto;
+
+    max-width:400px;
+
+    background:var(--card);
+
+    border:1px solid var(--border);
+
+    border-radius:20px;
+
+    padding:40px 25px;
+
+    text-align:center;
+
+    box-shadow:var(--shadow);
+
+}
+
+
+.icone-vazio{
+
+    width:80px;
+    height:80px;
+
+    margin:auto;
+
+    border-radius:50%;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    background:rgba(211,14,14,.12);
+
+    color:var(--primary);
+
+    font-size:35px;
+
+}
+
+
+.fila-vazia h2{
+
+    margin-top:20px;
+
+    color:var(--text);
+
+}
+
+
+.fila-vazia p{
+
+    margin-top:10px;
+
+    color:var(--text-secondary);
+
+}
+
+
+.fila-vazia small{
+
+    display:block;
+
+    margin-top:15px;
+
+    color:var(--text-secondary);
+
+}
+
+.btnAdicionar{
+
+    margin-top:25px;
+
+    padding:12px 25px;
+
+    border:none;
+
+    border-radius:30px;
+
+    background:var(--primary);
+
+    color:white;
+
+    font-size:16px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    margin-left:auto;
+    margin-right:auto;
+
+    transition:.3s;
+
+}
+
+
+.btnAdicionar:hover{
+
+    transform:translateY(-3px);
+
+    box-shadow:var(--shadow-hover);
+
+}
+
+/* RESPONSIVO */
+
+@media(max-width:600px){
+
+  .header{
+    font-size:18px;
+    padding:18px;
+  }
+
+  .nome{
+    font-size:16px;
+  }
+
+  .posicao{
+    width:36px;
+    height:36px;
+    font-size:14px;
+  }
+
+  li{
+    padding:14px;
+  }
+}
+
+
+</style>
+</head>
+
+<body>
+
+<div class="header">
+    <i class="fa-solid fa-arrow-left"
+       id="voltar"
+       onclick="window.location.href='fila.online.html'">
+    </i>
+
+    <span id="filaTitulo">Carregando...</span>
+</div>
+
+
+<div class="cards">
+
+<div class="card">
+FILA ATUAL:
+<span id="totalFila">0</span>
+</div>
+
+<div class="card">
+Último Pedido
+<span id="ultimoChamado">---</span><br>
+<input type="time" id="hora">
+</div>
+
+
+
+
+</div>
+
+
+<!-- LISTA --> 
+
+<div class="lista">
+
+<div class="pesquisa">
+    <i class="fa-solid fa-magnifying-glass"></i>
+
+    <input
+        type="text"
+        id="pesquisaCliente"
+        placeholder="Pesquisar Clientes..."
+        autocomplete="off">
+</div>
+
+<hr style="margin:30px;">
+
+<div class="fila">
+  <ul id="filaLista"><div id="filaVazia" class="fila-vazia">
+
+    <div class="icone-vazio">
+        <i class="fa-solid fa-users-slash"></i>
+    </div>
+
+    <h2>Fila vazia</h2>
+
+    <p>
+        Nenhum cliente aguardando atendimento.
+    </p>
+
+    <small>
+        Novos clientes aparecerão automaticamente aqui.
+    </small>
+
+</div></ul>
+</div>
+
+<hr style="margin:40px;"> 
+
+</div>
+
+<hr style="margin:40px;"> 
+
+</div>
+
+
+
+<div id="modalPedido" class="modal">
+
+    <div class="modal-content">
+
+        <span class="fecharModal">&times;</span>
+
+        <h2>Pedido</h2>
+
+        <div id="conteudoPedido"></div>
+
+    </div>
+
+</div>
+
+<footer>
+<button onclick="window.location.href='cadastro.fila.online.html'" id="inicio"><i class="fa-solid fa-house" id="home"></i></button>
+<button onclick="window.location.href='catalogoEmpresario.prototipo.html'" id="produto"><i class="fa-solid fa-clipboard-list"></i></button>
+<button onclick="window.location.href='fila.online.html'" class="active"><i class="fa-solid fa-users-line" id="fila"></i></button>
+<button onclick="window.location.href='perfilEmpresario.prototipo.html'" id="perfil"><i class="fa-solid fa-user"></i></button>
+<button onclick="window.location.href='Confi.prototipo.html'" id="confi"><i class="fa-solid fa-gear"></i></button>
+</footer>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
+
+import {
+  getFirestore,
+  collection,
+  query,
+  orderBy,
+  onSnapshot,
+  where,
+  limit,
+  doc,
+  getDoc,
+  addDoc,
+  serverTimestamp
+} from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
+
+/* =========================
+   FIREBASE
+========================= */
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAvXF36Fi9K25Ub1czRkZ_G9OQ_dwcm5rk",
+  authDomain: "locatego.firebaseapp.com",
+  projectId: "locatego",
+  storageBucket: "locatego.firebasestorage.app",
+  messagingSenderId: "904411855752",
+  appId: "1:904411855752:web:8a2cb38545cba994d3d83d"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+/* =========================
+   PARAMETRO DA URL
+========================= */
+
+const params = new URLSearchParams(window.location.search);
+const filaId = params.get("id");
+
+
+if (!filaId) {
+  alert("Fila inválida.");
+  window.location.href = "fila.online.html";
+}
+
+let fila = null;
+
+
+const colecoes = [
+    "filas",
+    "filasEspecificas",
+    "delivery",
+    "presencial",
+    "retirada"
+];
+
+
+for(const nomeColecao of colecoes){
+
+    const referencia = doc(
+        db,
+        nomeColecao,
+        filaId
+    );
+
+    const resultado = await getDoc(referencia);
+
+
+    if(resultado.exists()){
+
+        fila = resultado.data();
+
+        console.log(
+            "Fila encontrada em:",
+            nomeColecao
+        );
+
+        break;
+    }
+
+}
+
+
+if(fila){
+
+    document.getElementById("filaTitulo").innerText =
+    fila.nome.toUpperCase();
+
+
+    document.documentElement.style
+    .setProperty(
+        "--primary",
+        fila.cor || "#d30e0e"
+    );
+
+
+}
+else{
+
+    console.log(
+        "Nenhuma fila encontrada"
+    );
+
+}
+
+/* =========================
+   ELEMENTOS
+========================= */
+
+const lista = document.getElementById("filaLista");
+const totalFila = document.getElementById("totalFila");
+const ultimoChamado = document.getElementById("ultimoChamado");
+const horaInput = document.getElementById("hora");
+const filaLista = document.getElementById("filaLista");
+const pesquisaCliente = document.getElementById("pesquisaCliente");
+
+/* =========================
+   HORA
+========================= */
+
+function atualizarHora() {
+  const agora = new Date();
+
+  horaInput.value =
+    agora.getHours().toString().padStart(2, "0") +
+    ":" +
+    agora.getMinutes().toString().padStart(2, "0");
+}
+
+setInterval(atualizarHora, 1000);
+atualizarHora();
+
+/* =========================
+   CLIENTES DA FILA (FILTRADO)
+========================= */
+
+const filaQuery = query(
+    collection(db, "fila"),
+    where("filaId", "==", filaId),
+    orderBy("criadoEm", "asc")
+);
+
+console.log(filaId);
+
+onSnapshot(filaQuery, (snapshot) => {
+
+
+  lista.innerHTML = "";
+
+
+  totalFila.innerText = snapshot.size;
+
+
+  if(snapshot.empty){
+
+
+      lista.innerHTML = `
+
+      <div class="fila-vazia">
+
+
+          <div class="icone-vazio">
+
+              <i class="fa-solid fa-users-slash"></i>
+
+          </div>
+
+
+          <h2>Fila vazia</h2>
+
+
+          <p>
+          Nenhum cliente aguardando atendimento.
+          </p>
+
+
+          <small>
+          Novos clientes aparecerão automaticamente.
+          </small>
+
+
+          <button class="btnAdicionar"
+          onclick="adicionarCliente()">
+
+              <i class="fa-solid fa-user-plus"></i>
+
+              Adicionar cliente
+
+          </button>
+
+
+      </div>
+
+      `;
+
+
+      return;
+
+  }
+
+
+
+  let posicao = 1;
+
+
+  snapshot.forEach((docItem)=>{
+
+
+      const pessoa = docItem.data();
+
+
+      criarCard(
+          docItem.id,
+          pessoa,
+          posicao
+      );
+
+
+      posicao++;
+
+
+  });
+
+
+});
+
+/* =========================
+   CRIAR CARD
+========================= */
+
+
+function criarCard(id, pessoa, posicao) {
+
+  const cores = {
+    verde: "#18b418",
+    amarelo: "gold",
+    azul: "#2196f3",
+    vermelho: "#d32f2f"
+};
+
+const cor = cores[pessoa.cor] || pessoa.cor || "#d32f2f";
+
+const criado = pessoa.criadoEm?.toDate?.();
+
+      //detales de tempo
+const entrada = pessoa.criadoEm?.toDate();
+
+const agora = new Date();
+
+let minutos = Math.floor(
+    (agora - entrada) / 60000
+);
+
+if (criado) {
+    minutos = Math.floor(
+        (Date.now() - criado.getTime()) / 60000
+    );
+}
+
+let status = "verde";
+
+if (minutos >= 50) {
+    status = "vermelho";
+}
+else if (minutos >= 30) {
+    status = "amarelo";
+}
+
+if(minutos>=50){
+
+status="vermelho";
+
+}
+
+else if(minutos>=30){
+
+status="amarelo";
+
+}
+
+if (criado) {
+    minutos = Math.floor((Date.now() - criado.getTime()) / 60000);
+}
+  lista.insertAdjacentHTML(
+    "beforeend",
+    `
+<li
+style="border-left:6px solid ${cor}; --cor-posicao:${cor};">
+
+    <div class="info" onclick="abrirPedido('${id}')">
+
+        <div
+class="posicao"
+style="background:${cor};">
+            ${posicao}
+        </div>
+
+    <div class="conteudo">
+      <div class="nome">
+        ${pessoa.cliente || "Sem nome"}
+      </div>
+    <div class="entrada">
+
+<div class="tempo">
+<span class="status ${status}">
+Esperando
+</span>
+
+<span class="tempoEspera">
+${minutos} minutos
+</span>
+
+</div>
+</div>
+
+</div>
+</div>
+    <div class="alterar">
+
+        <button class="btn-menu">
+            <i class="fa-solid fa-bars"></i>
+        </button>
+
+        <div class="menu">
+
+            <button onclick="finalizarPessoa('${id}')">
+                ATENDER
+            </button>
+
+            <button onclick="removerPessoa('${id}')">
+                EXCLUIR
+            </button>
+
+            <button>
+                PRIORIZAR
+            </button>
+
+            <button onclick="abrirCores(this)">
+                ALTERAR COR
+            </button>
+
+            <div class="menu-cores">
+
+                <button onclick="marcarCor('${id}','verde')">🟢 Verde</button>
+                <button onclick="marcarCor('${id}','amarelo')">🟡 Amarelo</button>
+                <button onclick="marcarCor('${id}','azul')">🔵 Azul</button>
+                <button onclick="marcarCor('${id}','vermelho')">🔴 Vermelho</button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</li>
+`
+  );
+}
+window.abrirFila = function(id){
+
+    window.location.href =
+    "fila.especifica.html?id=" + id;
+
+}
+/* =========================
+   ÚLTIMO ATENDIMENTO (FILTRADO)
+========================= */
+
+const ultimoQuery = query(
+  collection(db, "ultimoAtendimento"),
+  orderBy("horario", "desc"),
+  limit(1),
+  where(
+"filaId",
+"==",
+filaId
+)
+);
+
+onSnapshot(ultimoQuery, (snapshot) => {
+  if (snapshot.empty) {
+    ultimoChamado.innerText = "---";
+    return;
+  }
+
+  const pessoa = snapshot.docs[0].data();
+  ultimoChamado.innerText = pessoa.cliente;
+});
+
+/* =========================
+   ABRIR PEDIDO
+========================= */
+
+window.abrirPedido = async function (id) {
+  const snap = await getDoc(doc(db, "fila", id));
+
+  if (!snap.exists()) return;
+
+  console.log(snap.data());
+
+};
+
+/* =========================
+   ABRIR MENU
+========================= */
+
+document.addEventListener("click",(e)=>{
+
+    if(e.target.closest(".menu")) return;
+
+    const botao = e.target.closest(".btn-menu");
+
+    if(botao){
+
+        e.stopPropagation();
+
+        document.querySelectorAll(".menu").forEach(menu=>{
+            menu.classList.remove("active");
+        });
+
+        document.querySelectorAll(".menu-cores").forEach(menu=>{
+            menu.classList.remove("active");
+        });
+
+        document.querySelectorAll("li").forEach(li=>{
+            li.classList.remove("menu-aberto");
+        });
+
+        const li = botao.closest("li");
+
+        li.classList.add("menu-aberto");
+
+        li.querySelector(".menu").classList.add("active");
+
+        return;
+    }
+
+    document.querySelectorAll(".menu").forEach(menu=>{
+        menu.classList.remove("active");
+    });
+
+    document.querySelectorAll(".menu-cores").forEach(menu=>{
+        menu.classList.remove("active");
+    });
+
+    document.querySelectorAll("li").forEach(li=>{
+        li.classList.remove("menu-aberto");
+    });
+
+});
+
+
+
+/* =========================
+   COR
+========================= */
+
+window.abrirCores = function(botao){
+
+    const menu = botao.nextElementSibling;
+
+    document.querySelectorAll(".menu-cores").forEach(m=>{
+
+        if(m !== menu){
+            m.classList.remove("active");
+        }
+
+    });
+
+    menu.classList.toggle("active");
+}
+
+
+//PESQUISA
+pesquisaCliente.addEventListener("input", () => {
+
+    const texto =
+    pesquisaCliente.value.toLowerCase();
+
+    document.querySelectorAll("#filaLista li").forEach(card=>{
+
+        const nome =
+        card.querySelector(".nome")
+        .textContent
+        .toLowerCase();
+
+        card.style.display =
+        nome.includes(texto)
+        ? "flex"
+        : "none";
+
+    });
+
+});
+
+window.adicionarCliente=function(){
+
+
+    alert("Abrir cadastro de cliente");
+
+ window.location.href = "cadastro.fila.online.html";
+}
+</script>
+<script src="tema.js"></script>
