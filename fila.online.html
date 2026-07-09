@@ -1,0 +1,1901 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="data:,">
+
+
+<title>Fila Online</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="stylesheet" href="tema.css">
+
+<style>
+
+    :root{
+  --primary:#d30e0e;
+
+  /* CLARO */
+  --bg:#f4f6f9;
+  --header1:#d30e0e;
+  --header2:#6d0909;
+
+  --card:#ffffff;
+  --card-hover:#fafafa;
+
+  --text:#222222;
+  --text-secondary:#555555;
+
+  --title:#8c0a0a;
+
+  --footer:#ffffff;
+
+  --border:#ececec;
+
+  --shadow:
+  0 6px 20px rgba(0,0,0,.08);
+
+  --shadow-hover:
+  0 10px 25px rgba(0,0,0,.12);
+}
+
+/* =========================
+   TEMA ESCURO
+========================= */
+
+[data-theme="dark"]{
+  --bg:#0c0e14;
+
+  --header1:#a50c0c;
+  --header2:#4b0707;
+
+  --card:#161923;
+  --card-hover:#1f2431;
+
+  --text:#ffffff;
+  --text-secondary:#c8c8c8;
+
+  --title:#ffffff;
+
+  --footer:#161923;
+
+  --border:rgba(255,255,255,.08);
+
+  --shadow:
+  0 6px 20px rgba(0,0,0,.35);
+
+  --shadow-hover:
+  0 10px 25px rgba(0,0,0,.45);
+}
+
+/* RESET */
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Segoe UI',Arial,sans-serif;
+}
+
+body{
+  background:var(--bg);
+  color:var(--text);
+  padding-bottom:90px;
+  transition:.3s;
+}
+
+/* HEADER */
+
+.header {
+  background:linear-gradient(
+    135deg,
+    var(--header1),
+    var(--header2)
+  );
+  color:#fff;
+  padding:20px;
+  text-align:center;
+  font-size:22px;
+  font-weight:700;
+  letter-spacing:1px;
+  box-shadow:0 4px 12px rgba(0,0,0,.15);
+}
+
+
+/* CARDS */
+
+.cards {
+  display:flex;
+  gap:10px;
+  padding:15px;
+}
+
+.card {
+  flex:1;
+  background:var(--card);
+  color:var(--text);
+  padding:15px;
+  border-radius:12px;
+  box-shadow:var(--shadow);
+  text-align:center;
+  border:1px solid var(--border);
+}
+
+.card span {
+  font-size:35px;
+  font-weight:bold;
+  display:block;
+  margin-top:5px;
+}
+
+.filas{
+  text-align: center;
+    display:flex;
+    flex-wrap:wrap;
+margin: 5px;
+    display: flex;
+  
+}
+
+.div{
+    width:calc(50% - 20px);
+    background:#ffffff;
+    padding: 20px;
+    box-sizing:border-box;
+    box-shadow:0 4px 12px rgba(0,0,0,.15);
+    border-radius: 12px;
+    border:1px solid var(--border);
+    margin: 10px;
+}
+
+.filas h6 {
+  font-size: 15px;
+}
+
+#totalFila{
+  font-size:70px;
+  margin-top:10px;
+}
+
+/* HORA */
+
+#hora{
+  margin-top:0;
+  padding:10px;
+  border-radius:8px;
+  border:1px solid var(--border);
+  background:var(--input);
+  color:var(--text);
+  font-size:16px;
+  text-align:center;
+}
+
+/* CONTAINER */
+
+.lista, .listas{
+  max-width:900px;
+  margin:20px auto;
+  padding:20px;
+  
+}
+
+.lista h3, .listas {
+  color:var(--title);
+  font-size:22px;
+  font-weight:700;
+  margin-bottom:15px;
+}
+
+hr{
+  border:none;
+  border-top:1px solid var(--border);
+}
+
+/* FILA */
+
+ul{
+  list-style:none;
+  display:flex;
+  flex-direction:column;
+  gap:18px;
+}
+
+/* CARD */
+
+li{
+  background:var(--card);
+  border-radius:18px;
+  padding:10px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  box-shadow:var(--shadow);
+  transition:.25s;
+  border-left:5px solid var(--primary);
+  position:relative;
+    z-index:1;
+}
+
+li:hover, li:active{
+  background:linear-gradient(
+    135deg,
+    var(--header1),
+    var(--header2)
+  );
+  transform:translateY(-2px);
+  box-shadow:var(--shadow-hover);
+}
+
+li.menu-aberto{
+    z-index:9999;
+}
+
+/* INFO */
+
+.info{
+  display:flex;
+  align-items:center;
+  gap:15px;
+  width:100%;
+  cursor:pointer;
+}
+
+.posicao{
+    width:42px;
+    height:42px;
+    border-radius:50%;
+    background:#d32f2f;
+    box-shadow: 5px solid black;
+    color:#fff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:bold;
+    font-size:16px;
+    flex-shrink:0;
+}
+
+.nome{
+  font-size:20px !important;
+  font-weight:700;
+  color:var(--text);
+  text-transform:capitalize;
+}
+
+/* DETALHES */
+
+.oculto{
+  display:none;
+  margin-top:10px;
+  background:var(--card-hover);
+  border-radius:12px;
+  padding:14px;
+  border:1px solid var(--border);
+}
+
+.oculto strong{
+  color:var(--title);
+  font-size:15px;
+}
+
+.detalhes{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+  margin-top:10px;
+}
+
+.detalhes small{
+  font-size:14px;
+  color:var(--text-secondary);
+}
+
+/* BOTÕES */
+
+.alterar{
+    display:flex;
+    gap:10px;
+    margin-left:15px;
+    position:relative;
+}
+
+.menu{
+
+    display:none;
+
+    position:absolute;
+
+    top:35px;
+
+    right:0;
+
+    background:var(--card);
+
+    border-radius:10px;
+
+    border:1px solid var(--border);
+
+    box-shadow:0 5px 15px rgba(0,0,0,.2);
+
+    overflow:hidden;
+
+    z-index: 10000;
+
+}
+
+.menu.active{
+    display:block;
+}
+
+.menu button{
+
+    width:170px;
+
+    border:none;
+
+    background:none;
+
+    text-align:left;
+
+    cursor:pointer;
+
+    color:var(--text);
+
+    z-index: 11;
+
+    display:flex;
+
+align-items:center;
+
+gap:12px;
+
+padding:14px 18px;
+
+font-size:15px;
+
+}
+
+.menu button:hover{
+
+    background:var(--card-hover);
+
+}
+
+.menu-cores{
+
+    display:none;
+
+    margin-top:8px;
+
+    border-top:1px solid var(--border);
+
+     z-index: 5000;
+
+}
+
+.menu-cores.active{
+z-index: 22222;
+    display:block;
+
+}
+
+.btn-menu {
+  border: none;
+  background: none;
+  font-size: 20px;
+  cursor: pointer;
+  z-index: 1;
+}
+
+#check, .remover, .marcar{
+  border:none;
+  color:#000000;
+  width:130px;
+  height:42px;
+  font-size:16px;
+  cursor:pointer;
+  transition:.2s;
+  z-index: 12000;
+}
+
+#check:hover, .remover:hover, .marcarr:hover{
+  transform:scale(1.05);
+}
+
+
+/*=========================
+FOOTER
+=========================*/
+
+footer{
+
+    position:fixed;
+
+    bottom:0;
+
+    left:0;
+
+    width:100%;
+
+    height:70px;
+
+    display:flex;
+
+    justify-content:space-around;
+
+    align-items:center;
+
+    background:var(--footer);
+
+    border-top:1px solid var(--border);
+
+    box-shadow:0 -3px 12px rgba(0,0,0,.08);
+
+    z-index:99;
+
+}
+
+footer button{
+
+    width:55px;
+
+    height:55px;
+
+    border:none;
+
+    background:none;
+
+    border-radius:50%;
+
+    color:var(--muted);
+
+    font-size:22px;
+
+    cursor:pointer;
+
+    transition:.25s;
+
+}
+
+footer button:hover{
+
+    color:var(--primary);
+
+    background:rgba(129,10,10,.08);
+
+}
+
+footer button.active{
+
+    color:var(--primary);
+
+    background:rgba(129,10,10,.12);
+
+}
+
+[data-theme="dark"] footer button.active{
+    color:#fff;
+    background:rgba(208, 10, 10, 0.234);
+}
+
+[data-theme="dark"] .div{
+    color:#fff;
+    background:#161923;
+}
+
+[data-theme="dark"] .btn-menu{
+    color:#fff;
+}
+
+.menuFila{
+
+position:absolute;
+
+top:8px;
+
+right:8px;
+
+}
+
+.btnFilaMenu{
+
+background:none;
+
+border:none;
+
+font-size:18px;
+
+cursor:pointer;
+
+color:var(--text);
+
+padding:6px;
+
+}
+
+.opcoesFila{
+
+display:none;
+
+position:absolute;
+
+top:28px;
+
+right:0;
+
+background:var(--card);
+
+border:1px solid var(--border);
+
+border-radius:10px;
+
+box-shadow:0 4px 15px rgba(0,0,0,.2);
+
+overflow:hidden;
+
+z-index:9999;
+
+}
+
+.opcoesFila button{
+
+width:150px;
+
+padding:12px;
+
+background:none;
+
+border:none;
+
+cursor:pointer;
+
+text-align:left;
+
+color:#c62828;
+    font-weight:600;
+
+}
+
+.opcoesFila button:hover{
+
+background:var(--card-hover);
+
+}
+
+.opcoesFila.active{
+
+display:block;
+
+}
+
+.filaExtra{
+    position:relative;
+    overflow:visible;
+}
+
+.filas{
+    overflow:visible;
+}
+
+
+.modal{
+
+    display:none;
+
+    position:fixed;
+
+    left:0;
+    top:0;
+
+    width:100%;
+    height:100%;
+
+    background:rgba(0,0,0,.55);
+
+    z-index:99999;
+
+    justify-content:center;
+    align-items:center;
+    font-size: 20px;
+    
+
+}
+
+.modal.active{
+
+    display:flex;
+
+}
+
+.modal-content{
+
+    position:relative;
+
+    width:92%;
+    max-width:600px;
+
+    margin:15px;
+
+    max-height:85vh;
+
+    overflow:auto;
+
+    background:var(--card);
+
+    color:var(--text);
+
+    border-radius:18px;
+
+    padding:25px;
+
+}
+
+.modal-content h2{
+
+    margin-bottom:25px;
+
+    padding-right:45px;
+
+}
+
+.fecharModal{
+
+    position:absolute;
+
+    top:18px;
+
+    right:18px;
+
+    width:60px;
+height:60px;
+
+display:flex;
+align-items:center;
+justify-content:center;
+
+border-radius:50%;
+
+transition:.2s;
+
+    cursor:pointer;
+
+    color:var(--text);
+
+    line-height:1;
+
+    font-size: 34px;
+
+}
+
+.fecharModal:hover{
+
+    background:rgba(0,0,0,.08);
+
+}
+
+.cardFila{
+
+background:var(--card);
+
+border-radius:18px;
+
+padding:18px;
+
+display:flex;
+
+align-items:center;
+
+box-shadow:var(--shadow);
+
+transition:.25s;
+
+position:relative;
+
+}
+
+.conteudo{
+
+display:flex;
+
+flex-direction:column;
+
+gap:8px;
+
+margin-left:15px;
+
+flex:1;
+
+}
+
+.entrada{
+
+font-size:14px;
+
+opacity:.8;
+
+display:flex;
+
+align-items:center;
+
+gap:6px;
+
+}
+
+.tempo{
+
+display:flex;
+
+align-items:center;
+
+gap:10px;
+
+margin-top:5px;
+
+}
+
+.status{
+
+padding:3px 8px;
+
+border-radius:30px;
+
+color:white;
+
+font-size:14px;
+
+font-weight:bold;
+
+}
+
+.status.verde{
+
+background:#18b418;
+
+}
+
+.status.amarelo{
+
+background:#f4b400;
+
+}
+
+.status.vermelho{
+
+background:#d32f2f;
+
+}
+
+.tempoEspera{
+
+font-weight:bold;
+
+font-size:15px;
+
+}
+
+/*=========================
+PESQUISA
+=========================*/
+
+.pesquisa{
+    display:flex;
+    align-items:center;
+    gap:10px;
+
+    margin:25px 0;
+
+    padding:12px 15px;
+
+    background:var(--card);
+
+    border:1px solid var(--border);
+
+    border-radius:14px;
+
+    box-shadow:var(--shadow);
+}
+
+.pesquisa i{
+    color:var(--text-secondary);
+    font-size:18px;
+}
+
+.pesquisa input{
+
+    flex:1;
+
+    border:none;
+
+    outline:none;
+
+    background:transparent;
+
+    color:var(--text);
+
+    font-size:16px;
+
+}
+
+.pesquisa input::placeholder{
+
+    color:var(--text-secondary);
+
+}
+
+#pesquisaProdutos {
+    width: 100%;
+    margin: 15px;
+}
+
+.arrastando{
+
+    opacity:0.5;
+
+    transform:scale(1.03);
+
+    cursor:grabbing;
+
+}
+
+/* RESPONSIVO */
+
+@media(max-width:600px){
+
+  .header{
+    font-size:18px;
+    padding:18px;
+  }
+
+  .nome{
+    font-size:16px;
+  }
+
+  .posicao{
+    width:36px;
+    height:36px;
+    font-size:14px;
+  }
+
+  li{
+    padding:14px;
+  }
+}
+
+
+</style>
+</head>
+
+<body>
+
+<div class="header">
+FILA GERAL
+</div>
+
+
+<div class="cards">
+
+<div class="card">
+FILA ATUAL:
+<span id="totalFila">0</span>
+</div>
+
+<div class="card">
+Último Pedido
+<span id="ultimoChamado">---</span><br>
+<input type="time" id="hora">
+</div>
+
+
+
+
+</div>
+
+
+<!-- LISTA -->
+  <div class="filas" id="listaFilas">
+<div class="pesquisa" id="pesquisaProdutos">
+    <i class="fa-solid fa-magnifying-glass"></i>
+
+    <input
+        type="text"
+        id="pesquisaFila"
+        placeholder="Pesquisar Filas..."
+        autocomplete="off">
+</div>
+
+
+<div class="div" onclick="irParaFila('aEKfIBOJ0STevpD3yi9n')">
+    <i class="fa-solid fa-users-line"></i>
+    <h6>PRESENCIAL</h6>
+</div>
+
+<div class="div" onclick="irParaFila('daR85H7p7cHPsi9UjT2D')">
+    <i class="fa-solid fa-users-line"></i>
+    <h6>DELIVERY</h6>
+</div>
+
+<div class="div" onclick="irParaFila('HVZOXrxlCWZQrzwhoFrH')">
+    <i class="fa-solid fa-users-line"></i>
+    <h6>RETIRADA</h6>
+</div>
+
+<div class="div" onclick="irParaFila('xW2bmNDp7CiUquxZZXei')">
+    <i class="fa-solid fa-users-line"></i>
+    <h6>AGENDAMENTO</h6>
+</div>
+
+<div class="div" id="novaFila">
+    <h1>+</h1>
+</div>
+
+</div>
+
+<div class="lista">
+
+<h3>FILA GERAL:</h3>
+
+<div class="pesquisa">
+    <i class="fa-solid fa-magnifying-glass"></i>
+
+    <input
+        type="text"
+        id="pesquisaCliente"
+        placeholder="Pesquisar Clientes..."
+        autocomplete="off">
+</div>
+
+<hr style="margin:30px;">
+
+<div class="fila">
+  <ul id="filaLista"></ul>
+</div>
+
+<hr style="margin:40px;"> 
+
+</div>
+
+<hr style="margin:40px;"> 
+
+</div>
+
+<div id="modalPedido" class="modal">
+
+    <div class="modal-content">
+
+        <span class="fecharModal">&times;</span>
+
+        <h2>Pedido</h2>
+
+        <div id="conteudoPedido"></div>
+
+    </div>
+
+</div>
+
+<footer>
+<button onclick="window.location.href='cadastro.fila.online.html'" id="inicio"><i class="fa-solid fa-house" id="home"></i></button>
+<button onclick="window.location.href='catalogoEmpresario.prototipo.html'" id="produto"><i class="fa-solid fa-clipboard-list"></i></button>
+<button onclick="window.location.href='fila.online.html'" class="active"><i class="fa-solid fa-users-line" id="fila"></i></button>
+<button onclick="window.location.href='perfilEmpresario.prototipo.html'" id="perfil"><i class="fa-solid fa-user"></i></button>
+<button onclick="window.location.href='Confi.prototipo.html'" id="confi"><i class="fa-solid fa-gear"></i></button>
+</footer>
+
+<script type="module">
+
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
+
+import {
+  getFirestore,
+  collection,
+  query,
+  orderBy,
+  onSnapshot,
+  deleteDoc,
+  updateDoc,
+  addDoc,
+  getDoc,
+  serverTimestamp,
+  limit,
+  doc,
+  where
+}
+from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
+
+/* =========================
+   FIREBASE
+========================= */
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAvXF36Fi9K25Ub1czRkZ_G9OQ_dwcm5rk",
+  authDomain: "locatego.firebaseapp.com",
+  projectId: "locatego",
+  storageBucket: "locatego.firebasestorage.app",
+  messagingSenderId: "904411855752",
+  appId: "1:904411855752:web:8a2cb38545cba994d3d83d"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+/* =========================
+   ELEMENTOS
+========================= */
+
+const filaLista = document.getElementById("filaLista");
+const pesquisaCliente = document.getElementById("pesquisaCliente");
+const pesquisaFila = document.getElementById("pesquisaFila");
+const totalFila = document.getElementById("totalFila");
+const ultimoChamadoElemento = document.getElementById("ultimoChamado");
+const horaInput = document.getElementById("hora");
+const params = new URLSearchParams(window.location.search);
+const idFila = params.get("id");
+
+const filaConfigQuery = query(
+    collection(db, "filasEspecificas"),
+    where("id", "==", idFila)
+);
+
+let fila = [];
+let quantidadeAtual = 1;
+let ultimoChamado = "---";
+let catalogo = [];
+let pedidos = {};
+
+/* =========================
+   CARDS DE TRATAMENTO
+========================= */
+
+const filaRef = collection(db, "fila");
+
+const filaOrdenada = query(
+  filaRef,
+  orderBy("criadoEm")
+);
+
+ultimoChamadoElemento.innerText = ultimoChamado;
+
+const ultimoRef=query(
+
+collection(
+db,
+"ultimoAtendimento"
+),
+
+orderBy(
+
+"horario",
+
+"desc"
+
+),
+
+limit(1)
+
+);
+
+function atualizarHora(){
+
+    const agora = new Date();
+
+    horaInput.value =
+        agora.getHours().toString().padStart(2,"0")
+        + ":" +
+        agora.getMinutes().toString().padStart(2,"0");
+
+}
+
+setInterval(atualizarHora,1000);
+
+atualizarHora();
+
+
+/* =========================
+   FILA TEMPO REAL
+========================= */
+
+onSnapshot(filaOrdenada, (snapshot) => {
+
+  fila = [];
+
+  snapshot.forEach((docItem) => {
+
+    fila.push({
+      id: docItem.id,
+      ...docItem.data()
+    });
+
+  });
+
+  // Atualiza o número de pessoas na fila
+    totalFila.textContent = fila.length;
+
+    // Se essas funções existirem
+    if (typeof renderFila === "function") {
+        renderFila();
+
+}});
+
+/* =========================
+   NOVO CARD FILA
+========================= */
+
+async function criarFila(){
+
+    const nome = prompt("Nome da nova fila:");
+
+    if(!nome) return;
+
+    const cor = prompt("Cor da fila:","rgb(8, 161, 19)");
+
+    if(!cor) return;
+
+    const pagina =
+        "fila." +
+        nome.toLowerCase().replace(/\s+/g,"") +
+        ".html";
+
+    await addDoc(
+        collection(db,"filasEspecificas"),
+        {
+            nome,
+            cor,
+            criadoEm:serverTimestamp()
+        }
+    );
+
+    snapshot.forEach(docItem=>{
+
+const fila=docItem.data();
+
+const id=docItem.id;
+
+});
+
+}
+
+
+window.excluirFila = async function(id){
+
+    if(!confirm("Excluir esta fila?"))
+        return;
+
+    await deleteDoc(
+        doc(db,"filasEspecificas",id)
+    );
+
+}
+
+window.abrirMenuFila = function(botao){
+
+    document
+    .querySelectorAll(".opcoesFila")
+    .forEach(menu=>{
+
+        if(menu!==botao.nextElementSibling)
+            menu.classList.remove("active");
+
+    });
+
+    botao.nextElementSibling.classList.toggle("active");
+
+}
+
+/* =========================
+   FILA EM TEMPO REAL
+========================= */
+
+const filaQuery = query(
+  collection(db, "fila"),
+  orderBy("criadoEm", "asc")
+);
+
+onSnapshot(
+  filaQuery,
+  (snapshot) => {
+
+    console.log(snapshot.docs);
+
+    filaLista.innerHTML = "";
+
+    let posicao = 1;
+
+    snapshot.forEach((docItem) => {
+
+      const pessoa = docItem.data();
+const filaId = docItem.id;
+      const cores = {
+    verde:"#18b418",
+    amarelo:"gold",
+    azul:"#2196f3",
+    vermelho:"#d32f2f"
+};
+
+const cor =
+    cores[pessoa.cor] || pessoa.cor || "#d32f2f";
+
+      //detales de tempo
+const entrada = pessoa.criadoEm?.toDate();
+
+const agora = new Date();
+
+const minutos = Math.floor(
+
+(agora - entrada)/60000
+
+);
+
+let status="verde";
+
+if(minutos>=50){
+
+status="vermelho";
+
+}
+
+else if(minutos>=30){
+
+status="amarelo";
+
+}
+
+const horaEntrada =
+    entrada.getHours().toString().padStart(2,"0")
+    + ":" +
+    entrada.getMinutes().toString().padStart(2,"0");
+     
+
+      filaLista.innerHTML += `
+
+<li
+data-id="${docItem.id}"
+draggable="false"
+style="border-left:6px solid ${cor}; --cor-posicao:${cor};">
+ <div onclick="abrirPedido('${docItem.id}')">
+    <div class="info">
+
+        <div
+class="posicao"
+style="background:${cor};">
+    ${posicao}
+</div>
+
+    
+
+    <div class="conteudo">
+
+        <div class="nome">
+            ${pessoa.cliente || "Sem nome"}
+        </div>
+
+    <div class="entrada">
+
+<div class="tempo">
+<span class="status ${status}">
+Esperando
+</span>
+
+<span class="tempoEspera">
+${minutos} minutos
+</span>
+
+</div>
+</div>
+
+</div>
+</div>
+</div>
+    <div class="alterar">
+
+        <button class="btn-menu">
+            <i class="fa-solid fa-bars"></i>
+        </button>
+
+        <div class="menu">
+
+            <button onclick="finalizarPessoa('${docItem.id}')">
+                ATENDER
+            </button>
+
+            <button onclick="removerPessoa('${docItem.id}')">
+                EXCLUIR
+            </button>
+
+            <button onclick="ativarPrioridade('${docItem.id}')">
+    PRIORIZAR
+</button>
+
+            <button onclick="abrirCores(this)">
+                ALTERAR COR
+            </button>
+
+            <div class="menu-cores">
+
+                <button onclick="marcarCor('${docItem.id}','verde')">🟢 Verde</button>
+                <button onclick="marcarCor('${docItem.id}','amarelo')">🟡 Amarelo</button>
+                <button onclick="marcarCor('${docItem.id}','azul')">🔵 Azul</button>
+                <button onclick="marcarCor('${docItem.id}','vermelho')">🔴 Vermelho</button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</li>
+
+      `;
+
+      posicao++;
+
+    });
+
+  },
+  (erro) => {
+
+    console.error(
+      "Erro ao carregar fila:",
+      erro
+    );
+
+  }
+);
+
+const listaFilas = document.getElementById("listaFilas");
+
+const filasQuery = query(
+    collection(db,"filasEspecificas"),
+    orderBy("criadoEm")
+);
+
+onSnapshot(filasQuery,(snapshot)=>{
+
+    // remove apenas as filas criadas pelo usuário
+    document.querySelectorAll(".filaExtra").forEach(e=>e.remove());
+
+    snapshot.forEach(docItem=>{
+
+        const fila = docItem.data();
+
+        listaFilas.insertAdjacentHTML(
+    "beforeend",
+    `
+    <div class="div filaExtra"
+         onclick="irParaFila('${docItem.id}')">
+
+        <div class="menuFila">
+
+            <button class="btnFilaMenu"
+                    onclick="event.stopPropagation();abrirMenuFila(this)">
+                <i class="fa-solid fa-ellipsis-vertical"></i>
+            </button>
+
+            <div class="opcoesFila">
+
+                <button onclick="event.stopPropagation();excluirFila('${docItem.id}')">
+                    Excluir fila
+                </button>
+
+            </div>
+
+        </div>
+
+        <i class="fa-solid fa-users-line"></i>
+
+        <h6>${fila.nome}</h6>
+
+    </div>
+    `
+);
+
+    });
+
+    listaFilas.appendChild(
+        document.getElementById("novaFila")
+    );
+
+});
+
+document
+.getElementById("novaFila")
+.addEventListener("click", criarFila);
+
+/* =========================
+   ICON-MENU
+========================= */
+
+document.addEventListener("click", (e) => {
+
+    // Se clicou dentro do menu, não faz nada
+    if (e.target.closest(".menu")) return;
+
+    const botao = e.target.closest(".btn-menu");
+
+    if(botao){
+
+        e.stopPropagation();
+
+        document.querySelectorAll(".menu").forEach(menu=>{
+            menu.classList.remove("active");
+        });
+
+        document.querySelectorAll(".menu-cores").forEach(menu=>{
+            menu.classList.remove("active");
+        });
+
+        document.querySelectorAll("li").forEach(li=>{
+            li.classList.remove("menu-aberto");
+        });
+
+        const li = botao.closest("li");
+        li.classList.add("menu-aberto");
+
+        li.querySelector(".menu").classList.add("active");
+
+        return;
+    }
+
+    document.querySelectorAll(".menu").forEach(menu=>{
+        menu.classList.remove("active");
+    });
+
+    document.querySelectorAll(".menu-cores").forEach(menu=>{
+        menu.classList.remove("active");
+    });
+
+    document.querySelectorAll("li").forEach(li=>{
+        li.classList.remove("menu-aberto");
+    });
+    
+    // Fecha o menu das filas específicas
+if(!e.target.closest(".menuFila")){
+
+    document
+    .querySelectorAll(".opcoesFila")
+    .forEach(menu=>menu.classList.remove("active"));
+
+}
+
+});   
+
+/* =========================
+   COR CARD
+========================= */
+window.marcarCor = async function(id, cor){
+
+    try{
+
+        await updateDoc(
+            doc(db,"fila",id),
+            {
+                cor: cor
+            }
+        );
+
+    }catch(e){
+
+        console.log(e);
+
+    }
+
+}
+
+window.abrirCores = function(botao){
+
+    const menu = botao.nextElementSibling;
+
+    document.querySelectorAll(".menu-cores").forEach(m => {
+
+        if(m !== menu){
+            m.classList.remove("active");
+        }
+
+    });
+
+    menu.classList.toggle("active");
+
+}
+/* =========================
+   REMOVER
+========================= */
+
+window.removerPessoa =
+async function(id){
+
+  try{
+
+    await deleteDoc(
+      doc(db, "fila", id)
+    );
+
+  }catch(erro){
+
+    console.error(
+      "Erro ao remover:",
+      erro
+    );
+
+  }
+
+};
+
+/* =========================
+   FINALIZAR
+========================= */
+
+window.finalizarPessoa=async function(id){
+
+    try{
+
+        const referencia=doc(db,"fila",id);
+
+        const snap=await getDoc(referencia);
+
+        if(!snap.exists()) return;
+
+        const pessoa=snap.data();
+
+        await addDoc(
+    collection(db,"ultimoAtendimento"),
+    {
+        ...pessoa,
+        filaId: pessoa.filaId,
+        horario: serverTimestamp()
+    }
+);
+
+        await deleteDoc(referencia);
+
+    }
+
+    catch(e){
+
+        console.log(e);
+
+    }
+
+}
+
+onSnapshot(ultimoRef,(snapshot)=>{
+
+    if(snapshot.empty){
+
+        ultimoChamadoElemento.textContent="---";
+
+        return;
+
+    }
+
+    const pessoa=snapshot.docs[0].data();
+
+    ultimoChamadoElemento.textContent = pessoa.cliente;
+
+});
+
+// ver pedido
+window.abrirPedido = async function(id){
+
+    const snap = await getDoc(doc(db,"fila",id));
+
+    if(!snap.exists()) return;
+
+    const pedido = snap.data();
+
+    mostrarPedido(pedido);
+
+}
+
+function mostrarPedido(pedido){
+
+    const conteudo =
+        document.getElementById("conteudoPedido");
+
+    let html = "";
+
+    html += `
+        <h3>Funcionário: ${pedido.funcionario}</h3>
+
+<p>
+<b>Cliente:</b>
+${pedido.cliente}
+</p>
+
+        <p><b>Observação:</b> ${pedido.observacao || "-"}</p>
+
+        <p><b>Pagamento:</b> ${pedido.pagamento}</p>
+
+        <p><b>Tipo:</b> ${pedido.tipo}</p>
+
+        <p><b>Desconto:</b>
+            R$ ${pedido.desconto || 0}
+        </p>
+
+        <p><b>Acréscimo:</b>
+            R$ ${pedido.acrescimo || 0}
+        </p>
+
+        <hr>
+
+        <h3>Produtos:</h3>
+    `;
+
+    if(pedido.produtos){
+
+    pedido.produtos.forEach(produto=>{
+
+        html += `
+
+        <div class="produtoModal">
+
+            <h4>${produto.nome}</h4>
+
+            <p>${produto.descricao}</p>
+
+            <p>Quantidade:
+            ${produto.quantidade}</p>
+
+            <p>Valor:
+            R$ ${produto.preco}</p>
+
+        </div>
+
+        `;
+
+    });
+
+}
+
+html += `
+
+<hr>
+
+<h2>Total:
+${pedido.total}</h2>
+
+`;
+
+conteudo.innerHTML = html;
+
+
+//fecar 
+document
+.getElementById("modalPedido")
+.classList.add("active");
+
+}
+
+document
+.getElementById("modalPedido")
+.onclick = function(e){
+
+    if(e.target==this){
+
+        this.classList.remove("active");
+
+    }
+
+}
+
+document
+.querySelector(".fecharModal")
+.addEventListener("click", () => {
+
+    document
+    .getElementById("modalPedido")
+    .classList.remove("active");
+
+});
+
+
+//pesquisa
+pesquisaFila.addEventListener("input", () => {
+
+    const texto = pesquisaFila.value.toLowerCase();
+
+    document.querySelectorAll("#listaFilas .div").forEach(card => {
+
+        if(card.id === "novaFila"){
+            card.style.display = "block";
+            return;
+        }
+
+        const nome = card.querySelector("h6");
+
+        if(!nome) return;
+
+        card.style.display =
+            nome.textContent.toLowerCase().includes(texto)
+            ? "block"
+            : "none";
+
+    });
+
+});
+
+pesquisaCliente.addEventListener("input", () => {
+
+    const texto =
+    pesquisaCliente.value.toLowerCase();
+
+    document.querySelectorAll("#filaLista li").forEach(card=>{
+
+        const nome =
+        card.querySelector(".nome")
+        .textContent
+        .toLowerCase();
+
+        card.style.display =
+        nome.includes(texto)
+        ? "flex"
+        : "none";
+
+    });
+
+});
+
+//redirecionar
+window.irParaFila = function(id){
+
+    window.location.href =
+        "fila.especifica.html?id=" + id;
+
+}
+
+//PRIORIZAR
+window.ativarPrioridade = function(id){
+
+    const card = document.querySelector(
+        `li[data-id="${id}"]`
+    );
+
+    console.log("Card encontrado:", card);
+
+
+    if(!card) return;
+
+
+    card.draggable = true;
+console.log("Draggable:", card.draggable);
+
+    card.classList.add("arrastando");
+
+
+    card.addEventListener(
+        "dragstart",
+        iniciarArraste
+    );
+
+
+    card.addEventListener(
+        "dragend",
+        finalizarArraste
+    );
+
+
+    alert(
+      "Agora arraste o cliente para a posição desejada"
+    );
+
+}
+
+let cardArrastado = null;
+
+
+function iniciarArraste(e){
+
+    console.log("DRAG START");
+
+    cardArrastado = this;
+
+    this.classList.add(
+        "arrastando"
+    );
+
+}
+
+
+function finalizarArraste(){
+
+    this.classList.remove(
+        "arrastando"
+    );
+
+    this.draggable=false;
+
+}
+
+
+
+document
+.getElementById("filaLista")
+.addEventListener(
+"dragover",
+function(e){
+    console.log("DRAG OVER");
+
+    e.preventDefault();
+
+
+    const depois =
+    encontrarDepois(this,e.clientY);
+
+
+    if(depois == null){
+
+        this.appendChild(
+            cardArrastado
+        );
+
+    }
+
+    else{
+
+        this.insertBefore(
+            cardArrastado,
+            depois
+        );
+
+    }
+
+
+});
+
+
+
+function encontrarDepois(container,y){
+
+    const cards = [
+        ...container.querySelectorAll(
+            "li:not(.arrastando)"
+        )
+    ];
+
+
+    return cards.reduce(
+    (maisProximo,card)=>{
+
+
+        const box =
+        card.getBoundingClientRect();
+
+
+        const offset =
+        y - box.top - box.height/2;
+
+
+
+        if(
+            offset < 0 &&
+            offset > maisProximo.offset
+        ){
+
+            return {
+                offset:offset,
+                element:card
+            }
+
+        }
+
+        else{
+
+            return maisProximo;
+
+        }
+
+
+    },
+    {
+        offset:-Infinity
+    }
+
+    ).element;
+
+}
+</script>
+
+<script src="tema.js"></script>
+
+</body>
+</html>
