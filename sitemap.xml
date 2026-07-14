@@ -3,11 +3,11 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
-<loc>https://kasantosml.github.io/Prototipo-Locate-Go/</loc>
+<loc>https://kasantosml.github.io/Prototipo-Locate-Go/index.html</loc>
 </url>
 
 <url>
-<loc>https://kasantosml.github.io/Prototipo-Locate-Go/loginCliente.prototipo.html</loc>
+<loc>https://kasantosml.github.io/Prototipo-Locate-Go/login.entrar.prototipo.html</loc>
 </url>
 
 <url>
@@ -15,7 +15,7 @@
 </url>
 
 <url>
-<loc>https://kasantosml.github.io/Prototipo-Locate-Go/dadosEmpresario.prototipo.html</loc>
+<loc>https://kasantosml.github.io/Prototipo-Locate-Go/dadosEmpresa.prototipo.html</loc>
 </url>
 
 <url>
@@ -30,4 +30,22 @@
 <loc>https://kasantosml.github.io/Prototipo-Locate-Go/catalogoEmpresario.prototipo.html</loc>
 </url>
 
+<url>
+<loc>https://kasantosml.github.io/Prototipo-Locate-Go/Confi.prototipo.html</loc>
+</url>
+
+<url>
+<loc>https://kasantosml.github.io/Prototipo-Locate-Go/comentarios.empresa.html</loc>
+</url>
+
+<url>
+<loc>https://kasantosml.github.io/Prototipo-Locate-Go/fila.especifica.prototipo.html</loc>
+</url>
+
+<url>
+<loc>https://kasantosml.github.io/Prototipo-Locate-Go/cadastro.fila.online.prototipo.html</loc>
+</url>
+
+
+  
 </urlset>
