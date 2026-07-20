@@ -1,0 +1,2673 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Cadastro Fila Online</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="stylesheet" href="tema.css">
+
+<style>
+
+  :root{
+  --primary:#8c0a0a;
+
+  /* TEMA CLARO */
+  --bg:#f4f6f9;
+  --card:#ffffff;
+  --card-hover:#f8f8f8;
+  --text:#222222;
+  --title:#8c0a0a;
+  --input:#ffffff;
+  --border:#d7d7d7;
+  --footer:#ffffff;
+  --menu:#ffffff;
+  --shadow:0 2px 10px rgba(0,0,0,.10);
+  --primary:#d30e0e;
+--primary-dark:#850909;
+
+--surface:#ffffff;
+--surface-2:#f5f5f5;
+
+--text-light:#666;
+}
+
+/* =========================
+   TEMA ESCURO
+========================= */
+
+[data-theme="dark"]{
+  --bg:#0c0e14;
+  --card:#161923;
+  --card-hover:#1e2130;
+  --text:#ffffff;
+  --title:#ffffff;
+  --input:#1e2130;
+  --border:rgba(255,255,255,.08);
+  --footer:#161923;
+  --menu:#161923;
+  --shadow:0 2px 20px rgba(0,0,0,.35);
+--surface:#161923;
+--surface-2:#252b38;
+
+--text-light:#d5d5d5;
+
+}
+
+/* RESET */
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Arial;
+}
+
+body{
+  background:var(--bg);
+  color:var(--text);
+  transition:.3s;
+}
+
+/* HEADER */
+
+/*===============================
+HEADER
+===============================*/
+
+.appHeader{
+
+
+
+position:relative;
+overflow:hidden;
+
+padding:25px 22px 110px;
+
+background:
+linear-gradient(
+160deg,
+#c90818,
+#78050c
+);
+
+border-radius:0 0 45px 45px;
+
+box-shadow:
+0 20px 50px rgba(200,0,20,.25);
+
+
+padding:24px 22px 75px;
+
+background:linear-gradient(145deg,#60050b,#960F18);
+
+border-radius:0 0 34px 34px;
+
+color:#FFF;
+
+box-shadow:
+
+0 18px 40px rgba(193,18,31,.28);
+
+}
+
+
+
+/*===============================
+FUNDO
+===============================*/
+
+.headerBackground{
+
+position:absolute;
+
+inset:0;
+
+overflow:hidden;
+
+pointer-events:none;
+
+}
+
+.bgCircle{
+
+position:absolute;
+
+border-radius:50%;
+
+background:rgba(255,255,255,.05);
+
+}
+
+.circle1{
+
+width:220px;
+
+height:220px;
+
+left:-90px;
+
+bottom:-120px;
+
+}
+
+.circle2{
+
+width:180px;
+
+height:180px;
+
+right:-60px;
+
+top:-60px;
+
+}
+
+.circle3{
+
+width:120px;
+
+height:120px;
+
+right:80px;
+
+bottom:-40px;
+
+}
+
+
+
+/*===============================
+TOPO
+===============================*/
+
+.headerTop{
+
+display:flex;
+
+align-items:center;
+
+justify-content:space-between;
+
+position:relative;
+
+z-index:2;
+
+}
+
+/*===============================
+LOGO
+===============================*/
+
+.logoCenter{
+
+display:flex;
+
+align-items:center;
+
+gap:14px;
+
+}
+
+.logoCenter h1{
+
+font-size:1.6rem;
+
+font-weight:800;
+
+line-height:1;
+
+margin: 10px;
+
+}
+
+.logoCenter span{
+
+color:#FFD6D6;
+
+}
+
+.logoCenter small{
+
+display:block;
+
+margin-top:6px;
+
+font-size:.40rem;
+
+opacity:.85;
+
+}
+
+/*===============================
+RODAPÉ
+===============================*/
+
+.headerBottom{
+
+position:relative;
+
+z-index:2;
+
+margin-bottom:26px;
+
+text-align:center;
+
+}
+
+.headerBottom h2{
+
+font-size:1rem;
+
+font-weight:700;
+
+margin-bottom:0px;
+
+}
+
+.headerBottom p{
+
+font-size:.72rem;
+
+opacity:.9;
+
+line-height:1.5;
+
+max-width:260px;
+
+margin:auto;
+
+}
+
+
+/*===============================
+BADGE
+===============================*/
+
+.notificationButton{
+    position:relative;
+}
+
+.notification-badge{
+    position:absolute;
+    top:-6px;
+    right:-6px;
+
+    min-width:22px;
+    height:22px;
+    padding:0 6px;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    background:#ff1e1e;
+    color:#fff;
+
+    border:2px solid #fff;
+    border-radius:50%;
+
+    font-size:12px;
+    font-weight:700;
+    line-height:1;
+
+    box-shadow:0 4px 10px rgba(255,0,0,.35);
+
+    z-index:20;
+}
+
+.badge{
+    position:absolute;
+    top:10px;
+    right:10px;
+
+    width:35px;
+    height:35px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    background:#08a113;
+    color:#fff;
+
+    border-radius:50%;
+
+    font-size:18px;
+    font-weight:bold;
+}
+
+/*===============================
+BOTÕES
+===============================*/
+
+.iconButton{
+
+width:48px;
+
+height:48px;
+
+border:none;
+
+border-radius:16px;
+
+background:rgba(255,255,255,.10);
+
+backdrop-filter:blur(8px);
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+font-size:1.2rem;
+
+color:#FFF;
+
+cursor:pointer;
+
+transition:.25s;
+
+}
+
+.iconButton:active{
+
+transform:scale(.94);
+
+}
+
+.card{
+
+background:white;
+
+border-radius:22px;
+
+padding:22px;
+
+box-shadow:
+
+0 12px 30px rgba(0,0,0,.08);
+
+display:flex;
+
+flex-direction:column;
+
+gap:20px;
+
+}
+
+.card h2{
+
+display:flex;
+
+align-items:center;
+
+gap:12px;
+
+font-size:20px;
+
+color:#222;
+
+}
+
+.card h2 i{
+
+color:#d30e0e;
+
+font-size:20px;
+
+}
+
+.form{
+
+display:flex;
+
+flex-direction:column;
+
+gap:15px;
+
+}
+
+.form input,
+.form select,
+.form textarea{
+
+width:100%;
+
+height:58px;
+
+padding:0 18px;
+
+border-radius:16px;
+
+border:1px solid #e6e8ef;
+
+background:#fafbfc;
+
+font-size:16px;
+
+transition:.2s;
+
+}
+
+textarea{
+
+height:110px!important;
+
+padding-top:18px!important;
+
+resize:none;
+
+}
+
+input:focus,
+select:focus,
+textarea:focus{
+
+outline:none;
+
+border-color:#d30e0e;
+
+background:white;
+
+box-shadow:
+
+0 0 0 4px rgba(211,14,14,.10);
+
+}
+
+.resumo{
+
+position:fixed;
+
+bottom:95px;
+
+left:0;
+
+right:0;
+
+padding:18px 20px;
+
+background:white;
+
+box-shadow:
+
+0 -8px 20px rgba(0,0,0,.08);
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+}
+
+.acoes{
+    width:min(760px,94%);
+    margin:25px auto;
+}
+
+#botao{
+    width:100%;
+    height:68px;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:12px;
+
+    border:none;
+    border-radius:20px;
+
+    background:linear-gradient(135deg,#d30e0e,#960909);
+
+    color:#fff;
+    font-size:22px;
+    font-weight:700;
+
+    cursor:pointer;
+
+    box-shadow:0 12px 28px rgba(211,14,14,.30);
+}
+
+#botao:hover{
+    transform:translateY(-2px);
+}
+
+
+/*======================================
+            MAIN
+=======================================*/
+
+main{
+
+    width:min(760px,94%);
+
+    margin:auto;
+
+    margin-top:-70px;
+
+    position:relative;
+
+    z-index:10;
+
+}
+
+/*======================================
+        CARD CADASTRO
+=======================================*/
+
+.cadastro{
+
+    background:#fff;
+
+    border-radius:30px;
+
+    padding:32px;
+
+    box-shadow:
+
+    0 12px 45px rgba(0,0,0,.08);
+
+    border:1px solid #efefef;
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:20px;
+
+}
+
+/*======================================
+            CAMPOS
+=======================================*/
+
+.campo{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:8px;
+
+    flex: 1;
+
+}
+
+.campo label{
+
+    font-size:15px;
+
+    font-weight:700;
+
+    color:#6c7485;
+
+    margin-left:6px;
+
+    
+
+}
+
+/*======================================
+            INPUT BOX
+=======================================*/
+
+.input-box{
+
+  border: none;
+
+  width: 100%;
+
+  width:100%;
+    overflow:hidden;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:14px;
+
+    height:42px;
+
+    padding: 0px 14px;
+
+    background:#fff;
+
+    border:2px solid #ececec;
+
+    border-radius:10px;
+
+    transition:.25s;
+
+}
+
+.input-box:hover{
+
+    border-color:#d9d9d9;
+
+}
+
+.input-box:focus-within{
+
+    border-color:#d30e0e;
+
+    box-shadow:
+
+    0 0 0 5px rgba(211,14,14,.08);
+
+}
+
+/*======================================
+            ÍCONES
+=======================================*/
+
+.input-box i{
+
+    width:28px;
+
+    text-align:center;
+
+    font-size:22px;
+
+    color:#d30e0e;
+
+}
+
+/*======================================
+        INPUTS
+=======================================*/
+.input-box input,
+.input-box select{
+    flex: 1;
+    width: 100%;
+    min-width: 0;
+
+    border: 0 !important;
+    outline: 0 !important;
+    box-shadow: none !important;
+    background: transparent;
+
+    font-size: 17px; /* diminui a altura visual */
+    padding: 0;
+    margin: 0;
+
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+.input-box input::placeholder{
+
+    color:#8c93a5;
+   
+}
+
+/*======================================
+            SELECT
+=======================================*/
+
+.input-box select{
+
+    appearance:none;
+
+    cursor:pointer;
+
+    padding-right:20px;
+
+}
+
+/*======================================
+        LINHAS
+=======================================*/
+.linha{
+    display:flex;
+    gap:12px;
+    align-items:flex-start;
+}
+
+.linha .campo{
+    flex:1;
+    min-width:0;
+}
+
+.metade{
+
+    width:100%;
+
+}
+
+/*======================================
+        BOTÃO
+=======================================*/
+
+#botao{
+
+    width:100%;
+
+    height:72px;
+
+    border:none;
+
+    border-radius:20px;
+
+    background:
+
+    linear-gradient(135deg,#d90f0f,#a10707);
+
+    color:#fff;
+
+    font-size:28px;
+
+    font-weight:700;
+
+    cursor:pointer;
+
+    box-shadow:
+
+    0 12px 30px rgba(211,14,14,.30);
+
+    transition:.25s;
+
+}
+
+#botao:hover{
+
+    transform:translateY(-3px);
+
+}
+
+#botao:active{
+
+    transform:scale(.98);
+
+}
+
+/*======================================
+        TOTAL
+=======================================*/
+
+.total-card{
+
+    margin-top:25px;
+
+    background:#fff;
+
+    border-radius:25px;
+
+    padding:25px;
+
+    box-shadow:
+
+    0 10px 30px rgba(0,0,0,.08);
+
+}
+
+/*======================================
+        RESPONSIVO
+=======================================*/
+
+@media(max-width:720px){
+
+.cadastro{
+
+padding:22px;
+
+border-radius:24px;
+
+}
+
+.input-box{
+
+height:66px;
+
+padding:0 18px;
+
+}
+
+.input-box input,
+
+.input-box select{
+
+font-size:18px;
+
+}
+
+ .linha{
+        display:flex;
+        flex-direction:row; /* continua lado a lado */
+        gap:10px;
+    }
+
+    .linha .campo{
+        flex:1;
+    }
+
+#botao{
+
+height:65px;
+
+font-size:22px;
+
+}
+
+}
+
+/* TÍTULOS */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6{
+  color:var(--title);
+}
+
+/* FORMULÁRIO */
+.container{
+
+max-width:700px;
+
+margin:auto;
+
+padding:25px 20px 180px;
+
+display:flex;
+
+flex-direction:column;
+
+gap:20px;
+
+}
+
+
+.cadastro,
+#Tipo,
+#pagamento, #clienteTipo{
+  padding:15px;
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+
+.cadastro input,
+#Tipo,
+#pagamento, #clienteTipo{
+  padding:14px;
+  border-radius:10px;
+  border:1px solid var(--border);
+  background:var(--input);
+  color:var(--text);
+  font-size:18px;
+}
+
+.cadastro input::placeholder{
+  color:#888;
+}
+
+.cadastro button{
+  background:#087e39;
+  border:none;
+  color:white;
+  padding:14px;
+  border-radius:10px;
+  font-size:18px;
+  cursor:pointer;
+}
+
+/* QUANTIDADE */
+
+.quantidade{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:20px;
+  background:var(--card);
+  padding:10px;
+  border-radius:10px;
+  border:1px solid var(--border);
+}
+
+.quantidade span{
+  color:var(--text);
+  font-size:30px;
+  font-weight:bold;
+}
+
+.quantidade button{
+  border:none;
+  cursor:pointer;
+}
+
+#menos,
+#mais{
+  padding:0 8px;
+  background:#8e1313;
+  color:white;
+  font-size:20px;
+  border-radius:8px;
+}
+
+/* LISTA */
+
+.lista{
+  padding:15px;
+  background:var(--card);
+  max-width:90%;
+  margin:5%;
+  border-radius:12px;
+  border:1px solid var(--border);
+}
+
+.lista h3{
+  color:var(--title);
+}
+
+ul{
+  list-style:none;
+}
+
+li{
+  background:var(--card);
+  color:var(--text);
+  padding:12px;
+  border-radius:10px;
+  margin-bottom:10px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  box-shadow:var(--shadow);
+  border:1px solid var(--border);
+}
+
+.info{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  font-size:20px;
+  text-transform:capitalize;
+  width:100%;
+  color:var(--text);
+}
+
+.oculto{
+  background:var(--card-hover);
+  color:var(--text);
+  display:none;
+  flex-direction:column;
+  font-size:20px;
+  text-transform:capitalize;
+  flex:2;
+  border-radius:10px;
+  padding:12px;
+  border:1px solid var(--border);
+}
+
+.detalhes{
+  display:flex;
+  flex-direction:column;
+}
+
+/* BOTÕES */
+#botao {
+  position:relative;
+
+width:100%;
+
+margin-top:15px;
+
+height:70px;
+}
+#check{
+  flex:1;
+  border:none;
+  color:white;
+  background:#087e39;
+  padding:6px 10px;
+  border-radius:8px;
+  cursor:pointer;
+}
+
+.remover{
+  flex:1;
+  background:#7a150a;
+  border:none;
+  color:white;
+  padding:6px 10px;
+  border-radius:8px;
+  cursor:pointer;
+  margin:0 20px;
+}
+
+.alterar{
+  display:flex;
+  gap:10px;
+}
+
+/* CHAMAR */
+
+.chamar{
+  margin:15px;
+  width:calc(100% - 30px);
+  padding:14px;
+  background:#870c0c;
+  color:white;
+  border:none;
+  border-radius:10px;
+  font-size:18px;
+  cursor:pointer;
+}
+
+/* MENU */
+
+.menu{
+  position:absolute;
+  right:18px;
+  top:70px;
+  background:var(--menu);
+  border-radius:14px;
+  box-shadow:var(--shadow);
+  overflow:hidden;
+  transform:scale(0);
+  transform-origin:top right;
+  transition:.2s;
+  z-index:10;
+  width:50%;
+  border:1px solid var(--border);
+}
+
+.menu.active{
+  transform:scale(1);
+}
+
+.menu button{
+  width:100%;
+  padding:15px;
+  border:none;
+  background:none;
+  text-align:left;
+  cursor:pointer;
+  color:var(--text);
+}
+
+.menu button:hover{
+  background:var(--primary);
+  color:white;
+}
+
+#contador{
+  color:var(--title);
+  font-weight:bold;
+  margin-bottom:20px;
+}
+
+
+/* PRODUTO CARD */
+.produto{
+    position: relative;
+  background: var(--card);
+  color: var(--text);
+  border-radius: 16px; /* <- aqui você controla o arredondamento */
+  padding: 16px;
+  margin-bottom: 18px;
+  box-shadow: 0 8px 18px rgba(0,0,0,.12);
+  border: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+.produto.selected{
+  outline:3px solid var(--primary);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+#contador{
+  color:var(--titulo-cor);
+}
+
+.produto p{
+  color: var(--text);
+  font-size: 18px;
+  opacity: 0.9;
+}
+
+.produto h3,strong {
+  font-size: 25px;
+}
+
+
+.badge{
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 35px;
+  height: 35px;
+  background: rgb(8, 161, 19);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.lixeira {
+  z-index: 101;
+  position: absolute;
+  top: 10px;
+  left: 10px; /* canto oposto da badge */
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: none;
+  background: #ff0000 !important;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: 0.2s;
+  font-weight: bold;
+}
+
+.lixeira:hover {
+  transform: scale(1.1);
+  background: #750404;
+}
+
+/* IMAGE CARD */
+.image-card{
+  width:100%;
+  height:160px;
+   background:var(--input,#e0e0e0);
+  border:1px solid var(--borda);
+  color:var(--texto);
+  border-radius:14px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+  overflow:hidden;
+}
+
+.image-card img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+.produto input,
+.produto textarea{
+  width:100%;
+  border:none;
+  outline:none;
+  font-size:16px;
+  background:transparent;
+  color:var(--texto);
+}
+
+textarea{ resize:none; }
+
+.produto input::placeholder,
+.produto textarea::placeholder{
+  color:#8b95a8;
+}
+
+/*=========================
+FOOTER
+=========================*/
+
+footer{
+
+position:fixed;
+
+bottom:16px;
+
+left:16px;
+
+right:16px;
+
+height:70px;
+
+display:flex;
+
+justify-content:space-around;
+
+align-items:center;
+
+background:rgba(255,255,255,.90);
+
+backdrop-filter:blur(16px);
+
+border-radius:24px;
+
+border:1px solid rgba(255,255,255,.25);
+
+box-shadow:
+
+0 18px 45px rgba(15,23,42,.18);
+
+z-index:99999;
+
+}
+
+
+
+.nav-item, .active{
+
+    width:70px;
+
+    height:60px;
+
+    border:none;
+
+    background:none;
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:center;
+
+    align-items:center;
+
+    gap:4px;
+
+    color:var(--text-light);
+
+    font-size:11px;
+
+    cursor:pointer;
+
+}
+
+.nav-item i, .active{
+
+    font-size:21px;
+
+}
+
+.active span {
+  font-size: 10px;
+}
+
+.nav-item.active{
+
+    color:#d30e0e;
+
+    font-weight:700;
+
+}
+
+.nav-item.active i {
+
+    color:#d30e0e;
+
+}
+
+[data-theme="dark"] footer{
+
+background:rgba(22,25,35,.92);
+
+border:1px solid rgba(255,255,255,.08);
+
+}
+
+/*======================================================
+                BOTÕES
+======================================================*/
+
+footer button{
+
+width:54px;
+
+height:54px;
+
+border:none;
+
+background:none;
+
+border-radius:18px;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+cursor:pointer;
+
+transition:.20s;
+
+color:var(--text-light);
+
+font-size:22px;
+
+}
+
+footer button:hover{
+
+background:var(--surface-2);
+
+transform:translateY(-2px);
+
+}
+
+footer button.active{
+
+background:
+
+linear-gradient(
+
+135deg,
+
+var(--primary),
+
+var(--primary-dark)
+
+);
+
+color:white;
+
+box-shadow:
+
+0 10px 20px rgba(211,14,14,.30);
+
+}
+
+
+[data-theme="dark"] footer button.active{
+    color:#fff;
+    background:rgba(208, 10, 10, 0.234);
+}
+
+[data-theme="dark"] .cadastro{
+    color:#fff;
+    background:#ffffff;
+}
+
+[data-theme="dark"] .btn-menu{
+    color:#fff;
+}
+#valorFinal{
+    position:fixed;
+    bottom:92px; /* acima do footer */
+    left:0;
+    width:100%;
+    padding:12px 18px;
+    z-index:900;
+    background:transparent;
+}
+
+#valorFinal .total-card{
+
+    background:linear-gradient(135deg,#d30e0e,#940909);
+
+    color:#fff;
+
+    border-radius:22px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:18px 22px;
+
+    box-shadow:0 12px 30px rgba(0,0,0,.25);
+
+}
+
+#valorFinal .total-card span{
+
+    color:#fff;
+
+}
+
+#valorFinal #totalGeral{
+
+    font-size:30px;
+
+    font-weight:800;
+
+}
+
+.total-card span:first-child{
+    font-weight:bold;
+    font-size:20px;
+}
+
+#totalGeral{
+    font-size:30px;
+    font-weight:bold;
+}
+
+/* TITULOS */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+label,
+strong{
+    color:var(--title);
+}
+
+/* INPUTS */
+
+input,
+select,
+textarea{
+    color:var(--text);
+    background:var(--input);
+}
+
+input::placeholder,
+textarea::placeholder{
+    color:#8f8f8f;
+}
+
+/* CARDS DA FILA */
+
+.card,
+.lista,
+li,
+.oculto,
+.produto{
+    background:var(--card);
+    color:var(--text);
+}
+
+/* DETALHES ABERTOS */
+
+.oculto strong,
+.oculto small{
+    color:var(--text);
+}
+
+/* MENU */
+
+.menu{
+    background:var(--menu);
+}
+
+.menu button{
+    color:var(--text);
+}
+
+
+/* SELECT */
+
+#Tipo,
+#pagamento{
+    background:var(--input);
+    color:var(--text);
+}
+
+/* HORA */
+
+#hora{
+    background:var(--input);
+    color:var(--text);
+}
+
+/* CONTADOR */
+
+#contador{
+    color: var(--title);
+}
+
+#clienteTipo{
+    color: var(--text);
+}
+
+/*=========================
+PESQUISA
+=========================*/
+
+.pesquisa{
+    display:flex;
+    align-items:center;
+    gap:10px;
+
+    margin:25px 0;
+
+    padding:12px 15px;
+
+    background:var(--card);
+
+    border:1px solid var(--border);
+
+    border-radius:14px;
+
+    box-shadow:var(--shadow);
+}
+
+.pesquisa i{
+    color:var(--text-secondary);
+    font-size:18px;
+}
+
+.pesquisa input{
+
+    flex:1;
+
+    border:none;
+
+    outline:none;
+
+    background:transparent;
+
+    color:var(--text);
+
+    font-size:16px;
+
+}
+
+.pesquisa input::placeholder{
+
+    color:var(--text-secondary);
+
+}
+
+
+</style>
+</head>
+
+<body>
+
+<header class="appHeader">
+
+    <div class="headerBackground">
+        <div class="bgCircle circle1"></div>
+        <div class="bgCircle circle2"></div>
+        <div class="bgCircle circle3"></div>
+    </div>
+
+    <div class="headerTop">
+
+        <button class="iconButton">
+            <i class="fa-solid fa-bars"></i>
+        </button>
+
+        <div class="logoCenter">
+
+  
+            <div>
+
+                <h1><span>Locate</span> <span style="color: rgba(255, 0, 0, 0.814);">&amp; <span>Go</span> </span></h1>
+
+
+            </div>
+
+        </div>
+
+        <button class="iconButton notificationButton">
+
+            <i class="fa-regular fa-bell"></i>
+
+            <span class="notification-badge">0</span>
+
+        </button>
+
+    </div>
+
+    <div class="headerBottom">
+
+        <p>Cadastre seus clientes em tempo real.</p>
+
+    </div>
+
+  </header>
+
+<main>
+
+   
+
+    <!-- DADOS -->
+
+    <section class="cadastro">
+
+        <div class="campo">
+
+            <label>Cliente</label>
+
+            <div class="input-box">
+                <i class="fa-regular fa-user"></i>
+
+                <input
+                    id="cliente"
+                    type="text"
+                    placeholder="Nome do cliente">
+            </div>
+
+        </div>
+
+        <div class="campo">
+
+            <label>Funcionário</label>
+
+            <div class="input-box">
+                <i class="fa-regular fa-id-badge"></i>
+
+                <input
+                    id="nome"
+                    type="text"
+                    placeholder="Responsável pelo atendimento">
+
+            </div>
+
+        </div>
+
+        <div class="campo">
+
+            <label>Observação</label>
+
+            <div class="input-box">
+                <i class="fa-regular fa-note-sticky"></i>
+
+                <input
+                    id="observacao"
+                    type="text"
+                    placeholder="Adicionar observações">
+
+            </div>
+
+        </div>
+<div class="vals">
+        <div class="linha">
+
+            <div class="campo metade">
+
+                <label>Desconto</label>
+
+                <div class="input-box">
+
+                    <i class="fa-light fa-percent"></i>
+
+                    <input
+                        id="desconto"
+                        type="text"
+                        placeholder="R$ 0,00">
+
+                </div>
+
+            </div>
+
+            <div class="campo metade">
+
+                <label>Acréscimo</label>
+
+                <div class="input-box">
+
+                    <i class="fa-light fa-plus"></i>
+
+                    <input
+                        id="acrescimo"
+                        type="text"
+                        placeholder="R$ 0,00">
+
+                </div>
+              </div>
+
+            </div>
+
+        </div>
+
+        <div class="campo">
+
+            <label>Método de Atendimento</label>
+
+            <div class="input-box">
+
+                <i class="fa-solid fa-layer-group"></i>
+
+                <select id="Tipo"></select>
+
+            </div>
+
+        </div>
+
+        <div class="linha">
+
+            <div class="campo metade">
+
+                <label>Pagamento</label>
+
+                <div class="input-box">
+
+                    <i class="fa-regular fa-credit-card"></i>
+
+                    <select id="pagamento">
+
+                        <option>PIX</option>
+                        <option>Dinheiro</option>
+                        <option>Cartão</option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+            <div class="campo metade">
+
+                <label>Tipo de Cliente</label>
+
+                <div class="input-box">
+
+                    <i class="fa-solid fa-crown"></i>
+
+                    <select id="clienteTipo">
+
+                        <option>Cliente Comum</option>
+                        <option>Cliente VIP</option>
+                        <option>Preferencial</option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</main>
+
+<!-- TOTAL -->
+
+    <div class="acoes">
+    <button id="botao" onclick="adicionarPessoa()">
+        <i class="fa-solid fa-check"></i>
+        Cadastrar Atendimento
+    </button>
+</div>
+
+  <h3>CATÁLOGO DE PRODUTOS</h3><br>
+  <div id="contador">00 PRODUTOS</div>
+  <div class="pesquisa">
+    <i class="fa-solid fa-magnifying-glass"></i>
+
+    <input
+        type="text"
+        id="pesquisaProdutos"
+        placeholder="Pesquisar Produtos..."
+        autocomplete="off">
+</div>
+  <div id="lista"></div>
+
+</div>
+
+<div id="valorFinal">
+    
+</div>
+
+<div class="card total-card">
+
+<i class="fa-solid fa-wallet"></i><div class="card total-card">
+        <span id="totalGeral">R$ 0,00</span>
+    </div>
+
+<div>
+
+</div>
+
+</div>
+
+<footer>
+<button onclick="window.location.href='cadastro.fila.online.html'" id="inicio" class="active"><i class="fa-solid fa-house" id="home"></i><span>Cadastro</span></button>
+<button onclick="window.location.href='catalogoEmpresario.prototipo.html'" id="produto" class="nav-item"><i class="fa-solid fa-clipboard-list"></i><span>Produtos</span></button>
+<button onclick="window.location.href='fila.online.html'" class="nav-item"><i class="fa-solid fa-users-line" id="fila"></i><span>Fila</span></button>
+<button onclick="window.location.href='perfilEmpresario.prototipo.html'" id="perfil" class="nav-item"><i class="fa-solid fa-user"></i><span>Perfil</span></button>
+<button onclick="window.location.href='Confi.prototipo.html'" id="confi" class="nav-item"><i class="fa-solid fa-gear"></i><span>Config</span></button>
+</footer>
+
+<script type="module">
+
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
+
+import {
+    getFirestore,
+    collection,
+    addDoc,
+    getDocs,
+    doc,
+    getDoc,
+    updateDoc,
+    deleteDoc,
+    query,
+    orderBy,
+    onSnapshot,
+    serverTimestamp,
+    limit
+}
+from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
+
+
+import {
+  getAuth
+}
+
+from "https://www.gstatic.com/firebasejs/12.11.0/firebase-auth.js";
+/* =========================
+   FIREBASE
+========================= */
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAvXF36Fi9K25Ub1czRkZ_G9OQ_dwcm5rk",
+  authDomain: "locatego.firebaseapp.com",
+  projectId: "locatego",
+  storageBucket: "locatego.firebasestorage.app",
+  messagingSenderId: "904411855752",
+  appId: "1:904411855752:web:8a2cb38545cba994d3d83d"
+};
+
+const app = initializeApp(firebaseConfig);
+
+const db = getFirestore(app);
+
+const auth = getAuth(app);
+
+const produtosRef = query(
+  collection(db, "produtos"),
+  orderBy("nome")
+);
+
+
+/* =========================
+   ELEMENTOS
+========================= */
+
+const nomeInput = document.getElementById("nome");
+const observacaoInput = document.getElementById("observacao");
+const descontoInput = document.getElementById("desconto");
+const acrescimoInput = document.getElementById("acrescimo");
+const clienteInput = document.getElementById("cliente");
+const tipoInput = document.getElementById("Tipo");
+const pagamentoInput = document.getElementById("pagamento");
+const pesquisaProdutos = document.getElementById("pesquisaProdutos");
+
+
+
+let filaIdSelecionada = null;
+
+/* =========================
+   SELECT
+========================= */
+
+const filasRef = query(
+    collection(db,"filasEspecificas"),
+    orderBy("criadoEm")
+);
+
+onSnapshot(filasRef,(snapshot)=>{
+
+    tipoInput.innerHTML = `
+    <option value="null">METODO DE ATENDIMENTO</option>
+        <option value="aEKfIBOJ0STevpD3yi9n">PRESENCIAL</option>
+        <option value="daR85H7p7cHPsi9UjT2D">DELIVERY</option>
+        <option value="HVZOXrxlCWZQrzwhoFrH">RETIRADA</option>
+        <option value="xW2bmNDp7CiUquxZZXei">AGENDAMENTO</option>
+    filaIdSelecionada = tipoInput.value;`;
+
+    snapshot.forEach(docItem=>{
+
+        const fila = docItem.data();
+
+        tipoInput.innerHTML += `
+            <option value="${docItem.id}">
+  ${fila.nome}
+</option>
+                ${fila.nome}
+            </option>
+        `;
+
+        tipoInput.addEventListener("change", () => {
+    filaIdSelecionada = tipoInput.value;
+});
+
+
+
+    });
+
+});
+
+//tipo cliente
+const clienteTipoInput = document.getElementById("clienteTipo");
+
+let cor = "#7a150a";
+
+function atualizarCor(){
+
+    switch(clienteTipoInput.value){
+
+        case "cc":
+            cor = "red";
+            break;
+
+        case "cvip":
+            cor = "#2962ff";
+            break;
+
+        case "ar":
+            cor = "#16a34a";
+            break;
+
+        case "pe":
+            cor = "#ff6d00";
+            break;
+
+        case "pf":
+            cor = "#ffd600";
+            break;
+
+        default:
+            cor = "#2196f3";
+    }
+
+    clienteTipoInput.style.color = cor;
+
+}
+
+atualizarCor();
+
+clienteTipoInput.addEventListener("change", atualizarCor);
+
+
+/* =========================
+   FILA TEMPO REAL
+========================= */
+
+let produtosArray = [];
+let produtosPedido = [];
+
+
+onSnapshot(produtosRef, (snapshot) => {
+
+  const lista = document.getElementById("lista");
+  const contador = document.getElementById("contador");
+
+  lista.innerHTML = "";
+
+  produtosArray = [];
+
+  snapshot.forEach((docItem) => {
+
+    const produto = docItem.data();
+    const id = docItem.id;
+
+    produtosArray.push(produto);
+
+    const card = document.createElement("div");
+    card.classList.add("produto");
+
+    card.innerHTML = `
+      <div class="image-card">
+        <img src="${produto.imagem || ''}">
+      </div>
+
+      <div class="badge">${produto.quantidade || 0}</div>
+
+      <h3>${produto.nome || "Sem nome"}</h3>
+
+      <p>${produto.desc || "Sem descrição"}</p>
+
+      <strong>R$ ${produto.preco || "0,00"}</strong>
+
+      <button class="lixeira">
+        <i class="fa-solid fa-minus"></i>
+      </button>
+    `;
+
+  
+// 🔼 AUMENTA QUANTIDADE
+card.addEventListener("click", async () => {
+
+    const novaQuantidade = (produto.quantidade || 0) + 1;
+
+    await updateDoc(
+        doc(db, "produtos", id),
+        {
+            quantidade: novaQuantidade
+        }
+    );
+
+    adicionarProdutoPedido({
+        ...produto,
+        quantidade: novaQuantidade
+    });
+
+});
+    // 🗑 DIMINUI QUANTIDADE
+    const botaoLixeira = card.querySelector(".lixeira");
+
+    botaoLixeira.addEventListener("click", async (e) => {
+      e.stopPropagation();
+
+      await updateDoc(doc(db, "produtos", id), {
+        quantidade: Math.max(0, (produto.quantidade || 0) - 1)
+      });
+    });
+
+    lista.appendChild(card);
+  });
+
+  contador.textContent = `${snapshot.size} PRODUTOS`;
+
+  // 🔥 CALCULA TOTAL GERAL AQUI
+  calcularTotalGeral(produtosArray);
+
+  function adicionarProdutoPedido(produto){
+
+    const existente = produtosPedido.find(
+        p => p.nome === produto.nome
+    );
+
+    if(existente){
+
+        existente.quantidade++;
+
+    }else{
+
+        produtosPedido.push({
+
+    nome: produto.nome,
+
+    descricao: produto.desc,
+
+    preco: produto.preco,
+
+    imagem: produto.imagem,
+
+    quantidade:1
+
+});
+
+    }
+
+    console.log(produtosPedido);
+
+}
+
+});
+
+/* =========================
+   TOTAL VALOR
+========================= */
+
+function calcularTotalGeral(produtos) {
+
+  let total = 0;
+
+  produtos.forEach(p => {
+
+    const preco = Number(
+      String(p.preco || 0)
+        .replace("R$", "")
+        .replace(/\./g, "")
+        .replace(",", ".")
+    ) || 0;
+
+    const qtd = Number(p.quantidade) || 0;
+
+    total += preco * qtd;
+
+  });
+
+  // desconto digitado
+  const desconto = Number(
+    descontoInput.value
+      .replace(/\D/g, "")
+  ) / 100 || 0;
+
+  // acréscimo digitado
+  const acrescimo = Number(
+    acrescimoInput.value
+      .replace(/\D/g, "")
+  ) / 100 || 0;
+
+  total = total - desconto + acrescimo;
+
+  if(total < 0) total = 0;
+
+  document.getElementById("totalGeral").textContent =
+    total.toLocaleString("pt-BR",{
+      style:"currency",
+      currency:"BRL"
+    });
+
+}
+
+/* =========================
+   MÁSCARA PREÇO
+========================= */
+
+function aplicarMascaraMoeda(input) {
+
+  input.addEventListener("input", (e) => {
+
+    let valor = e.target.value.replace(/\D/g, "");
+
+    if (valor === "") {
+      e.target.value = "";
+      return;
+    }
+
+    valor = (Number(valor) / 100).toFixed(2);
+
+    valor = valor.replace(".", ",");
+
+    valor = valor.replace(
+      /\B(?=(\d{3})+(?!\d))/g,
+      "."
+    );
+
+    e.target.value = "R$ " + valor;
+
+  });
+
+  calcularTotalGeral(produtosArray);
+
+}
+
+aplicarMascaraMoeda(descontoInput);
+aplicarMascaraMoeda(acrescimoInput);
+
+descontoInput.addEventListener("input", () => {
+    calcularTotalGeral(produtosArray);
+});
+
+acrescimoInput.addEventListener("input", () => {
+    calcularTotalGeral(produtosArray);
+});
+
+
+/* =========================
+   ADICIONAR PESSOA
+========================= */
+
+window.adicionarPessoa = async function () {
+
+  const funcionario =
+nomeInput.value.trim();
+
+const cliente =
+clienteInput.value.trim();
+
+  if (funcionario === "") {
+
+    alert("Informe o nome do funcionário.");
+
+    return;
+
+  }
+
+  const descontoNumero =
+    Number(
+      descontoInput.value.replace(/\D/g, "")
+    ) / 100 || 0;
+
+  const acrescimoNumero =
+    Number(
+      acrescimoInput.value.replace(/\D/g, "")
+    ) / 100 || 0;
+
+  try {
+
+    console.log("=================================");
+console.log("Fila selecionada:", filaIdSelecionada);
+console.log("Cliente:", cliente);
+console.log("Funcionário:", funcionario);
+console.log("=================================");
+
+   await addDoc(
+collection(db,"fila"),
+{
+
+    cliente,
+
+    funcionario,
+
+    observacao:
+    observacaoInput.value.trim(),
+
+    clienteTipo: clienteTipoInput.value,
+
+    cor: cor,
+
+   filaId: filaIdSelecionada,
+tipo: tipoInput.options[tipoInput.selectedIndex].text,
+
+    pagamento:
+    pagamentoInput.value,
+
+    desconto:
+    descontoNumero,
+
+    acrescimo:
+    acrescimoNumero,
+
+    produtos:
+    produtosPedido,
+
+    total:
+    document.getElementById("totalGeral").innerText,
+
+    status:
+    "aguardando",
+
+    criadoEm:
+    serverTimestamp()
+
+});
+
+    await registrarUso(
+    "adicionou_na_fila",
+    {
+        funcionario,
+        cliente,
+        desconto: descontoNumero,
+        acrescimo: acrescimoNumero
+    }
+);
+
+    limparFormulario();
+
+  }
+
+  catch (erro) {
+
+    console.error(
+      "Erro ao adicionar:",
+      erro
+    );
+
+  }
+
+};
+
+/* =========================
+   ALTEROU
+========================= */
+
+nomeInput.addEventListener(
+
+"change",
+
+()=>{
+
+registrarUso(
+
+"novo_nome"
+
+);
+
+}
+
+);
+
+observacaoInput.addEventListener(
+
+"change",
+
+()=>{
+
+registrarUso(
+
+"nova_observacao"
+
+);
+
+}
+
+);
+
+descontoInput.addEventListener(
+
+"change",
+
+()=>{
+
+registrarUso(
+
+"novo_desconto",
+
+{
+
+valor:
+
+descontoInput.value
+
+}
+
+);
+
+}
+
+);
+
+acrescimoInput.addEventListener(
+
+"change",
+
+()=>{
+
+registrarUso(
+
+"novo_acrescimo",
+
+{
+
+valor:
+
+acrescimoInput.value
+
+}
+
+);
+
+}
+
+);
+
+tipoInput.addEventListener(
+
+"change",
+
+()=>{
+
+registrarUso(
+
+"alterou_tipo",
+
+{
+
+tipo:
+
+tipoInput.value
+
+}
+
+);
+
+}
+
+);
+
+pagamentoInput.addEventListener(
+
+"change",
+
+()=>{
+
+registrarUso(
+
+"alterou_pagamento",
+
+{
+
+pagamento:
+
+pagamentoInput.value
+
+}
+
+);
+
+}
+);
+
+/* =========================
+   SELECTS
+========================= */
+
+tipoInput.addEventListener("change", async () => {
+
+    if (tipoInput.value !== "__novo__") return;
+
+    const nome = prompt("Digite o nome da nova categoria:");
+
+    if (!nome) {
+        tipoInput.selectedIndex = 0;
+        return;
+    }
+
+    await addDoc(collection(db, "categoriasTipo"), {
+        nome: nome.trim()
+    });
+
+    setTimeout(() => {
+        tipoInput.value = nome.trim();
+    }, 300);
+
+});
+
+/* =========================
+   LIMPAR FORM
+========================= */
+
+async function limparFormulario() {
+
+    // Campos
+    document.getElementById("cliente").value = "";
+    nomeInput.value = "";
+    observacaoInput.value = "";
+    descontoInput.value = "";
+    acrescimoInput.value = "";
+
+    tipoInput.selectedIndex = 0;
+    pagamentoInput.selectedIndex = 0;
+
+    // Limpa produtos do pedido
+    produtosPedido = [];
+
+    // Zera o total
+    document.getElementById("totalGeral").textContent =
+        "R$ 0,00";
+
+    // Zera quantidade de TODOS os produtos
+    const snapshot = await getDocs(collection(db,"produtos"));
+
+    for(const produto of snapshot.docs){
+
+        await updateDoc(
+            doc(db,"produtos",produto.id),
+            {
+                quantidade:0
+            }
+        );
+
+    }
+
+    // Recalcula
+    calcularTotalGeral([]);
+
+}
+
+/* =========================
+   RELATÓRIO
+========================= */
+
+async function registrarUso(
+    acao,
+    dados={}
+){
+
+    try{
+
+        const usuario=auth.currentUser;
+
+        await addDoc(
+            collection(db,"logs"),
+            {
+
+                usuario:
+                usuario?.email || "Empresa",
+
+                uid:
+                usuario?.uid || null,
+
+                tipo:"EMPRESA",
+
+                acao,
+
+                dados,
+
+                pagina:
+                window.location.pathname,
+
+                navegador:
+                navigator.userAgent,
+
+                horario:
+                serverTimestamp()
+
+            }
+        );
+
+    }
+
+    catch(erro){
+
+        console.error(
+            "Erro ao registrar log:",
+            erro
+        );
+
+    }
+
+}
+
+
+/* =========================
+   LOG ACESSO TELA
+========================= */
+
+window.addEventListener(
+  "load",
+  async () => {
+
+    await registrarUso(
+      "acessou_tela",
+      {
+        tela: "cadastro-fila"
+      }
+    );
+
+  }
+);
+
+
+/* =========================
+   LOG CLIQUES
+========================= */
+
+document.addEventListener(
+  "click",
+  async (e) => {
+
+    try {
+
+      const texto =
+        e.target.innerText || "";
+
+      await registrarUso(
+        "clique",
+        {
+          elemento: e.target.tagName,
+          texto
+        }
+      );
+
+    } catch(erro){
+
+      console.error(erro);
+
+    }
+
+  }
+);
+
+
+/* =========================
+   ERROS SISTEMA
+========================= */
+
+window.addEventListener(
+  "error",
+  async (erro) => {
+
+    await registrarUso(
+      "erro_sistema",
+      {
+        mensagem: erro.message,
+        arquivo: erro.filename,
+        linha: erro.lineno
+      }
+    );
+
+  }
+);
+
+await addDoc(collection(db, "logs"), {
+
+    usuario: "Empresa",
+
+    tipo: "EMPRESA",
+
+    pagina: window.location.pathname,
+
+    navegador: navigator.userAgent,
+
+    horario: serverTimestamp()
+
+});
+
+
+
+//PESQUISAR
+pesquisaProdutos.addEventListener("input", () => {
+
+    const texto = pesquisaProdutos.value.toLowerCase();
+
+    document.querySelectorAll(".produto").forEach(card => {
+
+        const nome = card.querySelector("h3")
+            .textContent
+            .toLowerCase();
+
+        card.style.display =
+            nome.includes(texto)
+                ? "flex"
+                : "none";
+
+    });
+
+});
+
+
+</script>
+
+<script src="tema.js"></script>
+
+</body>
+</html>

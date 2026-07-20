@@ -1,0 +1,2013 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Locate & Go - Sistema Inteligente de Filas</title>
+
+<meta name="description"
+content="Locate & Go é um sistema inteligente para gerenciamento de filas, agendamentos e atendimento em tempo real, ajudando empresas e clientes a reduzir filas e otimizar o atendimento.">
+
+<meta name="keywords"
+content="Locate Go, filas online, gerenciamento de filas, atendimento, agendamento, Picos PI">
+
+<meta name="author"
+content="Locate & Go">
+
+<meta name="robots" content="index, follow">
+
+<meta property="og:title" content="Locate & Go - Sistema Inteligente de Filas">
+<meta property="og:description" content="Gerencie filas, agendamentos e atendimentos de forma inteligente.">
+<meta property="og:image" content="https://kasantosml.github.io/Prototipo-Locate-Go/locatego.jpg">
+<meta property="og:url" content="https://kasantosml.github.io/Prototipo-Locate-Go/">
+<meta property="og:type" content="website">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Locate & Go">
+<meta name="twitter:description" content="Sistema inteligente de gerenciamento de filas.">
+<meta name="twitter:image" content="https://kasantosml.github.io/Prototipo-Locate-Go/locatego.jpg">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="preconnect" href="https://googleapis.com">
+<link rel="preconnect" href="https://gstatic.com" crossorigin>
+<link href="https://googleapis.com/css2?family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
+    <style>
+   /*=====================================================================
+    LOCATE & GO
+    CSS PROFISSIONAL
+    PARTE 1/10
+
+    ✔ Reset Moderno
+    ✔ Variáveis
+    ✔ Body
+    ✔ Background
+    ✔ Hero
+    ✔ Logo
+    ✔ Títulos
+======================================================================*/
+
+
+/*=====================================================================
+    GOOGLE FONT
+======================================================================*/
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+
+/*=====================================================================
+    RESET
+======================================================================*/
+
+*,
+*::before,
+*::after{
+
+    margin:0;
+    padding:0;
+
+    box-sizing:border-box;
+
+}
+
+html{
+
+    scroll-behavior:smooth;
+
+    -webkit-text-size-adjust:100%;
+
+}
+
+body,
+button,
+input,
+textarea,
+select{
+
+    font-family:'Poppins',sans-serif;
+
+}
+
+button,
+input,
+textarea,
+select{
+
+    border:none;
+
+    outline:none;
+
+    background:none;
+
+}
+
+a{
+
+    color:inherit;
+
+    text-decoration:none;
+
+}
+
+img{
+
+    display:block;
+
+    max-width:100%;
+
+    user-select:none;
+
+    -webkit-user-drag:none;
+
+}
+
+ul{
+
+    list-style:none;
+
+}
+
+
+/*=====================================================================
+    ROOT
+======================================================================*/
+
+:root{
+
+/* CORES */
+
+--primary:#B30F19;
+--primary-dark:#870811;
+--primary-light:#D92C39;
+
+--secondary:#006A63;
+--secondary-dark:#004A45;
+
+--success:#00A86B;
+--warning:#F8A100;
+
+--white:#FFFFFF;
+
+--gray-50:#FCFCFC;
+--gray-100:#F7F7F7;
+--gray-200:#EEEEEE;
+--gray-300:#DDDDDD;
+--gray-400:#C6C6C6;
+--gray-500:#999999;
+--gray-600:#666666;
+--gray-700:#444444;
+--gray-800:#2D2D2D;
+--gray-900:#1A1A1A;
+
+
+/* GRADIENTES */
+
+--gradient-primary:
+linear-gradient(
+135deg,
+#D61E2F,
+#A30E18
+);
+
+--gradient-soft:
+linear-gradient(
+180deg,
+#FFFFFF,
+#FAFAFA
+);
+
+--gradient-background:
+#FFFFFF;
+
+
+/* SOMBRAS */
+
+--shadow-xs:
+0 2px 8px rgba(0,0,0,.05);
+
+--shadow-sm:
+0 8px 20px rgba(0,0,0,.08);
+
+--shadow-md:
+0 20px 45px rgba(0,0,0,.12);
+
+--shadow-lg:
+0 35px 80px rgba(0,0,0,.18);
+
+
+/* RAIOS */
+
+--radius-xs:10px;
+--radius-sm:16px;
+--radius-md:24px;
+--radius-lg:34px;
+--radius-xl:50px;
+
+
+/* TRANSIÇÕES */
+
+--transition:.35s cubic-bezier(.4,0,.2,1);
+
+}
+
+        .logo-text {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1a1a1a;
+            /* Alto espaçamento entre as letras */
+            letter-spacing: 0.25em; 
+            text-transform: uppercase;
+            margin-top: 7px;
+        }
+
+        /* Estilização especial para a letra A (estilo triângulo/localizador) */
+        .custom-a {
+            display: inline-block;
+            color: #d32f2f; /* Cor vermelha do destaque */
+            position: relative;
+            /* Ajuste fino de margem por conta do letter-spacing global */
+            margin-right: -0.1em; 
+        }
+    
+/*=====================================================================
+    SCROLLBAR
+======================================================================*/
+
+::-webkit-scrollbar{
+
+    width:8px;
+
+}
+
+::-webkit-scrollbar-track{
+
+    background:#ffffff;
+
+}
+
+::-webkit-scrollbar-thumb{
+
+    background:linear-gradient(
+    180deg,
+    var(--primary),
+    var(--primary-dark));
+
+    border-radius:100px;
+
+}
+
+::-webkit-scrollbar-thumb:hover{
+
+    background:var(--primary-dark);
+
+}
+
+
+/*=====================================================================
+    BODY
+======================================================================*/
+
+body{
+
+    background-color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+
+    min-height:100vh;
+
+    overflow-x:hidden;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:flex-start;
+
+    color:var(--gray-900);
+
+    position:relative;
+
+}
+
+
+/*=====================================================================
+    FUNDO DECORATIVO
+======================================================================*/
+
+body::before{
+
+    content:"";
+
+    position:fixed;
+
+    width:480px;
+    height:480px;
+
+    left:-220px;
+    top:-180px;
+
+    border-radius:50%;
+
+    background:
+
+    radial-gradient(
+
+        circle,
+
+        rgba(255,255,255,.95),
+
+        rgba(255,255,255,.40),
+
+        transparent
+
+    );
+
+    z-index:-5;
+
+}
+
+body::after{
+
+    content:"";
+
+    position:fixed;
+
+    width:500px;
+    height:500px;
+
+    right:-240px;
+    top:80px;
+
+    border-radius:50%;
+
+    background:
+
+    radial-gradient(
+
+        circle,
+
+        rgba(255,255,255,.92),
+
+        rgba(255,255,255,.35),
+
+        transparent
+
+    );
+
+    z-index:-5;
+
+}
+
+
+/*=====================================================================
+    BACKGROUND SVG
+======================================================================*/
+
+.background{
+
+    position:fixed;
+
+    inset:0;
+
+    overflow:hidden;
+
+    pointer-events:none;
+
+    z-index:-10;
+
+}
+
+.background-svg{
+
+    width:100%;
+
+    height:100%;
+
+}
+
+
+/*=====================================================================
+    ONDA VERMELHA ESQUERDA
+======================================================================*/
+
+.background::before{
+
+    content:"";
+
+    position:absolute;
+
+    width:850px;
+    height:700px;
+
+    left:-420px;
+    bottom:-250px;
+
+    border-radius:50%;
+
+    transform:rotate(-18deg);
+
+    background:
+
+    linear-gradient(
+
+        135deg,
+
+        #E02B39,
+
+        #B30F19,
+
+        #7E0810
+
+    );
+
+}
+
+
+/*=====================================================================
+    ONDA DIREITA
+======================================================================*/
+
+.background::after{
+
+    content:"";
+
+    position:absolute;
+
+    width:620px;
+    height:500px;
+
+    right:-280px;
+    bottom:-120px;
+
+    border-radius:50%;
+
+    transform:rotate(18deg);
+
+    background:
+
+    linear-gradient(
+
+        140deg,
+
+        rgba(220,35,50,.92),
+
+        rgba(150,8,18,.95)
+
+    );
+
+}
+
+
+/*=====================================================================
+    APP
+======================================================================*/
+
+.app{
+
+    width:100%;
+
+    max-width:430px;
+
+    padding:
+
+        40px
+        24px
+        30px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
+    position:relative;
+
+    z-index:5;
+
+}
+
+
+/*=====================================================================
+    HERO
+======================================================================*/
+
+.hero{
+
+    width:100%;
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
+    justify-content:center;
+
+    text-align:center;
+
+    margin-bottom:18px;
+
+}
+
+
+/*=====================================================================
+    LOGO
+======================================================================*/
+
+.logo{
+
+    margin-bottom: 8px;
+
+    width:140px;
+
+    aspect-ratio:1;
+
+    object-fit:contain;
+
+    filter:
+
+        drop-shadow(
+            0 18px 30px
+            rgba(0,0,0,.15)
+        );
+
+    transition:var(--transition);
+
+}
+
+.logo:hover{
+
+    transform:
+
+        translateY(-6px)
+
+        scale(1.03);
+
+}
+
+
+/*=====================================================================
+    TÍTULO
+======================================================================*/
+
+.hero h1{
+
+    font-size:2.15rem;
+
+    font-weight:800;
+
+    letter-spacing:4px;
+
+    text-transform:uppercase;
+
+    color:var(--primary);
+
+
+}
+
+
+/*=====================================================================
+    SUBTÍTULO
+======================================================================*/
+
+.hero h2{
+
+    width:90%;
+
+    max-width:290px;
+
+    font-size:.97rem;
+
+    font-weight:400;
+
+    line-height:1.8;
+
+    color:var(--gray-600);
+
+}
+
+
+/*=====================================================================
+    SELEÇÃO
+======================================================================*/
+
+::selection{
+
+    background:var(--primary);
+
+    color:#fff;
+
+}
+
+
+/*=====================================================================
+    RESPONSIVIDADE INICIAL
+======================================================================*/
+
+@media(max-width:430px){
+
+.app{
+
+padding:
+
+30px
+18px
+25px;
+
+}
+
+.logo{
+
+width:120px;
+
+}
+
+.hero h1{
+
+font-size:1.8rem;
+
+}
+
+.hero h2{
+
+font-size:.90rem;
+
+}
+
+} 
+/*=====================================================================
+    LOCATE & GO
+    CSS PROFISSIONAL
+    PARTE 2/10
+
+    ✔ Card Principal
+    ✔ Glassmorphism Premium
+    ✔ Ícone
+    ✔ Títulos
+    ✔ Divider
+    ✔ Texto
+    ✔ Área dos Botões
+======================================================================*/
+
+
+/*=====================================================================
+    CARD PRINCIPAL
+======================================================================*/
+
+.card{
+
+    width:100%;
+
+    background:
+        rgba(255,255,255,.94);
+
+    backdrop-filter:blur(24px);
+    -webkit-backdrop-filter:blur(24px);
+
+    border-radius:34px;
+
+    padding:
+        38px
+        30px
+        34px;
+
+    position:relative;
+
+    overflow:hidden;
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
+    border:
+
+        1px solid
+        rgba(255,255,255,.55);
+
+    box-shadow:
+
+        0 35px 70px rgba(0,0,0,.10),
+
+        0 15px 30px rgba(0,0,0,.06),
+
+        inset 0 1px 0 rgba(255,255,255,.70);
+
+    transition:
+
+        transform .45s ease,
+        box-shadow .45s ease;
+
+}
+
+
+/*=====================================================================
+    HOVER CARD
+======================================================================*/
+
+.card:hover{
+
+    transform:
+
+        translateY(-8px);
+
+    box-shadow:
+
+        0 50px 90px rgba(0,0,0,.14),
+
+        0 20px 45px rgba(0,0,0,.08),
+
+        inset 0 1px 0 rgba(255,255,255,.80);
+
+}
+
+
+/*=====================================================================
+    BRILHO SUPERIOR
+======================================================================*/
+
+.card::before{
+
+    content:"";
+
+    position:absolute;
+
+    width:320px;
+    height:320px;
+
+    right:-170px;
+    top:-180px;
+
+    border-radius:50%;
+
+    background:
+
+        radial-gradient(
+
+            rgba(255,255,255,.95),
+
+            rgba(255,255,255,.10),
+
+            transparent
+
+        );
+
+}
+
+
+/*=====================================================================
+    BRILHO INFERIOR
+======================================================================*/
+
+.card::after{
+
+    content:"";
+
+    position:absolute;
+
+    width:250px;
+    height:250px;
+
+    left:-150px;
+    bottom:-150px;
+
+    border-radius:50%;
+
+    background:
+
+        radial-gradient(
+
+            rgba(215,25,40,.08),
+
+            transparent
+
+        );
+
+}
+
+
+/*=====================================================================
+    ELEMENTOS ACIMA DOS EFEITOS
+======================================================================*/
+
+.card>*{
+
+    position:relative;
+
+    z-index:2;
+
+}
+
+
+/*=====================================================================
+    ÍCONE
+======================================================================*/
+
+.card-icon{
+
+    width:90px;
+    height:90px;
+
+    border-radius:50%;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    margin-bottom:4px;
+
+    background:
+
+        linear-gradient(
+
+            145deg,
+
+            #D82436,
+
+            #A10D18
+
+        );
+
+    color:#fff;
+
+    font-size:36px;
+
+    box-shadow:
+
+        0 18px 35px rgba(179,15,25,.35),
+
+        inset 0 2px 6px rgba(255,255,255,.28);
+
+    position:relative;
+
+    overflow:hidden;
+
+}
+
+
+/*=====================================================================
+    REFLEXO DO ÍCONE
+======================================================================*/
+
+.card-icon::before{
+
+    content:"";
+
+    position:absolute;
+
+    left:-120%;
+    top:0;
+
+    width:70%;
+    height:100%;
+
+    transform:skewX(-20deg);
+
+    background:
+
+        linear-gradient(
+
+            90deg,
+
+            transparent,
+
+            rgba(255,255,255,.55),
+
+            transparent
+
+        );
+
+    transition:.9s;
+
+}
+
+
+.card:hover .card-icon::before{
+
+    left:180%;
+
+}
+
+
+/*=====================================================================
+    CÍRCULO EXTERNO
+======================================================================*/
+
+.card-icon::after{
+
+    content:"";
+
+    position:absolute;
+
+    width:112px;
+    height:112px;
+
+    border-radius:50%;
+
+    border:2px dashed rgba(179,15,25,.18);
+
+}
+
+
+/*=====================================================================
+    ANIMAÇÃO FLUTUANTE
+======================================================================*/
+
+.card-icon{
+
+    animation:
+
+        floatIcon 4s ease-in-out infinite;
+
+}
+
+@keyframes floatIcon{
+
+0%{
+
+transform:translateY(0);
+
+}
+
+50%{
+
+transform:translateY(-5px);
+
+}
+
+100%{
+
+transform:translateY(0);
+
+}
+
+}
+
+
+/*=====================================================================
+    TÍTULO
+======================================================================*/
+
+.card h1{
+
+    font-size:2rem;
+
+    font-weight:700;
+
+    color:var(--gray-900);
+
+    margin-bottom:4px;
+
+    text-align:center;
+
+    letter-spacing:.3px;
+
+}
+
+
+/*=====================================================================
+    DIVISOR
+======================================================================*/
+
+.divider{
+
+    width:80px;
+
+    height:6px;
+
+    border-radius:50px;
+
+    margin-bottom:18px;
+
+    background:
+
+        linear-gradient(
+
+            90deg,
+
+            var(--primary),
+
+            var(--primary-light)
+
+        );
+
+    box-shadow:
+
+        0 5px 15px rgba(179,15,25,.20);
+
+}
+
+
+/*=====================================================================
+    TEXTO
+======================================================================*/
+
+.card p{
+
+    width:100%;
+
+    max-width:280px;
+
+    text-align:center;
+
+    font-size:.97rem;
+
+    line-height:1.8;
+
+    color:var(--gray-600);
+
+}
+
+
+/*=====================================================================
+    ÁREA DOS BOTÕES
+======================================================================*/
+
+.buttons{
+
+    width:100%;
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:14px;
+
+}
+
+
+/*=====================================================================
+    ANIMAÇÃO DE ENTRADA
+======================================================================*/
+
+.card{
+
+    opacity:0;
+
+    animation:
+
+        cardEntrance
+
+        .9s ease forwards;
+
+}
+
+@keyframes cardEntrance{
+
+from{
+
+    opacity:0;
+
+    transform:
+
+        translateY(60px)
+        scale(.96);
+
+}
+
+to{
+
+    opacity:1;
+
+    transform:
+
+        translateY(0)
+        scale(1);
+
+}
+
+}
+
+
+/*=====================================================================
+    PULSE DO CARD
+======================================================================*/
+
+.card:hover{
+
+    animation:
+
+        pulseShadow 2s infinite;
+
+}
+
+@keyframes pulseShadow{
+
+0%{
+
+box-shadow:
+
+0 35px 70px rgba(0,0,0,.10);
+
+}
+
+50%{
+
+box-shadow:
+
+0 45px 90px rgba(179,15,25,.14);
+
+}
+
+100%{
+
+box-shadow:
+
+0 35px 70px rgba(0,0,0,.10);
+
+}
+
+}
+
+
+/*=====================================================================
+    RESPONSIVIDADE
+======================================================================*/
+
+@media(max-width:600px){
+
+.card{
+
+padding:
+
+30px
+22px
+26px;
+
+border-radius:28px;
+
+}
+
+.card-icon{
+
+width:78px;
+height:78px;
+
+font-size:30px;
+
+}
+
+.card-icon::after{
+
+width:96px;
+height:96px;
+
+}
+
+.card h1{
+
+font-size:1.7rem;
+
+}
+
+.card p{
+
+font-size:.92rem;
+
+margin-bottom:28px;
+
+}
+
+.buttons{
+
+gap:15px;
+
+}
+
+}
+
+
+/*=====================================================================
+    TELAS MUITO PEQUENAS
+======================================================================*/
+
+@media(max-width:360px){
+
+.card{
+
+padding:
+
+24px
+18px
+22px;
+
+}
+
+.card h1{
+
+font-size:1.45rem;
+
+}
+
+.card p{
+
+font-size:.88rem;
+
+}
+
+.card-icon{
+
+width:70px;
+height:70px;
+
+font-size:26px;
+
+}
+
+}
+
+/*=====================================================================
+    LOCATE & GO
+    CSS PROFISSIONAL
+    PARTE 3/10
+
+    ✔ Botões principais
+    ✔ Empresário
+    ✔ Cliente
+    ✔ Login
+    ✔ Ícones
+    ✔ Animações
+======================================================================*/
+
+
+/*=====================================================================
+    BOTÕES PRINCIPAIS
+======================================================================*/
+
+.btn{
+
+    width:100%;
+
+    height:82px;
+
+    border-radius:14px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    padding:0 16px;
+
+    color:white;
+
+    text-transform:uppercase;
+
+    font-size:1rem;
+
+    font-weight:800;
+
+    letter-spacing:.5px;
+
+    position:relative;
+
+    overflow:hidden;
+
+    cursor:pointer;
+
+    transition:.35s ease;
+
+    box-shadow:
+
+        0 15px 30px rgba(0,0,0,.18);
+
+}
+
+
+/* brilho interno */
+
+.btn::before{
+
+    content:"";
+
+    position:absolute;
+
+    inset:0;
+
+    background:
+
+    linear-gradient(
+
+        120deg,
+
+        rgba(255,255,255,.25),
+
+        transparent 35%
+
+    );
+
+    opacity:.5;
+
+}
+
+
+
+/* conteúdo acima do brilho */
+
+.btn > div,
+.btn > span{
+
+    position:relative;
+
+    z-index:2;
+
+}
+
+
+/*=====================================================================
+    ÁREA DO ÍCONE
+======================================================================*/
+
+.btn div{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:22px;
+
+}
+
+
+/* círculo do ícone */
+
+.btn i{
+
+    width:58px;
+
+    height:58px;
+
+    border-radius:50%;
+
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+
+    font-size:26px;
+
+
+    background:
+
+    rgba(255,255,255,.18);
+
+
+    border:
+
+    1px solid
+
+    rgba(255,255,255,.20);
+
+
+    color:white;
+
+
+    backdrop-filter:blur(10px);
+
+
+}
+
+
+
+/* seta */
+
+.btn > span:last-child{
+
+    font-size:3rem;
+
+    font-weight:300;
+
+    line-height:0;
+
+}
+
+
+
+/*=====================================================================
+    BOTÃO EMPRESÁRIO
+======================================================================*/
+
+.empresa{
+
+    background:
+
+    linear-gradient(
+
+        135deg,
+
+        #D51F30,
+
+        #A30712
+
+    );
+
+
+    box-shadow:
+
+    0 18px 35px
+
+    rgba(179,15,25,.45);
+
+}
+
+
+
+.empresa:hover{
+
+    transform:
+
+    translateY(-5px);
+
+
+    box-shadow:
+
+    0 25px 45px
+
+    rgba(179,15,25,.55);
+
+}
+
+
+
+/*=====================================================================
+    BOTÃO CLIENTE
+======================================================================*/
+
+.cliente{
+
+
+    background:
+
+    linear-gradient(
+
+        135deg,
+
+        #08756F,
+
+        #004C49
+
+    );
+
+
+    box-shadow:
+
+    0 18px 35px
+
+    rgba(0,90,85,.40);
+
+
+}
+
+
+
+.cliente:hover{
+
+
+    transform:
+
+    translateY(-5px);
+
+
+    box-shadow:
+
+    0 25px 45px
+
+    rgba(0,90,85,.55);
+
+
+}
+
+
+
+/*=====================================================================
+    ANIMAÇÃO DO CLIQUE
+======================================================================*/
+
+.btn:active{
+
+
+    transform:
+
+    scale(.96);
+
+
+}
+
+
+
+/*=====================================================================
+    EFEITO DE LUZ PASSANDO
+======================================================================*/
+
+.btn::after{
+
+
+    content:"";
+
+
+    position:absolute;
+
+
+    top:0;
+
+    left:-120%;
+
+
+    width:80%;
+
+
+    height:100%;
+
+
+    background:
+
+
+    linear-gradient(
+
+        90deg,
+
+        transparent,
+
+        rgba(255,255,255,.45),
+
+        transparent
+
+    );
+
+
+    transform:skewX(-25deg);
+
+
+    transition:.8s;
+
+
+}
+
+
+
+.btn:hover::after{
+
+
+    left:130%;
+
+
+}
+
+
+
+/*=====================================================================
+    LOGIN
+======================================================================*/
+
+.login{
+
+
+    width:100%;
+
+
+    margin-top:18px;
+
+
+    display:flex;
+
+
+    flex-direction:column;
+
+
+    align-items:center;
+
+
+    gap:14px;
+
+
+}
+
+
+
+.login p{
+
+
+    color:white;
+
+
+    text-transform:uppercase;
+
+
+    font-size:1rem;
+
+
+    font-weight:700;
+
+
+    letter-spacing:.8px;
+
+
+}
+
+
+
+/* linha decorativa */
+
+.login p::after{
+
+
+    content:"";
+
+
+    display:block;
+
+
+    width:65px;
+
+
+    height:3px;
+
+
+    margin:8px auto 0;
+
+
+    border-radius:20px;
+
+
+    background:white;
+
+
+}
+
+
+
+/*=====================================================================
+    BOTÃO ENTRAR
+======================================================================*/
+
+
+.btn-login{
+
+
+    width:100%;
+
+
+    height:72px;
+
+
+    border-radius:20px;
+
+
+    background:white;
+
+
+    border:
+
+    3px solid
+
+    #B30F19;
+
+
+    display:flex;
+
+
+    align-items:center;
+
+
+    justify-content:center;
+
+
+    color:#B30F19;
+
+
+    font-size:1.25rem;
+
+
+    font-weight:800;
+
+
+    text-transform:uppercase;
+
+
+    letter-spacing:1px;
+
+
+    box-shadow:
+
+
+    0 15px 35px rgba(0,0,0,.20);
+
+
+    position:relative;
+
+
+    transition:.35s;
+
+
+}
+
+
+
+.btn-login::before{
+
+
+    content:"➜";
+
+
+    position:absolute;
+
+
+    left:35px;
+
+
+    font-size:2rem;
+
+
+    font-weight:400;
+
+
+}
+
+
+
+.btn-login::after{
+
+
+    content:"›";
+
+
+    position:absolute;
+
+
+    right:32px;
+
+
+    font-size:3rem;
+
+
+    font-weight:300;
+
+
+}
+
+
+
+.btn-login:hover{
+
+
+    transform:
+
+
+    translateY(-5px);
+
+
+    box-shadow:
+
+
+    0 25px 45px rgba(0,0,0,.28);
+
+
+}
+
+
+
+/*=====================================================================
+    MOBILE
+======================================================================*/
+
+
+@media(max-width:430px){
+
+
+.btn{
+
+
+height:76px;
+
+
+font-size:1rem;
+
+
+padding:0 20px;
+
+
+}
+
+
+.btn i{
+
+
+width:52px;
+
+height:52px;
+
+font-size:23px;
+
+
+}
+
+
+.btn > span:last-child{
+
+
+font-size:2.5rem;
+
+
+}
+
+
+
+.btn-login{
+
+
+height:65px;
+
+
+font-size:1.1rem;
+
+
+}
+
+
+
+}
+
+
+</style>
+    <script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"SoftwareApplication",
+  "name":"Locate & Go",
+  "applicationCategory":"BusinessApplication",
+  "operatingSystem":"Web",
+  "description":"Sistema inteligente de gerenciamento de filas e agendamentos.",
+  "url":"https://kasantosml.github.io/Prototipo-Locate-Go/",
+  "image":"https://kasantosml.github.io/Prototipo-Locate-Go/locatego.jpg"
+}
+</script>
+</head>
+<body>
+
+    <!-- =====================================================
+                    FUNDO VETORIAL
+    ====================================================== -->
+
+    <div class="background">
+
+        <svg class="background-svg"
+             viewBox="0 0 390 844"
+             preserveAspectRatio="none">
+
+            <!--
+                Aqui ficarão as ondas vermelhas.
+                Elas serão desenhadas no CSS/SVG.
+            -->
+
+        </svg>
+
+    </div>
+
+
+    <!-- =====================================================
+                    CONTEÚDO
+    ====================================================== -->
+
+    <main class="app">
+
+        <!-- Logo -->
+
+        <header class="hero">
+
+            <img
+                src="locateP2.png"
+                alt="Locate & Go"
+                class="logo">
+
+                <div class="logo-text">
+        LOC<span class="custom-a">A</span>TE & G<span class="custom-a">o</span>
+    </div>
+
+            <h2>O melhor jeito de gerir e encontrar.</h2>
+
+        </header>
+
+
+
+        <!-- Card -->
+
+        <section class="card">
+
+            <div class="card-icon">
+
+                <i class="fa-regular fa-user"></i>
+
+            </div>
+
+
+            <h1 style="text-transform:uppercase;">
+
+                Cadastre-se
+
+            </h1>
+
+
+            <div class="divider"></div>
+
+
+            <p>
+
+                Escolha como deseja utilizar
+                o <span class="custom-a" style="font-size: 18px;">L&G</span>.
+
+            </p>
+
+
+            <nav class="buttons">
+
+                <a
+                href="dadosEmpresario.prototipo.html"
+                class="btn empresa">
+
+                    <div>
+
+                        <i id="btn-icon" class="fa-solid fa-store"></i>
+
+                        <span>
+
+                            Empresário
+
+                        </span>
+
+                    </div>
+
+                    <span>
+
+                        ›
+
+                    </span>
+
+                </a>
+
+
+                <a
+                href="dadosCliente.prototipo.html"
+                class="btn cliente">
+
+                    <div>
+
+                        <i id="btn-icon" class="fa-solid fa-user"></i>
+
+                        <span>
+
+                            Cliente
+
+                        </span>
+
+                    </div>
+
+                    <span>
+
+                        ›
+
+                    </span>
+
+                </a>
+
+            </nav>
+
+        </section>
+
+
+
+        <!-- Login -->
+
+        <section class="login">
+
+            <p>
+
+                Já possui uma conta?
+
+            </p>
+
+            <a
+            href="loginCliente.prototipo.html"
+            class="btn-login">
+
+                Entrar
+
+            </a>
+
+        </section>
+
+    </main>
+
+</body>
+
+</html>
